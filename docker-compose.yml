@@ -17,7 +17,7 @@ services:
       environment:
           JUPYTER_NO_PASSWORD: "true"
       volumes:
-          - ./explore:/home/jupyter/work
+          - ./lab:/home/jupyter/work
   graphql-engine:
     image: hasura/graphql-engine:v1.3.0.cli-migrations
     ports:
