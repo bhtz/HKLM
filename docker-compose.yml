@@ -10,14 +10,14 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: postgres  
-  jupyter:
-      image: joshendriks/jupyter-dotnet:latest
+  lab:
+      build: ./lab
       ports:
           - "8081:8888"
       environment:
           JUPYTER_NO_PASSWORD: "true"
       volumes:
-          - ./lab:/home/jupyter/work
+          - ./lab/work:/home/jupyter/work
   graphql-engine:
     image: hasura/graphql-engine:v1.3.0.cli-migrations
     ports:
