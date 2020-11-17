@@ -14,7 +14,7 @@ RUN apt-get -y install nodejs \
 
 RUN apt-get install -y graphviz libgraphviz-dev pkg-config
 
-RUN pip3 install pandas xlrd sqlalchemy psycopg2-binary pygraphviz eralchemy
+RUN pip3 install pandas xlrd matplotlib sqlalchemy psycopg2-binary pygraphviz eralchemy
 
 ARG NB_USER="jupyter"
 ARG NB_UID="1000"
