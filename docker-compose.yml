@@ -2,24 +2,19 @@ version: "3.6"
 services:
   postgres:
     image: postgres:12
+    container_name: hklm_database
     ports:
       - "5432:5432"
     restart: always
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: postgres  
-  lab:
-      build: ./lab
-      ports:
-          - "8081:8888"
-      environment:
-          JUPYTER_NO_PASSWORD: "true"
-      volumes:
-          - ./lab/work:/home/jupyter/work
+      POSTGRES_DB: postgres
   graphql-engine:
     image: hasura/graphql-engine:v1.3.0.cli-migrations
+    container_name: hklm_baas
     ports:
     - "8080:8000"
     depends_on:
@@ -28,7 +23,42 @@ services:
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:root@postgres:5432/postgres
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-      HASURA_GRAPHQL_ADMIN_SECRET: datastack
+      HASURA_GRAPHQL_ADMIN_SECRET: microscope
       HASURA_GRAPHQL_SERVER_PORT: 8000
+  lab:
+      build: ./lab
+      container_name: hklm_lab
+      ports:
+          - "8081:8888"
+      environment:
+          JUPYTER_NO_PASSWORD: "true"
+      volumes:
+          - ./lab/work:/home/jupyter/work
+  storage:
+    image: bitnami/minio:latest
+    container_name: hklm_storage
+    ports:
+        - "8082:9000"
+    environment:
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: microscope
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: hklm_identity
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: postgres
+      DB_USER: postgres
+      DB_SCHEMA: mcsp_identity
+      DB_PASSWORD: root
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: microscope
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 8083:8080
+    depends_on:
+      - postgres
 volumes:
   db_data:

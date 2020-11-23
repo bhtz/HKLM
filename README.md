@@ -1,12 +1,9 @@
-# datastack
+# HKLM Stack
 
-Explore > Design > Expose > Consume
-
-## Stack
-
-* postgres
-* jupyterLab
-* hasura graphql engine
+* Interactive programming & data exploration (jupyterLab)
+* GraphQL & event engine (hasura)
+* Identity and access management (keycloak)
+* Storage engine (minio)
 
 ## Requirements: 
 
@@ -14,15 +11,16 @@ Explore > Design > Expose > Consume
 
 ## Getting started
 
-
-    git clone https://github.com/bhtz/datastack.git
+    git clone https://github.com/bhtz/HKLM.git
 
     cd datastack
 
     docker-compose up
 
-Enjoy your data experience :
+* [LAB](http://localhost:8081/lab/tree/files)
 
-[LAB](http://localhost:8081/lab/tree/files)
+* [BAAS](http://localhost:8080/console/)
 
-[BACKEND](http://localhost:8080/console/)
+* [STORAGE](http://localhost:8082/minio/)
+
+* [IDENTITY](http://localhost:8083/auth/)
