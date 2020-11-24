@@ -1,0 +1,47 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">MICROSCOPE</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" target="_blank" href="http://localhost:8081" Match="NavLinkMatch.All">
+                <span class="oi oi-beaker" aria-hidden="true"></span> Lab
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" target="_blank" href="http://localhost:8080" Match="NavLinkMatch.All">
+                <span class="oi oi-hard-drive" aria-hidden="true"></span> Data
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" target="_blank" href="http://localhost:8083" Match="NavLinkMatch.All">
+                <span class="oi oi-people" aria-hidden="true"></span> Identity
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" target="_blank" href="http://localhost:8082" Match="NavLinkMatch.All">
+                <span class="oi oi-cloud-upload" aria-hidden="true"></span> Storage
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
