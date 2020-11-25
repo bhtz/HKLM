@@ -17,10 +17,4 @@
 
     docker-compose up
 
-* [LAB](http://localhost:8081/lab/tree/files)
-
-* [BAAS](http://localhost:8080/console/)
-
-* [STORAGE](http://localhost:8082/minio/)
-
-* [IDENTITY](http://localhost:8083/auth/)
+* [NAVIGATE TO PORTAL](http://localhost:8085)
