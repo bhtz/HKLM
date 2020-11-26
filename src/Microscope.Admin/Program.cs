@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace admin
+namespace Microscope.Admin
 {
     public class Program
     {
@@ -18,6 +18,15 @@ namespace admin
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                // Configure your authentication provider options here.
+                // For more information, see https://aka.ms/blazor-standalone-auth
+                builder.Configuration.Bind("Local", options.ProviderOptions);
+                options.ProviderOptions.DefaultScopes.Add("roles");
+                //options.ProviderOptions.ResponseType = "code";
+            });
 
             await builder.Build().RunAsync();
         }

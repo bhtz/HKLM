@@ -26,7 +26,7 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: microscope
       HASURA_GRAPHQL_SERVER_PORT: 8000
   lab:
-      build: ./lab
+      build: ./src/Microscope.Lab
       container_name: hklm_lab
       ports:
           - "8081:8888"
@@ -43,7 +43,7 @@ services:
       MINIO_ACCESS_KEY: admin
       MINIO_SECRET_KEY: microscope
   admin:
-    build: ./admin
+    build: ./src/Microscope.Admin
     container_name: hklm_admin
     ports:
         - "8085:80"
