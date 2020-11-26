@@ -1,9 +1,15 @@
-# HKLM Stack
+# Microscope
+
+        POC version
+
+Admin & API on top of awesomes OSS products in order to provide BaaS experience
 
 * Interactive programming & data exploration (jupyterLab)
 * GraphQL & event engine (hasura)
 * Identity and access management (keycloak)
 * Storage engine (minio)
+
+related to https://github.com/bhtz/microscope
 
 ## Requirements: 
 
