@@ -6,8 +6,18 @@
 
 <AuthorizeView>
     <Authorized>
-        @context.User.Identity.Name
-        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+        @* @context.User.Identity.Name
+        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button> *@
+
+        <div class="dropdown">
+            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @context.User.Identity.Name
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" @onclick="BeginSignOut">Log out</a>
+                <a class="dropdown-item" href="http://localhost:8083/auth/realms/master/account">Manage</a>
+            </div>
+        </div>
     </Authorized>
     <NotAuthorized>
         <a href="authentication/login">Log in</a>

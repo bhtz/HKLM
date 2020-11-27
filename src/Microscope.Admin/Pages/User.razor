@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@inject IAccessTokenProvider TokenProvider
+@page "/user"
+
+<AuthorizeView>
+    <Authorized>
+        @context.User.Identity.Name
+
+        <s>@AccessToken</s>
+        
+        <ul>
+          @foreach (var item in context.User.Claims)
+          {
+            <li>@item.Type - @item.Value</li>
+          }
+        </ul>
+    </Authorized>
+    <NotAuthorized>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    public string AccessToken { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var accessTokenResult = await TokenProvider.RequestAccessToken();
+        AccessToken = string.Empty;
+
+        if (accessTokenResult.TryGetToken(out var token))
+        {
+            AccessToken = token.Value;
+        }
+    }
+}

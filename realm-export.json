@@ -42,6 +42,357 @@
   "quickLoginCheckMilliSeconds": 1000,
   "maxDeltaTimeSeconds": 43200,
   "failureFactor": 30,
+  "roles": {
+    "realm": [
+      {
+        "id": "8a41d575-659a-4364-8644-6a0797332ec3",
+        "name": "offline_access",
+        "description": "${role_offline-access}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "master",
+        "attributes": {}
+      },
+      {
+        "id": "9e60ec49-cf60-40b6-94d8-39f223cb78f2",
+        "name": "create-realm",
+        "description": "${role_create-realm}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "master",
+        "attributes": {}
+      },
+      {
+        "id": "7dd54238-bd9d-459a-af7b-227db490a697",
+        "name": "uma_authorization",
+        "description": "${role_uma_authorization}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "master",
+        "attributes": {}
+      },
+      {
+        "id": "6e16aa94-9dad-4d72-9957-d024878d2d9a",
+        "name": "admin",
+        "description": "${role_admin}",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "create-realm"
+          ],
+          "client": {
+            "master-realm": [
+              "manage-clients",
+              "manage-identity-providers",
+              "view-authorization",
+              "view-clients",
+              "query-realms",
+              "manage-realm",
+              "view-realm",
+              "view-users",
+              "query-users",
+              "view-events",
+              "manage-users",
+              "query-clients",
+              "view-identity-providers",
+              "impersonation",
+              "manage-authorization",
+              "query-groups",
+              "manage-events",
+              "create-client"
+            ]
+          }
+        },
+        "clientRole": false,
+        "containerId": "master",
+        "attributes": {}
+      }
+    ],
+    "client": {
+      "microscope-admin": [
+        {
+          "id": "a0ec484b-3352-45f2-9e1c-59a510748fa6",
+          "name": "uma_protection",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "9587cdf5-f59a-46c7-b072-e9300dae7c4e",
+          "attributes": {}
+        },
+        {
+          "id": "8361e8b4-b60c-4d3c-bb73-12cce874bca0",
+          "name": "administrator",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "9587cdf5-f59a-46c7-b072-e9300dae7c4e",
+          "attributes": {}
+        }
+      ],
+      "security-admin-console": [],
+      "admin-cli": [],
+      "account-console": [],
+      "broker": [
+        {
+          "id": "ebce3f64-cfb1-4566-9d44-0dd8f1bda3ee",
+          "name": "read-token",
+          "description": "${role_read-token}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "241cfddc-1752-4b93-a202-649b7169fe6a",
+          "attributes": {}
+        }
+      ],
+      "master-realm": [
+        {
+          "id": "09fbcdf5-9570-49f3-b9fd-92c8aae191b7",
+          "name": "manage-clients",
+          "description": "${role_manage-clients}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "28a03c88-5760-4bf7-9228-142c5580a024",
+          "name": "manage-identity-providers",
+          "description": "${role_manage-identity-providers}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "ad0e2e2b-f510-43d5-b38c-1b66fdbaf477",
+          "name": "view-authorization",
+          "description": "${role_view-authorization}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "4868ff8d-8dc5-43c6-b4a2-309ea7cee04d",
+          "name": "view-clients",
+          "description": "${role_view-clients}",
+          "composite": true,
+          "composites": {
+            "client": {
+              "master-realm": [
+                "query-clients"
+              ]
+            }
+          },
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "c4504099-4ec7-46e4-bb88-dfeb7a4b56a0",
+          "name": "query-realms",
+          "description": "${role_query-realms}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "32dbd3de-682b-4fba-b210-b5c5ac155461",
+          "name": "manage-realm",
+          "description": "${role_manage-realm}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "6e7f26c0-09c6-41f9-93d0-ae5b8ba33edf",
+          "name": "view-realm",
+          "description": "${role_view-realm}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "485e9325-e2d4-4b37-a5f9-e8cfc7f2d2aa",
+          "name": "view-users",
+          "description": "${role_view-users}",
+          "composite": true,
+          "composites": {
+            "client": {
+              "master-realm": [
+                "query-users",
+                "query-groups"
+              ]
+            }
+          },
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "e38d54f9-88b4-44ea-beb1-38575a972025",
+          "name": "query-users",
+          "description": "${role_query-users}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "2845926c-e8e9-490a-8131-7d053dfa9359",
+          "name": "view-events",
+          "description": "${role_view-events}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "4d414eee-2c5c-4806-af40-dfdb6403b2b9",
+          "name": "manage-users",
+          "description": "${role_manage-users}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "d28d2573-7ef3-49c3-ac59-42e732da9cf9",
+          "name": "query-clients",
+          "description": "${role_query-clients}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "6bf7e98e-e205-4f4f-9de9-b0259289933b",
+          "name": "view-identity-providers",
+          "description": "${role_view-identity-providers}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "86961bda-a395-40fc-a698-b0afb5fd7b36",
+          "name": "impersonation",
+          "description": "${role_impersonation}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "2eba1746-cca0-4a26-b1f7-0c9ad57a0ced",
+          "name": "manage-authorization",
+          "description": "${role_manage-authorization}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "b368c15a-13c6-480f-9249-0d5cb9dc3bdc",
+          "name": "query-groups",
+          "description": "${role_query-groups}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "a530b2c8-9f8e-45ef-b20e-6caff0520be1",
+          "name": "manage-events",
+          "description": "${role_manage-events}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        },
+        {
+          "id": "7e7c44c6-afe0-4e7a-a57c-18d3ed04a2ba",
+          "name": "create-client",
+          "description": "${role_create-client}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "e2867722-2e54-406a-a735-9be68088817b",
+          "attributes": {}
+        }
+      ],
+      "account": [
+        {
+          "id": "ce2bba4e-38ac-467a-aeb4-2ad69d36f9bc",
+          "name": "manage-account-links",
+          "description": "${role_manage-account-links}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "58879b80-f2b6-44e7-874e-fdddd0c7c66b",
+          "attributes": {}
+        },
+        {
+          "id": "f5e4fd96-3922-409a-b5ff-4f59ecbb1a93",
+          "name": "view-profile",
+          "description": "${role_view-profile}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "58879b80-f2b6-44e7-874e-fdddd0c7c66b",
+          "attributes": {}
+        },
+        {
+          "id": "b4b6f953-f7ec-4ce7-966b-47abfca30e53",
+          "name": "manage-consent",
+          "description": "${role_manage-consent}",
+          "composite": true,
+          "composites": {
+            "client": {
+              "account": [
+                "view-consent"
+              ]
+            }
+          },
+          "clientRole": true,
+          "containerId": "58879b80-f2b6-44e7-874e-fdddd0c7c66b",
+          "attributes": {}
+        },
+        {
+          "id": "a4045f44-3a92-445f-86bd-7a2d7565969c",
+          "name": "view-consent",
+          "description": "${role_view-consent}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "58879b80-f2b6-44e7-874e-fdddd0c7c66b",
+          "attributes": {}
+        },
+        {
+          "id": "15c90a43-9759-423a-9419-e03822cd0b34",
+          "name": "view-applications",
+          "description": "${role_view-applications}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "58879b80-f2b6-44e7-874e-fdddd0c7c66b",
+          "attributes": {}
+        },
+        {
+          "id": "c8177abe-c44d-42b5-97f0-d98dde1f6737",
+          "name": "manage-account",
+          "description": "${role_manage-account}",
+          "composite": true,
+          "composites": {
+            "client": {
+              "account": [
+                "manage-account-links"
+              ]
+            }
+          },
+          "clientRole": true,
+          "containerId": "58879b80-f2b6-44e7-874e-fdddd0c7c66b",
+          "attributes": {}
+        }
+      ]
+    }
+  },
+  "groups": [],
   "defaultRoles": [
     "offline_access",
     "uma_authorization"
@@ -83,20 +434,6 @@
   "webAuthnPolicyPasswordlessCreateTimeout": 0,
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
-  "users": [
-    {
-      "id": "7f0ed1b1-10af-4dc1-a8ba-0aefb8fb6785",
-      "createdTimestamp": 1606407328993,
-      "username": "service-account-microscope-admin",
-      "enabled": true,
-      "totp": false,
-      "emailVerified": false,
-      "serviceAccountClientId": "microscope-admin",
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "notBefore": 0
-    }
-  ],
   "scopeMappings": [
     {
       "clientScope": "offline_access",
@@ -358,11 +695,10 @@
       "bearerOnly": false,
       "consentRequired": false,
       "standardFlowEnabled": true,
-      "implicitFlowEnabled": true,
+      "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": true,
-      "authorizationServicesEnabled": true,
-      "publicClient": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
       "attributes": {
@@ -425,6 +761,21 @@
             "claim.name": "clientHost",
             "jsonType.label": "String"
           }
+        },
+        {
+          "id": "e7ab0c4a-dbe3-42c1-b637-d89688b15018",
+          "name": "client roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "multivalued": "true",
+            "user.attribute": "foo",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
         }
       ],
       "defaultClientScopes": [
@@ -439,50 +790,7 @@
         "phone",
         "offline_access",
         "microprofile-jwt"
-      ],
-      "authorizationSettings": {
-        "allowRemoteResourceManagement": true,
-        "policyEnforcementMode": "ENFORCING",
-        "resources": [
-          {
-            "name": "Default Resource",
-            "type": "urn:microscope-admin:resources:default",
-            "ownerManagedAccess": false,
-            "attributes": {},
-            "_id": "25083703-e18d-4938-b530-c1b2610fc8c5",
-            "uris": [
-              "/*"
-            ]
-          }
-        ],
-        "policies": [
-          {
-            "id": "53847e75-35bf-4f66-87e6-ec856fdcbc7d",
-            "name": "Default Policy",
-            "description": "A policy that grants access only for users within this realm",
-            "type": "js",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "code": "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
-            }
-          },
-          {
-            "id": "2f40e873-c1fe-4fa0-960a-aefad9247e4d",
-            "name": "Default Permission",
-            "description": "A permission that applies to the default resource type",
-            "type": "resource",
-            "logic": "POSITIVE",
-            "decisionStrategy": "UNANIMOUS",
-            "config": {
-              "defaultResourceType": "urn:microscope-admin:resources:default",
-              "applyPolicies": "[\"Default Policy\"]"
-            }
-          }
-        ],
-        "scopes": [],
-        "decisionStrategy": "UNANIMOUS"
-      }
+      ]
     },
     {
       "id": "78291f23-a2de-4d4d-8330-1f487d309620",
@@ -927,7 +1235,7 @@
       "description": "OpenID Connect scope for add user roles to the access token",
       "protocol": "openid-connect",
       "attributes": {
-        "include.in.token.scope": "false",
+        "include.in.token.scope": "true",
         "display.on.consent.screen": "true",
         "consent.screen.text": "${rolesScopeConsentText}"
       },

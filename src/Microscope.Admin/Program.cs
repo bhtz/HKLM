@@ -21,11 +21,9 @@ namespace Microscope.Admin
 
             builder.Services.AddOidcAuthentication(options =>
             {
-                // Configure your authentication provider options here.
-                // For more information, see https://aka.ms/blazor-standalone-auth
                 builder.Configuration.Bind("Local", options.ProviderOptions);
+                options.ProviderOptions.ResponseType = "code";
                 options.ProviderOptions.DefaultScopes.Add("roles");
-                //options.ProviderOptions.ResponseType = "code";
             });
 
             await builder.Build().RunAsync();
