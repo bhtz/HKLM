@@ -46,14 +46,9 @@ namespace Microscope.Api
             {
                 o.Authority = Configuration["Jwt:Authority"];
                 o.Audience = Configuration["Jwt:Audience"];
+                o.TokenValidationParameters.ValidIssuer = Configuration["Jwt:Authority"];
+                o.TokenValidationParameters.ValidAudiences = new string[] { "master-realm", "account", Configuration["Jwt:Audience"] };
                 o.RequireHttpsMetadata = false;
-
-                // o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                // {
-                //     ValidAudiences = new string[] { "master-realm", "account", Configuration["Jwt:Audience"] },
-                //     ValidateAudience = false,
-                //     ValidateIssuer = false,
-                // };
 
                 o.Events = new JwtBearerEvents()
                 {
