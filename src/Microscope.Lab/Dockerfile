@@ -2,7 +2,9 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-focal
 
 RUN apt-get update \
     && apt-get -y upgrade \
-    && apt-get -y install python3 python3-pip python3-dev ipython3 nano julia
+    && apt-get -y install python3 python3-pip python3-dev ipython3 nano
+
+# RUN apt-get -y install julia
 
 RUN apt-get -y install nmap 
 
@@ -34,7 +36,7 @@ RUN dotnet tool install -g --add-source "https://dotnet.myget.org/F/dotnet-try/a
 
 RUN dotnet-interactive jupyter install
 
-RUN julia -e 'using Pkg; pkg"add IJulia; add Plots; add CSV; add DataFrames"'
+# RUN julia -e 'using Pkg; pkg"add IJulia; add Plots; add CSV; add DataFrames"'
 
 RUN jupyter kernelspec list
 

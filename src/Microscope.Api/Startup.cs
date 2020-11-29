@@ -24,6 +24,14 @@ namespace Microscope.Api
         {
 
             services.AddControllers();
+
+            services.AddCors(o => o.AddPolicy("allow-all", builder =>
+            {
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+            }));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Microscope.Api", Version = "v1" });
@@ -40,6 +48,13 @@ namespace Microscope.Api
                 o.Audience = Configuration["Jwt:Audience"];
                 o.RequireHttpsMetadata = false;
 
+                // o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                // {
+                //     ValidAudiences = new string[] { "master-realm", "account", Configuration["Jwt:Audience"] },
+                //     ValidateAudience = false,
+                //     ValidateIssuer = false,
+                // };
+
                 o.Events = new JwtBearerEvents()
                 {
                     OnAuthenticationFailed = c =>
@@ -48,15 +63,17 @@ namespace Microscope.Api
 
                         c.Response.StatusCode = 500;
                         c.Response.ContentType = "text/plain";
+                        var t = o.Authority;
+                        var r = o.Audience;
 
-                        return c.Response.WriteAsync("An error occured processing your authentication.");
+                        return c.Response.WriteAsync(c.Exception.InnerException.Message);
                     }
                 };
             });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Administrator", policy => policy.RequireClaim("user_roles", "[Administrator]"));
+                options.AddPolicy("Administrator", policy => policy.RequireClaim("roles", "[administrator]"));
             });
         }
 
@@ -66,14 +83,20 @@ namespace Microscope.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Microscope.Api v1"));
+            }
+            else
+            {
+                app.UseHttpsRedirection();
             }
 
-            app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Microscope.Api v1"));
+            
+            app.UseCors("allow-all");
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
