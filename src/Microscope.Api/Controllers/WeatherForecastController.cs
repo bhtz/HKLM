@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microscope.Api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="mcsp_admin")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -28,11 +28,6 @@ namespace Microscope.Api.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var auth = User.Identity.IsAuthenticated;
-            _logger.LogError("=================================");
-            _logger.LogError(auth.ToString());
-            _logger.LogError("=================================");
-
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
