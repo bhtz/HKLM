@@ -16,7 +16,7 @@ RUN apt-get -y install nodejs \
 
 RUN apt-get install -y graphviz libgraphviz-dev pkg-config
 
-RUN pip3 install pandas xlrd matplotlib sqlalchemy psycopg2-binary pygraphviz eralchemy
+RUN pip3 install pandas xlrd matplotlib sqlalchemy psycopg2-binary pygraphviz eralchemy torch torchvision
 
 ARG NB_USER="jupyter"
 ARG NB_UID="1000"
@@ -37,6 +37,8 @@ RUN dotnet tool install -g --add-source "https://dotnet.myget.org/F/dotnet-try/a
 RUN dotnet-interactive jupyter install
 
 # RUN julia -e 'using Pkg; pkg"add IJulia; add Plots; add CSV; add DataFrames"'
+
+# RUN jupyter labextension install jupyterlab-spreadsheet
 
 RUN jupyter kernelspec list
 
