@@ -9,32 +9,51 @@
 
 <div class="container">
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#containerModal">
-        Create container
-    </button>
-    <br><br>
-
+<div class="row">
+  <div class="col-11">
     @if (Containers.Count > 0)
     {
-        <select @onchange="GetBlobsFromContainer" class="form-control">
-            <option selected disabled value="-1"> SELECT CONTAINER</option>
-            @foreach (var item in Containers)
-            {
-                <option value="@item">@item</option>
-            }
-        </select>
-        <br>
+      <select @onchange="GetBlobsFromContainer" class="form-control">
+        <option selected disabled value="-1"> SELECT CONTAINER</option>
+        @foreach (var item in Containers)
+        {
+          <option value="@item">@item</option>
+        }
+      </select>
+      <br>
     }
+  </div>
 
-    @if (Blobs.Count > 0)
-    {
-        <ul class="list-group">
-            @foreach (var blob in Blobs)
-            {
-                <li class="list-group-item">@blob</li>
-            }
-        </ul>
-    }
+  <div class="col-1">
+    <button type="button" class="btn btn-primary" title="Create container / bucket" data-toggle="modal" data-target="#containerModal">
+      <i class="fas fa-box"></i>
+    </button>
+  </div>
+</div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (Blobs.Count > 0)
+      {
+          @foreach (var blob in Blobs)
+          {
+            <tr>
+              <td>@blob</td>
+              <td>
+                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                <button class="btn btn-sm btn-info"><i class="fas fa-download"></i></button>
+              </td>
+            </tr>
+          }
+      }
+    </tbody>
+  </table>
 </div>
 
 <div class="modal fade" id="containerModal" tabindex="-1" aria-hidden="true">
@@ -48,17 +67,17 @@
       </div>
 
       <div class="modal-body">
-            <EditForm Model="@StorageContainer" OnValidSubmit="@HandleContainerSubmit">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
+        <EditForm Model="@StorageContainer" OnValidSubmit="@HandleContainerSubmit">
+          <DataAnnotationsValidator />
+          <ValidationSummary />
 
-                <div class="form-group">
-                    <label for="name">Container name :</label>
-                    <InputText class="form-control" id="name" @bind-Value="StorageContainer.Name" />
-                </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <InputText class="form-control" id="name" @bind-Value="StorageContainer.Name" />
+          </div>
 
-                <button class="btn btn-primary" type="submit">Create</button>
-            </EditForm>
+          <button class="btn btn-primary" type="submit">Create</button>
+        </EditForm>
       </div>
     </div>
   </div>
