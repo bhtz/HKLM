@@ -1,0 +1,65 @@
+@using Microsoft.AspNetCore.Authorization
+@page "/storage"
+@attribute [Authorize]
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="http://localhost:8082" target="_blank">Storage</a>
+</nav>
+<br>
+
+<div class="container">
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#containerModal">
+        Create container
+    </button>
+    <br><br>
+
+    @if (Containers.Count > 0)
+    {
+        <select @onchange="GetBlobsFromContainer" class="form-control">
+            <option selected disabled value="-1"> SELECT CONTAINER</option>
+            @foreach (var item in Containers)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+        <br>
+    }
+
+    @if (Blobs.Count > 0)
+    {
+        <ul class="list-group">
+            @foreach (var blob in Blobs)
+            {
+                <li class="list-group-item">@blob</li>
+            }
+        </ul>
+    }
+</div>
+
+<div class="modal fade" id="containerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create container</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+            <EditForm Model="@StorageContainer" OnValidSubmit="@HandleContainerSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label for="name">Container name :</label>
+                    <InputText class="form-control" id="name" @bind-Value="StorageContainer.Name" />
+                </div>
+
+                <button class="btn btn-primary" type="submit">Create</button>
+            </EditForm>
+      </div>
+    </div>
+  </div>
+</div>

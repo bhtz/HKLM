@@ -1,6 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using Microsoft.AspNetCore.Components.WebAssembly.Http
-@using System.Net.Http.Headers
 @inject HttpClient Http
 @inject IAccessTokenProvider TokenProvider
 @page "/user"
@@ -23,8 +21,6 @@
                     </ul>
                 </div>
             </div>
-
-            <button type="button" class="btn btn-success" @onclick="OnClickBtn">CALL</button>
         </div>
     </Authorized>
     <NotAuthorized>
@@ -42,21 +38,6 @@
         if (accessTokenResult.TryGetToken(out var token))
         {
             AccessToken = token.Value;
-        }
-    }
-
-    private async void OnClickBtn()
-    {
-        try
-        {
-            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
-            var result = await Http.GetFromJsonAsync<object>("WeatherForecast");
-            Console.WriteLine(result);
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            Console.WriteLine(exception);
-            exception.Redirect();
         }
     }
 }

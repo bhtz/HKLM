@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using Minio.DataModel;
+using System.Threading.Tasks;
 
 namespace Microscope.Storage
 {
     public interface IStorageService
     {
-        public void GetObjectAsync(string bucketName, string objectName);
+        public Task SaveBlobAsync(string containerName, string blobName, Stream data);
+        public Task DeleteBlobAsync(string containerName, string blobName);
+        public Task<Stream> GetBlobAsync(string containerName, string blobName);
+        public Task<IEnumerable<string>> ListBlobsAsync(string containerName);
+        public Task<IEnumerable<string>> ListContainersAsync();
+        public Task CreateContainerAsync(string containerName);
     }
 }
