@@ -58,25 +58,17 @@ namespace Microscope.Storage
         /// <returns></returns>
         public async Task<IEnumerable<string>> ListBlobsAsync(string containerName)
         {
-            List<string> blobs = new List<string>();
+            IList<Item> blobs = new List<Item>();
 
             try
             {
-                IObservable<Item> observable = this._client.ListObjectsAsync(containerName, null, true);
-                IDisposable subscription = observable.Subscribe(
-                    item => blobs.Add(item.Key),
-                    ex => throw ex);
-
-                await observable.LastOrDefaultAsync();
-                subscription.Dispose();
+                blobs = await _client.ListObjectsAsync(containerName).ToList();
+                return blobs.Select(x => x.Key);
             }
             catch (MinioException e)
             {
                 throw e;
             }
-
-            Console.WriteLine(blobs.Count);
-            return blobs;
         }
 
         /// <summary>

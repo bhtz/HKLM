@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Blazored.Toast;
 
 namespace Microscope.Admin
 {
@@ -25,6 +26,8 @@ namespace Microscope.Admin
                 options.ProviderOptions.ResponseType = "code";
                 options.ProviderOptions.DefaultScopes.Add("roles");
             });
+
+            builder.Services.AddBlazoredToast();
 
             await builder.Build().RunAsync();
         }
