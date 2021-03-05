@@ -5,28 +5,14 @@
 
 <AuthorizeView>
     <Authorized>
-
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-dark" style="background-color: #102362;">
             <a class="navbar-brand" href="http://localhost:8081" target="_blank">Account</a>
         </nav>
         <br>
 
-        <h3>@context.User.Identity.Name</h3>
-
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <textarea name="" width="100%" id="" cols="30" rows="10">@AccessToken</textarea>
-                </div>
-                <div class="col">
-                    <ul class="list-group">
-                            @foreach (var item in context.User.Claims)
-                            {
-                                <li class="list-group-item"><b>@item.Type : </b> @item.Value</li>
-                            }
-                    </ul>
-                </div>
-            </div>
+            <h3>@context.User.Identity.Name</h3>
+            <p>@context.User.Claims.FirstOrDefault(x => x.Type == "email")?.Value</p>
         </div>
     </Authorized>
     <NotAuthorized>

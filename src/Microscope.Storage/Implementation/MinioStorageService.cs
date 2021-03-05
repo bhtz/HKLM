@@ -67,7 +67,7 @@ namespace Microscope.Storage
             }
             catch (MinioException e)
             {
-                throw e;
+                throw new Exception($"[Bucket]  Exception: {e}");
             }
         }
 
@@ -80,7 +80,8 @@ namespace Microscope.Storage
         /// <returns></returns>
         public async Task SaveBlobAsync(string containerName, string blobName, Stream data)
         {
-            await this._client.PutObjectAsync(containerName, blobName, data, data.Length);
+            data.Position = 0;
+            await this._client.PutObjectAsync(containerName, blobName, data, data.Length, "application/octet-stream");
         }
 
         /// <summary>

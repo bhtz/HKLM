@@ -26,7 +26,7 @@ namespace Microscope.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("{containerName}")]
-        public async Task<IActionResult> SaveBlob(IFormFile file, [FromRoute] string containerName)
+        public async Task<IActionResult> SaveBlob([FromForm] IFormFile file, [FromRoute] string containerName)
         {
             if (file.Length > 0)
             {

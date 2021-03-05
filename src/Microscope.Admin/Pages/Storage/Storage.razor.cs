@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Blazored.Toast.Services;
 using Microscope.Admin.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.JSInterop;
@@ -28,25 +30,27 @@ namespace Microscope.Admin.Pages.Storage
         private IToastService ToastService { get; set; }
         #endregion
 
-        #region View properties
-        
-        public List<string> Blobs { get; set; } = new List<string>{};
-        public List<string> Containers { get; set; } = new List<string>{};
+        #region private properties
+        private string _selectedContainer;
+        #endregion
+
+        #region public properties
+
+        public List<string> Blobs { get; set; } = new List<string> { };
+        public List<string> Containers { get; set; } = new List<string> { };
         public StorageContainer StorageContainer { get; set; } = new StorageContainer();
-        public string SelectedContainer 
-        { 
+        public string ImageName { get; set; }
+        public bool IsLoading { get; set; } = false;
+        public string SelectedContainer
+        {
             get => _selectedContainer;
-            set 
+            set
             {
                 _selectedContainer = value;
                 this.GetBlobsFromSelectedContainer();
             }
         }
 
-        #endregion
-        
-        #region private properties
-        private string _selectedContainer;
         #endregion
 
         #region methods
@@ -61,6 +65,11 @@ namespace Microscope.Admin.Pages.Storage
         {
             var containerResults = await Http.GetFromJsonAsync<IEnumerable<string>>("/storage");
             this.Containers = containerResults.ToList();
+
+            if(this.Containers.Count > 0)
+            {
+                this.SelectedContainer = this.Containers.FirstOrDefault();
+            }
         }
 
         private async void HandleContainerSubmit()
@@ -83,6 +92,52 @@ namespace Microscope.Admin.Pages.Storage
             }
         }
 
+        private async Task DeleteBlob(string blobName)
+        {
+            var isConfirmed = await this.ConfirmDialog("Are you sure ?");
+            if (isConfirmed)
+            {
+                var res = await Http.DeleteAsync($"/storage/{this.SelectedContainer}/{blobName}");
+                if (res.IsSuccessStatusCode)
+                {
+                    this.Blobs.Remove(blobName);
+                }
+            }
+        }
+
+        private async Task OnInputFileChange(InputFileChangeEventArgs e)
+        {
+            IBrowserFile file = e.File;
+
+            this.IsLoading = true;
+
+            string imageType = file.ContentType;
+            var fileContent = new StreamContent(file.OpenReadStream(50 * 1000 * 1024)); // LIMIT 5 MO
+            var content = new MultipartFormDataContent();
+
+            content.Add(content: fileContent, name: "file", fileName: file.Name);
+
+            try
+            {
+                var res = await Http.PostAsync("/storage/" + this.SelectedContainer, content);
+                if(res.IsSuccessStatusCode)
+                {
+                    this.ToastService.ShowSuccess("File uploaded");
+                    this.GetBlobsFromSelectedContainer();
+                }
+                else
+                {
+                    this.ToastService.ShowWarning(res.ReasonPhrase);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.ToastService.ShowError(ex.Message);
+            }
+
+            this.IsLoading = false;
+        }
+
         private async Task SetHttpHeaders()
         {
             var accessTokenResult = await TokenProvider.RequestAccessToken();
@@ -96,7 +151,12 @@ namespace Microscope.Admin.Pages.Storage
         {
             await JsRuntime.InvokeVoidAsync("interop.toggleModal", "containerModal");
         }
-        
+
+        private ValueTask<bool> ConfirmDialog(string message)
+        {
+            return this.JsRuntime.InvokeAsync<bool>("confirm", message);
+        }
+
         #endregion
     }
 }
