@@ -38,6 +38,8 @@ namespace Microscope.Storage
             try
             {
                 Stream fileStream = new MemoryStream();
+                string tempPath = Path.GetTempFileName();
+
                 await this._client.GetObjectAsync(containerName, blobName, (stream) =>
                 {
                     stream.CopyTo(fileStream);

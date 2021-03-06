@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Authorization
-@page "/storage"
 @attribute [Authorize]
+@page "/storage"
 
 <nav class="navbar navbar-dark" style="background-color: #102362;">
   <a class="navbar-brand" href="http://localhost:8082" target="_blank">Storage</a>
@@ -14,7 +14,6 @@
     @if (Containers.Count > 0)
     {
       <select @bind="SelectedContainer" class="form-control">
-        <option selected disabled value="-1"> SELECT CONTAINER</option>
         @foreach (var item in Containers)
         {
           <option value="@item">@item</option>
@@ -68,7 +67,7 @@
               <td>@blob</td>
               <td>
                   <button @onclick="() => DeleteBlob(blob)" title="Delete" class="btn btn-sm btn-danger float-right mx-1"><i class="fas fa-trash"></i></button>
-                  <button title="Download" class="btn btn-sm btn-warning float-right mx-1"><i class="fas fa-download"></i></button>
+                  <button @onclick="() => Download(blob)" title="Download" class="btn btn-sm btn-warning float-right mx-1"><i class="fas fa-download"></i></button>
               </td>
             </tr>
           }

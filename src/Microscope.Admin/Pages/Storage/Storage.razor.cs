@@ -64,12 +64,9 @@ namespace Microscope.Admin.Pages.Storage
         private async Task GetContainers()
         {
             var containerResults = await Http.GetFromJsonAsync<IEnumerable<string>>("/storage");
-            this.Containers = containerResults.ToList();
 
-            if(this.Containers.Count > 0)
-            {
-                this.SelectedContainer = this.Containers.FirstOrDefault();
-            }
+            this.Containers = containerResults.ToList();
+            this.SelectedContainer = this.Containers.FirstOrDefault();
         }
 
         private async void HandleContainerSubmit()
@@ -89,6 +86,25 @@ namespace Microscope.Admin.Pages.Storage
                 var blobResults = await Http.GetFromJsonAsync<IEnumerable<string>>("/storage/" + this.SelectedContainer);
                 this.Blobs = blobResults.ToList();
                 this.StateHasChanged();
+            }
+        }
+
+        private async void Download(string blobName)
+        {
+            var res = await Http.GetAsync("/storage/" + this.SelectedContainer + "/" + blobName);
+            
+            if (res.IsSuccessStatusCode)
+            {
+                var bytes = await res.Content.ReadAsByteArrayAsync();
+                Console.WriteLine(bytes.Length);
+
+                await this.JsRuntime.InvokeVoidAsync("interop.downloadFromByteArray",
+                    new
+                    {
+                        ByteArray = bytes,
+                        FileName = blobName,
+                        ContentType = "application/octet-stream"
+                    });
             }
         }
 
@@ -112,7 +128,7 @@ namespace Microscope.Admin.Pages.Storage
             this.IsLoading = true;
 
             string imageType = file.ContentType;
-            var fileContent = new StreamContent(file.OpenReadStream(50 * 1000 * 1024)); // LIMIT 5 MO
+            var fileContent = new StreamContent(file.OpenReadStream(50 * 1000 * 1024)); // LIMIT 50 MO
             var content = new MultipartFormDataContent();
 
             content.Add(content: fileContent, name: "file", fileName: file.Name);
@@ -120,7 +136,7 @@ namespace Microscope.Admin.Pages.Storage
             try
             {
                 var res = await Http.PostAsync("/storage/" + this.SelectedContainer, content);
-                if(res.IsSuccessStatusCode)
+                if (res.IsSuccessStatusCode)
                 {
                     this.ToastService.ShowSuccess("File uploaded");
                     this.GetBlobsFromSelectedContainer();

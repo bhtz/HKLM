@@ -54,6 +54,7 @@ namespace Microscope.Api.Controllers
         public async Task<FileContentResult> GetBlob([FromRoute] string containerName, [FromRoute] string blobName)
         {
             var stream = await this._storageService.GetBlobAsync(containerName, blobName);
+            stream.Position = 0;
 
             using (MemoryStream ms = new MemoryStream())
             {
