@@ -1,6 +1,6 @@
 using System;
 
-namespace Microscope.Infrastructure.Entities
+namespace Microscope.Infrastructure.Entity
 {
     public class Analytic
     {

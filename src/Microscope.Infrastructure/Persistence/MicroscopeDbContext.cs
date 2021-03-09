@@ -1,13 +1,14 @@
 ﻿using System;
-using Microscope.Infrastructure.Entities;
+using Microscope.Infrastructure.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Microscope.Infrastructure
+namespace Microscope.Infrastructure.Persistence
 {
     public class MicroscopeDbContext : DbContext
     {
         public virtual DbSet<Analytic> Analytics { get; set; }
+        public virtual DbSet<RemoteConfig> RemoteConfigs { get; set; }
         
         public MicroscopeDbContext()
         {

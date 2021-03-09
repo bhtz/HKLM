@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Microscope.Storage\Microscope.Storage.csproj" />
+    <ProjectReference Include="..\Microscope.Infrastructure\Microscope.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
