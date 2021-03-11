@@ -1,6 +1,6 @@
 using System;
 
-namespace Microscope.Infrastructure.Entity
+namespace Microscope.Infrastructure.Entities
 {
     public class RemoteConfig
     {
