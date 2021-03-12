@@ -1,6 +1,6 @@
 # Microscope
 
-        POC version
+    WORK IN PROGRESS
 
 Admin & API on top of awesomes OSS products in order to provide BaaS experience
 

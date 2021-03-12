@@ -18,17 +18,11 @@ namespace Microscope.Infrastructure
                 switch (provider)
                 {
                     case "postgres":
-                        options.UseNpgsql(connectionString, o =>
-                        {
-                            o.MigrationsAssembly(assemblyName);
-                        });
+                        options.UseNpgsql(connectionString, o => o.MigrationsAssembly(assemblyName));
                         break;
 
                     case "mssql":
-                        options.UseSqlServer(connectionString, o =>
-                        {
-                            o.MigrationsAssembly(assemblyName);
-                        });
+                        options.UseSqlServer(connectionString, o => o.MigrationsAssembly(assemblyName));
                         break;
 
                     default:
