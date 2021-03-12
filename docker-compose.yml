@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: postgres
   baas:
-    image: hasura/graphql-engine:v2.0.0-alpha.3
+    image: hasura/graphql-engine:v2.0.0-alpha.4
     container_name: mcsp_baas
     ports:
     - "8080:8000"

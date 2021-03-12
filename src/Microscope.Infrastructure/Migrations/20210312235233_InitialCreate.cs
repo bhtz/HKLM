@@ -7,8 +7,12 @@ namespace Microscope.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "mcsp_common");
+
             migrationBuilder.CreateTable(
                 name: "Analytics",
+                schema: "mcsp_common",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -22,6 +26,7 @@ namespace Microscope.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "RemoteConfigs",
+                schema: "mcsp_common",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -37,10 +42,12 @@ namespace Microscope.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Analytics");
+                name: "Analytics",
+                schema: "mcsp_common");
 
             migrationBuilder.DropTable(
-                name: "RemoteConfigs");
+                name: "RemoteConfigs",
+                schema: "mcsp_common");
         }
     }
 }
