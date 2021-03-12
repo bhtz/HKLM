@@ -9,9 +9,14 @@ namespace Microscope.Infrastructure
         public virtual DbSet<Analytic> Analytics { get; set; }
         public virtual DbSet<RemoteConfig> RemoteConfigs { get; set; }
         
-        public MicroscopeDbContext(DbContextOptions options) : base(options)
+        public MicroscopeDbContext(DbContextOptions<MicroscopeDbContext> options) : base(options)
         {
             
+        }
+
+        public void Migrate()
+        {
+            this.Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

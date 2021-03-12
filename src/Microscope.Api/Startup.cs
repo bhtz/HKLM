@@ -48,6 +48,11 @@ namespace Microscope.Api
                 app.UseHttpsRedirection();
             }
 
+            if(Configuration.GetValue<bool>("EnableMigration"))
+            {
+                this.InitializeDatabase(app);
+            }
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Microscope.Api v1"));
             
@@ -62,6 +67,14 @@ namespace Microscope.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void InitializeDatabase(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<MicroscopeDbContext>().Migrate();
+            }
         }
     }
 }

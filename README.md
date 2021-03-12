@@ -24,3 +24,9 @@ related to https://github.com/bhtz/microscope
     docker-compose up
 
 * [NAVIGATE TO PORTAL](http://localhost:8085)
+
+Migration cmd : 
+
+run to src/Microscope.Infrastructure : 
+
+        dotnet ef --startup-project ../Microscope.Api/ migrations add InitialCreate -o Migrations/Postgres
