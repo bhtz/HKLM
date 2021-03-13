@@ -29,4 +29,10 @@ Migration cmd :
 
 run to src/Microscope.Infrastructure : 
 
-        dotnet ef --startup-project ../Microscope.Api/ migrations add InitialCreate -o Migrations/Postgres
+    dotnet ef --startup-project ../Microscope.Api/ migrations add InitialCreate -o Migrations/Postgres
+
+    dotnet ef database update
+
+Generate controller : 
+
+    dotnet aspnet-codegenerator controller -api -name RemoteConfigController -m RemoteConfig -dc MicroscopeDbContext
