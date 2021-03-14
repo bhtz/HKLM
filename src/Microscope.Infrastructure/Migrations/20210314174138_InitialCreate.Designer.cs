@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Microscope.Infrastructure.Migrations
 {
     [DbContext(typeof(MicroscopeDbContext))]
-    [Migration("20210312235233_InitialCreate")]
+    [Migration("20210314174138_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace Microscope.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("Microscope.Infrastructure.Entities.Analytic", b =>
+            modelBuilder.Entity("Microscope.Domain.Entities.Analytic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace Microscope.Infrastructure.Migrations
                     b.ToTable("Analytics");
                 });
 
-            modelBuilder.Entity("Microscope.Infrastructure.Entities.RemoteConfig", b =>
+            modelBuilder.Entity("Microscope.Domain.Entities.RemoteConfig", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

@@ -20,7 +20,7 @@ namespace Microscope.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("Microscope.Infrastructure.Entities.Analytic", b =>
+            modelBuilder.Entity("Microscope.Domain.Entities.Analytic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace Microscope.Infrastructure.Migrations
                     b.ToTable("Analytics");
                 });
 
-            modelBuilder.Entity("Microscope.Infrastructure.Entities.RemoteConfig", b =>
+            modelBuilder.Entity("Microscope.Domain.Entities.RemoteConfig", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

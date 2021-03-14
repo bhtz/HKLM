@@ -29,7 +29,7 @@ Migration cmd :
 
 run to src/Microscope.Infrastructure : 
 
-    dotnet ef --startup-project ../Microscope.Api/ migrations add InitialCreate -o Migrations/Postgres
+    dotnet ef --startup-project ../Microscope.Api/ migrations add InitialCreate -o Migrations
 
     dotnet ef database update
 

@@ -1,8 +1,8 @@
 using System;
 
-namespace Microscope.Infrastructure.Entities
+namespace Microscope.Domain.Entities
 {
-    public class Analytic
+    public class RemoteConfig
     {
         public Guid Id { get; set; }
         public string Key { get; set; }

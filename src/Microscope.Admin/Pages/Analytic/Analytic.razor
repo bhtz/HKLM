@@ -9,4 +9,12 @@
 
 <div class="container text-center">
     <h3>todo</h3>
+
+    @if(Analytics.Count() > 0)
+    {
+      @foreach (var item in Analytics)
+      {
+          <p>@item.Key</p>
+      }
+    }
 </div>

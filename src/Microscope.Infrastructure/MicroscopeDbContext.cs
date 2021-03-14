@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Microscope.Infrastructure.Entities;
+using Microscope.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microscope.Infrastructure

@@ -1,10 +1,14 @@
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.JSInterop;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace Microscope.Admin.Pages.Analytic
 {
@@ -22,9 +26,14 @@ namespace Microscope.Admin.Pages.Analytic
         private IToastService ToastService { get; set; }
         #endregion
 
+        #region properties
+        public IEnumerable<Domain.Entities.Analytic> Analytics { get; set; } = new List<Domain.Entities.Analytic>();
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             await this.SetHttpHeaders();
+            await this.GetAnalytic();
         }
 
         private async Task SetHttpHeaders()
@@ -34,6 +43,12 @@ namespace Microscope.Admin.Pages.Analytic
             {
                 Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
             }
+        }
+
+        private async Task GetAnalytic()
+        {
+            var res = await this.Http.GetFromJsonAsync<IEnumerable<Microscope.Domain.Entities.Analytic>>("api/analytic");
+            this.Analytics = res.ToList();
         }
     }
 }

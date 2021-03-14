@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Microscope.Storage\Microscope.Storage.csproj" />
     <ProjectReference Include="..\Microscope.Infrastructure\Microscope.Infrastructure.csproj" />
     <ProjectReference Include="..\Microscope.Hasura\Microscope.Hasura.csproj" />
+    <ProjectReference Include="..\Microscope.Domain\Microscope.Domain.csproj" />
   </ItemGroup>
 
 </Project>

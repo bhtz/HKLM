@@ -1,4 +1,4 @@
-using Microscope.Infrastructure.Entities;
+using Microscope.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
