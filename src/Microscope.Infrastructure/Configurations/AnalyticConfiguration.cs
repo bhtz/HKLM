@@ -7,7 +7,7 @@ namespace Microscope.Infrastructure.Configurations
     public class AnalyticConfiguration : IEntityTypeConfiguration<Analytic>
     {
         public void Configure(EntityTypeBuilder<Analytic> builder)
-        {         
+        {   
             builder.HasKey(e => e.Id);
             
             builder.Property(e => e.Dimension)

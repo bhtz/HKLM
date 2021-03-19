@@ -35,7 +35,7 @@ namespace Microscope.Configurations
                         var t = o.Authority;
                         var r = o.Audience;
 
-                        return c.Response.WriteAsync(c.Exception.InnerException.Message);
+                        return c.Response.WriteAsync(c.Exception.Message);
                     }
                 };
             });

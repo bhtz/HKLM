@@ -63,7 +63,7 @@ namespace Microscope.Admin.Pages.Storage
 
         private async Task GetContainers()
         {
-            var containerResults = await Http.GetFromJsonAsync<IEnumerable<string>>("/storage");
+            var containerResults = await Http.GetFromJsonAsync<IEnumerable<string>>("api/storage");
 
             this.Containers = containerResults.ToList();
             this.SelectedContainer = this.Containers.FirstOrDefault();
@@ -71,7 +71,7 @@ namespace Microscope.Admin.Pages.Storage
 
         private async void HandleContainerSubmit()
         {
-            var res = await Http.PostAsJsonAsync<string>("/storage", this.StorageContainer.Name);
+            var res = await Http.PostAsJsonAsync<string>("api/storage", this.StorageContainer.Name);
             this.Containers.Add(this.StorageContainer.Name);
             this.StorageContainer.Name = string.Empty;
             base.StateHasChanged();
@@ -83,7 +83,7 @@ namespace Microscope.Admin.Pages.Storage
         {
             if (!string.IsNullOrEmpty(this.SelectedContainer))
             {
-                var blobResults = await Http.GetFromJsonAsync<IEnumerable<string>>("/storage/" + this.SelectedContainer);
+                var blobResults = await Http.GetFromJsonAsync<IEnumerable<string>>("api/storage/" + this.SelectedContainer);
                 this.Blobs = blobResults.ToList();
                 this.StateHasChanged();
             }
@@ -91,7 +91,7 @@ namespace Microscope.Admin.Pages.Storage
 
         private async void Download(string blobName)
         {
-            var res = await Http.GetAsync("/storage/" + this.SelectedContainer + "/" + blobName);
+            var res = await Http.GetAsync("api/storage/" + this.SelectedContainer + "/" + blobName);
             
             if (res.IsSuccessStatusCode)
             {
@@ -113,7 +113,7 @@ namespace Microscope.Admin.Pages.Storage
             var isConfirmed = await this.ConfirmDialog("Are you sure ?");
             if (isConfirmed)
             {
-                var res = await Http.DeleteAsync($"/storage/{this.SelectedContainer}/{blobName}");
+                var res = await Http.DeleteAsync($"api/storage/{this.SelectedContainer}/{blobName}");
                 if (res.IsSuccessStatusCode)
                 {
                     this.Blobs.Remove(blobName);
@@ -135,7 +135,7 @@ namespace Microscope.Admin.Pages.Storage
 
             try
             {
-                var res = await Http.PostAsync("/storage/" + this.SelectedContainer, content);
+                var res = await Http.PostAsync("api/storage/" + this.SelectedContainer, content);
                 if (res.IsSuccessStatusCode)
                 {
                     this.ToastService.ShowSuccess("File uploaded");

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Microscope.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class StorageController : ControllerBase
     {
         private readonly IStorageService _storageService;
