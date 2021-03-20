@@ -80,7 +80,7 @@ namespace Microscope.Admin.Pages.Analytic
 
         private async void HandleFormSubmit()
         {
-            if(this.SelectedItem.Id == null)
+            if(this.SelectedItem.Id != Guid.Empty)
             {
                 await Http.PutAsJsonAsync("api/Analytic/" + this.SelectedItem.Id, this.SelectedItem);                
             }
