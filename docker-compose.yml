@@ -25,15 +25,16 @@ services:
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: microscope
       HASURA_GRAPHQL_SERVER_PORT: 8000
-  lab:
-      build: ./src/Microscope.Lab
-      container_name: mcsp_lab
-      ports:
-          - "8081:8888"
-      environment:
-          JUPYTER_NO_PASSWORD: "true"
-      volumes:
-          - ./src/Microscope.Lab/work:/home/jupyter/work
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: user
+  # lab:
+  #     build: ./src/Microscope.Lab
+  #     container_name: mcsp_lab
+  #     ports:
+  #         - "8081:8888"
+  #     environment:
+  #         JUPYTER_NO_PASSWORD: "true"
+  #     volumes:
+  #         - ./src/Microscope.Lab/work:/home/jupyter/work
   storage:
     image: bitnami/minio:latest
     container_name: mcsp_storage

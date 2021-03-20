@@ -1,62 +1,14 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">MICROSCOPE</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿<PersonCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text);"/>
+<MudDivider Class="mb-4" />
+<MudNavMenu>
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Microscope</MudText>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="lab" Match="NavLinkMatch.All">
-                <span class="oi oi-beaker" aria-hidden="true"></span> Lab
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="data" Match="NavLinkMatch.All">
-                <span class="oi oi-hard-drive" aria-hidden="true"></span> Data
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="identity" Match="NavLinkMatch.All">
-                <span class="oi oi-people" aria-hidden="true"></span> Identity
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="storage" Match="NavLinkMatch.All">
-                <span class="oi oi-cloud-upload" aria-hidden="true"></span> Storage
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="analytic" Match="NavLinkMatch.All">
-                <span class="oi oi-bar-chart" aria-hidden="true"></span> Analytics
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="remoteconfig" Match="NavLinkMatch.All">
-                <span class="oi oi-cog" aria-hidden="true"></span> Remote config
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="user" Match="NavLinkMatch.All">
-                <span class="oi oi-people" aria-hidden="true"></span> User
-            </NavLink>
-        </li>
-    </ul>
-</div>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home">Home</MudNavLink>
+    <MudNavLink Href="lab" Icon="@Icons.Material.Outlined.Science">Lab</MudNavLink>
+    <MudNavLink Href="data" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Outlined.Storage">Data</MudNavLink>
+    <MudNavLink Href="identity" Icon="@Icons.Material.Outlined.AdminPanelSettings">Identity</MudNavLink>
+    <MudNavLink Href="storage" Icon="@Icons.Material.Outlined.CloudUpload">Storage</MudNavLink>
+    <MudNavLink Href="analytic" Icon="@Icons.Material.Outlined.Analytics">Analytics</MudNavLink>
+    <MudNavLink Href="remoteconfig" Icon="@Icons.Material.Outlined.Settings">Remote configs</MudNavLink>
+</MudNavMenu>
 
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}

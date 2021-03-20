@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Blazored.Toast;
+using MudBlazor.Services;
 
 namespace Microscope.Admin
 {
@@ -27,7 +28,7 @@ namespace Microscope.Admin
                 options.ProviderOptions.DefaultScopes.Add("roles");
             });
 
-            builder.Services.AddBlazoredToast();
+            builder.Services.AddMudServices();
 
             await builder.Build().RunAsync();
         }

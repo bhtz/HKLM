@@ -26,8 +26,8 @@ namespace Microscope.Admin.Pages.Storage
         private HttpClient Http { get; set; }
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
-        [Inject]
-        private IToastService ToastService { get; set; }
+        // [Inject]
+        // private IToastService ToastService { get; set; }
         #endregion
 
         #region private properties
@@ -75,7 +75,7 @@ namespace Microscope.Admin.Pages.Storage
             this.Containers.Add(this.StorageContainer.Name);
             this.StorageContainer.Name = string.Empty;
             base.StateHasChanged();
-            this.ToastService.ShowSuccess("Container created !");
+          //  this.ToastService.ShowSuccess("Container created !");
             this.CloseModal();
         }
 
@@ -138,17 +138,17 @@ namespace Microscope.Admin.Pages.Storage
                 var res = await Http.PostAsync("api/storage/" + this.SelectedContainer, content);
                 if (res.IsSuccessStatusCode)
                 {
-                    this.ToastService.ShowSuccess("File uploaded");
+                   // this.ToastService.ShowSuccess("File uploaded");
                     this.GetBlobsFromSelectedContainer();
                 }
                 else
                 {
-                    this.ToastService.ShowWarning(res.ReasonPhrase);
+                   // this.ToastService.ShowWarning(res.ReasonPhrase);
                 }
             }
             catch (System.Exception ex)
             {
-                this.ToastService.ShowError(ex.Message);
+                //this.ToastService.ShowError(ex.Message);
             }
 
             this.IsLoading = false;

@@ -1,12 +1,62 @@
 @using Microsoft.AspNetCore.Authorization
-@attribute [Authorize]
+
 @page "/data"
 
-<nav class="navbar navbar-dark" style="background-color: #102362;">
-  <a class="navbar-brand" href="http://localhost:8080" target="_blank">Data</a>
-</nav>
-<br>
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Data</MudText>
 
-<div class="container text-center">
-    <h3>GraphQL Engine, Data, Actions, Remote schemas, Events</h3>
-</div>
+<MudTabs Elevation="25" Color="Color.Transparent" Rounded="true" PanelClass="mt-6">
+    <MudTabPanel Text="GraphiQL">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>GraphiQL</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent></MudCardContent>
+        </MudCard>
+    </MudTabPanel>
+
+    <MudTabPanel Text="Data">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>Data</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent></MudCardContent>
+        </MudCard>
+    </MudTabPanel>
+
+    <MudTabPanel Text="Actions">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>Actions</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent></MudCardContent>
+        </MudCard>
+    </MudTabPanel>
+
+    <MudTabPanel Text="Remote schemas">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>Remote schemas</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent></MudCardContent>
+        </MudCard>
+    </MudTabPanel>
+
+    <MudTabPanel Text="Events">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>Events</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent></MudCardContent>
+        </MudCard>
+    </MudTabPanel>
+</MudTabs>
