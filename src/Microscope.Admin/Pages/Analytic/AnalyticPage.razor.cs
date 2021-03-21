@@ -2,15 +2,15 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using Microscope.Domain.Entities;
 using MCSPAnalytic = Microscope.Domain.Entities.Analytic;
+using MudBlazor;
+using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
 
 namespace Microscope.Admin.Pages.Analytic
 {
@@ -22,15 +22,19 @@ namespace Microscope.Admin.Pages.Analytic
         private IAccessTokenProvider TokenProvider { get; set; }
         [Inject]
         private HttpClient Http { get; set; }
+
+        [Inject]
+        private IDialogService DialogService { get; set; }
+
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
-        [Inject]
-        private IToastService ToastService { get; set; }
+        // [Inject]
+        // private IToastService ToastService { get; set; }
         #endregion
 
         #region properties
         public IList<MCSPAnalytic> Analytics { get; set; } = new List<MCSPAnalytic>();
-        public MCSPAnalytic SelectedItem { get; set; } = new MCSPAnalytic();
+
         public string SearchTerm { get; set; } = String.Empty;
         #endregion
 
@@ -55,6 +59,86 @@ namespace Microscope.Admin.Pages.Analytic
             this.Analytics = res.ToList();
         }
 
+        private bool FilterFunc(MCSPAnalytic element)
+        {
+            if (string.IsNullOrWhiteSpace(SearchTerm))
+                return true;
+            if (element.Key.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return false;
+        }
+
+        private async Task OpenCreateDialog()
+        {
+            await Task.FromResult(0);
+            // await this.JSONEditor();
+
+            var dialog = DialogService.Show<AnalyticFormDialog>("New Analytic", new DialogOptions
+            {
+                MaxWidth = MaxWidth.Medium,
+                FullWidth = true,
+                CloseButton = true,
+                DisableBackdropClick = true
+            });
+
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                var newItem = (AnalyticFormDTO)result.Data;
+                //In a real world scenario we would reload the data from the source
+                MCSPAnalytic newAnalytic = new MCSPAnalytic
+                {
+                    Id = newItem.Id,
+                    Key = newItem.Key,
+                    Dimension = newItem.Dimension
+                };
+
+                this.Analytics.Add(newAnalytic);
+
+            }
+        }
+
+        private async Task OnSelectItem(MCSPAnalytic item)
+        {
+
+            AnalyticFormDTO dto = new AnalyticFormDTO
+            {
+                Id = item.Id,
+                Key = item.Key,
+                Dimension = item.Dimension
+            };
+
+            var parameters = new DialogParameters { ["Analytic"] = dto };
+
+            //await this.JSONEditor();
+
+            var dialog = DialogService.Show<AnalyticFormDialog>("Edit Analytic", parameters, new DialogOptions
+            {
+                MaxWidth = MaxWidth.Medium,
+                FullWidth = true,
+                CloseButton = true,
+                DisableBackdropClick = true
+            });
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                //In a real world scenario we would reload the data 
+
+                var editedItem = (AnalyticFormDTO)result.Data;
+
+                var analyticToUpdate = this.Analytics.FirstOrDefault(a => a.Id == editedItem.Id);
+                if (analyticToUpdate != null)
+                {
+                    analyticToUpdate.Key = editedItem.Key;
+                    analyticToUpdate.Dimension = editedItem.Dimension;
+                }
+
+            }
+        }
+
         private async Task Delete(MCSPAnalytic item)
         {
             var confirm = await this.ConfirmDialog("Are you sure ?");
@@ -68,42 +152,12 @@ namespace Microscope.Admin.Pages.Analytic
             }
         }
 
-        private async Task OnSelectItem(MCSPAnalytic item)
-        {
-            this.SelectedItem = item;
-            await this.JSONEditor();
-        }
-
-        private async Task OpenCreate()
-        {
-            this.SelectedItem = new MCSPAnalytic();
-            this.SelectedItem.Dimension = "{}";
-            await this.JSONEditor();
-        }
-
-        private async void HandleFormSubmit()
-        {
-            this.StateHasChanged();
-            if(this.SelectedItem.Id != Guid.Empty)
-            {
-                await Http.PutAsJsonAsync("api/Analytic/" + this.SelectedItem.Id, this.SelectedItem);                
-            }
-            else
-            {
-                await Http.PostAsJsonAsync("api/Analytic", this.SelectedItem);
-                this.Analytics.Add(this.SelectedItem);
-            }
-
-            await JsRuntime.InvokeVoidAsync("interop.toggleModal", "analyticModal");
-            this.StateHasChanged();
-        }
-
         private ValueTask<bool> ConfirmDialog(string message)
         {
             return this.JsRuntime.InvokeAsync<bool>("confirm", message);
         }
 
-        private async Task JSONEditor ()
+        private async Task JSONEditor()
         {
             await this.JsRuntime.InvokeVoidAsync("interop.jsonEditor", "jsoneditor", "dimension");
         }

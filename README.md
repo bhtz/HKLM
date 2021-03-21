@@ -31,7 +31,7 @@ run to src/Microscope.Infrastructure :
 
     dotnet ef --startup-project ../Microscope.Api/ migrations add InitialCreate -o Migrations
 
-    dotnet ef database update
+    dotnet ef --startup-project ../Microscope.Api/ database update
 
 Generate controller : 
 

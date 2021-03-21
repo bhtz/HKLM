@@ -9,12 +9,12 @@
     <MudAppBar Elevation="4">
         <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start"  OnClick="@((e) => DrawerToggle())" />
 
-        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        @* <MudHidden Breakpoint="Breakpoint.SmAndDown">
             <MudIcon Icon="@Icons.Custom.Brands.MudBlazor" Size="Size.Large" />
-        </MudHidden>
-        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+        </MudHidden> *@
+        @* <MudHidden Breakpoint="Breakpoint.MdAndUp">
             <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        </MudHidden>
+        </MudHidden> *@
         <MudHidden Breakpoint="Breakpoint.Xs">
             <MudText Typo="Typo.h6" Class="ml-4">Microscope</MudText>
         </MudHidden>

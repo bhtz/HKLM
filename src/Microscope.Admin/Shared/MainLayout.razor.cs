@@ -32,7 +32,7 @@ namespace Microscope.Admin.Shared
         protected override void OnInitialized()
         {
             _themeManager.Theme = new MicroscopeTheme();
-            _themeManager.DrawerClipMode = DrawerClipMode.Always;
+            _themeManager.DrawerClipMode = DrawerClipMode.Never;
             _themeManager.FontFamily = "Montserrat";
             _themeManager.DefaultBorderRadius = 3;
         }
