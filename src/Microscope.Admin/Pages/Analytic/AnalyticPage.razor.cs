@@ -68,18 +68,22 @@ namespace Microscope.Admin.Pages.Analytic
             }
         }
 
-        private void OnSelectItem(MCSPAnalytic item)
+        private async Task OnSelectItem(MCSPAnalytic item)
         {
             this.SelectedItem = item;
+            await this.JSONEditor();
         }
 
-        private void OpenCreate()
+        private async Task OpenCreate()
         {
             this.SelectedItem = new MCSPAnalytic();
+            this.SelectedItem.Dimension = "{}";
+            await this.JSONEditor();
         }
 
         private async void HandleFormSubmit()
         {
+            this.StateHasChanged();
             if(this.SelectedItem.Id != Guid.Empty)
             {
                 await Http.PutAsJsonAsync("api/Analytic/" + this.SelectedItem.Id, this.SelectedItem);                
@@ -97,6 +101,11 @@ namespace Microscope.Admin.Pages.Analytic
         private ValueTask<bool> ConfirmDialog(string message)
         {
             return this.JsRuntime.InvokeAsync<bool>("confirm", message);
+        }
+
+        private async Task JSONEditor ()
+        {
+            await this.JsRuntime.InvokeVoidAsync("interop.jsonEditor", "jsoneditor", "dimension");
         }
     }
 }

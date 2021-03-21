@@ -64,12 +64,13 @@
 
           <div class="form-group">
             <label for="name">Key</label>
-            <InputText class="form-control" id="name" @bind-Value="SelectedItem.Key" />
+            <InputText class="form-control" id="key" @bind-Value="SelectedItem.Key" />
           </div>
 
           <div class="form-group">
             <label for="name">Dimension</label>
-            <InputText class="form-control" id="name" @bind-Value="SelectedItem.Dimension" />
+            <InputText class="form-control d-none" id="dimension" @bind-Value="SelectedItem.Dimension" />
+            <div id="jsoneditor" style="width: 100%; height: 400px;"></div>
           </div>
 
           <button class="btn btn-primary" type="submit">SAVE</button>

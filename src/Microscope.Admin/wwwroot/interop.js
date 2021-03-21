@@ -8,14 +8,37 @@ function downloadFromUrl (options) {
 }
 
 window.interop = {
+
     toggleModal: function (modalId) {
         $("#" + modalId).modal("toggle");
     },
 
     downloadFromByteArray: function (options) {
-        // The byte array in .NET is encoded to base64 string when it passes to JavaScript.
-        // So we can pass that base64 encoded string to the browser as a "data URL" directly.
         var url = "data:" + options.contentType + ";base64," + options.byteArray;
         downloadFromUrl({ url: url, fileName: options.fileName });
+    },
+
+    jsonEditor: function (containerId, inputId) {
+        var editor = null;
+        var container = document.getElementById(containerId);
+    
+        try {
+            var data = JSON.parse($input.val());
+            var options = {
+                mode: 'code',
+                modes: ['code', 'form', 'text', 'tree', 'view', 'preview'],
+                onValidate: function (json) {
+                    var input = document.getElementById(inputId);
+                    var event = new Event('change');
+                    input.value = JSON.stringify(json);
+                    input.dispatchEvent(event);
+                }
+            };
+            
+            editor = new JSONEditor(container, options, data);
+
+        } catch (e) {
+            console.log(`${e.name}: ${e.message}`);
+        }
     }
 }
