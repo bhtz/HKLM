@@ -147,7 +147,7 @@ namespace Microscope.Admin.Pages.Analytic
             parameters.Add("ButtonText", "Delete");
             parameters.Add("Color", Color.Error);
 
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 
             var dialog = DialogService.Show<ConfirmDialog>("Delete", parameters, options);
             var result = await dialog.Result;
@@ -165,11 +165,6 @@ namespace Microscope.Admin.Pages.Analytic
                     Snackbar.Add("Error", Severity.Error);
                 }
             }
-        }
-
-        private ValueTask<bool> ConfirmDialog(string message)
-        {
-            return this.JsRuntime.InvokeAsync<bool>("confirm", message);
         }
 
         private async Task JSONEditor()

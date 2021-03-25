@@ -1,0 +1,28 @@
+<MudDialog>
+  <DialogContent>
+    <EditForm Model="@StorageContainer" OnValidSubmit="OnValidSubmit">
+      <DataAnnotationsValidator />
+      <MudTextField T="string" Label="Name" @bind-Value="StorageContainer.Name"
+        For="@(() => StorageContainer.Name)" />
+
+      <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Class="mt-4" Variant="Variant.Filled"
+        Color="Color.Success">
+        Save</MudButton>
+
+      <MudExpansionPanels Class="mt-4">
+        <MudExpansionPanel Text="Show Validation Summary">
+          @if (Success)
+                          {
+          <MudText Color="Color.Success">Success</MudText>
+          }
+                          else
+                          {
+          <MudText Color="@Color.Error">
+            <ValidationSummary />
+          </MudText>
+          }
+        </MudExpansionPanel>
+      </MudExpansionPanels>
+    </EditForm>
+  </DialogContent>
+</MudDialog>

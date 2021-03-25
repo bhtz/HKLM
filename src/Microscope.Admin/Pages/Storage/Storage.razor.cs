@@ -1,18 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Blazored.Toast.Services;
-using Microscope.Admin.ViewModels;
+using Microscope.Admin.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.JSInterop;
+using MudBlazor;
+using static Microscope.Admin.Pages.Storage.ContainerFormDialog;
 
 namespace Microscope.Admin.Pages.Storage
 {
@@ -22,15 +21,25 @@ namespace Microscope.Admin.Pages.Storage
 
         [Inject]
         private IAccessTokenProvider TokenProvider { get; set; }
+
         [Inject]
         private HttpClient Http { get; set; }
+
+        [Inject]
+        private IDialogService DialogService { get; set; }
+
+        [Inject]
+        private ISnackbar Snackbar { get; set; }
+
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
-        // [Inject]
-        // private IToastService ToastService { get; set; }
+
+
         #endregion
 
         #region private properties
+
+        public string SearchTerm { get; set; } = String.Empty;
         private string _selectedContainer;
         #endregion
 
@@ -38,8 +47,6 @@ namespace Microscope.Admin.Pages.Storage
 
         public List<string> Blobs { get; set; } = new List<string> { };
         public List<string> Containers { get; set; } = new List<string> { };
-        public StorageContainer StorageContainer { get; set; } = new StorageContainer();
-        public string ImageName { get; set; }
         public bool IsLoading { get; set; } = false;
         public string SelectedContainer
         {
@@ -64,25 +71,48 @@ namespace Microscope.Admin.Pages.Storage
         private async Task GetContainers()
         {
             var containerResults = await Http.GetFromJsonAsync<IEnumerable<string>>("api/storage");
-
             this.Containers = containerResults.ToList();
             this.SelectedContainer = this.Containers.FirstOrDefault();
         }
 
-        private async void HandleContainerSubmit()
+        private bool FilterFunc(string element)
         {
-            var res = await Http.PostAsJsonAsync<string>("api/storage", this.StorageContainer.Name);
-            this.Containers.Add(this.StorageContainer.Name);
-            this.StorageContainer.Name = string.Empty;
-            base.StateHasChanged();
-          //  this.ToastService.ShowSuccess("Container created !");
-            this.CloseModal();
+            if (string.IsNullOrWhiteSpace(SearchTerm))
+                return true;
+            if (element.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return false;
+        }
+
+        private async Task OpenCreateContainerDialog()
+        {
+
+            var dialog = DialogService.Show<ContainerFormDialog>("New Container", new DialogOptions
+            {
+                MaxWidth = MaxWidth.Medium,
+                FullWidth = true,
+                CloseButton = true,
+                DisableBackdropClick = true
+            });
+
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                var newItem = (StorageContainerDTO)result.Data;
+                this.Containers.Add(newItem.Name);
+                this.SelectedContainer = newItem.Name;
+                this.StateHasChanged();
+            }
         }
 
         private async void GetBlobsFromSelectedContainer()
         {
+
             if (!string.IsNullOrEmpty(this.SelectedContainer))
             {
+                this.SearchTerm = string.Empty;
                 var blobResults = await Http.GetFromJsonAsync<IEnumerable<string>>("api/storage/" + this.SelectedContainer);
                 this.Blobs = blobResults.ToList();
                 this.StateHasChanged();
@@ -92,7 +122,7 @@ namespace Microscope.Admin.Pages.Storage
         private async void Download(string blobName)
         {
             var res = await Http.GetAsync("api/storage/" + this.SelectedContainer + "/" + blobName);
-            
+
             if (res.IsSuccessStatusCode)
             {
                 var bytes = await res.Content.ReadAsByteArrayAsync();
@@ -110,13 +140,26 @@ namespace Microscope.Admin.Pages.Storage
 
         private async Task DeleteBlob(string blobName)
         {
-            var isConfirmed = await this.ConfirmDialog("Are you sure ?");
-            if (isConfirmed)
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", "Are you sure ?");
+            parameters.Add("ButtonText", "Delete");
+            parameters.Add("Color", Color.Error);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<ConfirmDialog>("Delete Blob", parameters, options);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
             {
                 var res = await Http.DeleteAsync($"api/storage/{this.SelectedContainer}/{blobName}");
                 if (res.IsSuccessStatusCode)
                 {
                     this.Blobs.Remove(blobName);
+                    Snackbar.Add("Blob deleted", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Error deleted blob", Severity.Error);
                 }
             }
         }
@@ -138,17 +181,18 @@ namespace Microscope.Admin.Pages.Storage
                 var res = await Http.PostAsync("api/storage/" + this.SelectedContainer, content);
                 if (res.IsSuccessStatusCode)
                 {
-                   // this.ToastService.ShowSuccess("File uploaded");
+                    Snackbar.Add("File uploaded", Severity.Success);
                     this.GetBlobsFromSelectedContainer();
                 }
                 else
                 {
-                   // this.ToastService.ShowWarning(res.ReasonPhrase);
+                    Snackbar.Add("res.ReasonPhrase", Severity.Error);
                 }
             }
             catch (System.Exception ex)
             {
-                //this.ToastService.ShowError(ex.Message);
+                Snackbar.Add(ex.Message, Severity.Error);
+
             }
 
             this.IsLoading = false;
@@ -161,16 +205,6 @@ namespace Microscope.Admin.Pages.Storage
             {
                 Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
             }
-        }
-
-        private async void CloseModal()
-        {
-            await JsRuntime.InvokeVoidAsync("interop.toggleModal", "containerModal");
-        }
-
-        private ValueTask<bool> ConfirmDialog(string message)
-        {
-            return this.JsRuntime.InvokeAsync<bool>("confirm", message);
         }
 
         #endregion

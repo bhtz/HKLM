@@ -151,7 +151,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
             parameters.Add("ButtonText", "Delete");
             parameters.Add("Color", Color.Error);
 
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 
             var dialog = DialogService.Show<ConfirmDialog>("Delete", parameters, options);
             var result = await dialog.Result;
