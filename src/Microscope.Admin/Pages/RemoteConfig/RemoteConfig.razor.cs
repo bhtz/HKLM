@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microscope.Admin.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.JSInterop;
@@ -141,8 +142,16 @@ namespace Microscope.Admin.Pages.RemoteConfig
         }
         private async Task Delete(MCSPRemoteConfig item)
         {
-            var confirm = await this.ConfirmDialog("Are you sure ?");
-            if (confirm)
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", "Are you sure ?");
+            parameters.Add("ButtonText", "Delete");
+            parameters.Add("Color", Color.Error);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+            var dialog = DialogService.Show<ConfirmDialog>("Delete", parameters, options);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
             {
                 var res = await this.Http.DeleteAsync("api/remoteconfig/" + item.Id);
                 if (res.IsSuccessStatusCode)
@@ -150,11 +159,8 @@ namespace Microscope.Admin.Pages.RemoteConfig
                     this.RemoteConfigs.Remove(item);
                 }
             }
+
         }
 
-        private ValueTask<bool> ConfirmDialog(string message)
-        {
-            return this.JsRuntime.InvokeAsync<bool>("confirm", message);
-        }
     }
 }

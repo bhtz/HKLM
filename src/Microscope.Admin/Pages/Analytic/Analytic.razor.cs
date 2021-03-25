@@ -11,6 +11,7 @@ using System;
 using MCSPAnalytic = Microscope.Domain.Entities.Analytic;
 using MudBlazor;
 using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
+using Microscope.Admin.Shared;
 
 namespace Microscope.Admin.Pages.Analytic
 {
@@ -141,8 +142,16 @@ namespace Microscope.Admin.Pages.Analytic
 
         private async Task Delete(MCSPAnalytic item)
         {
-            var confirm = await this.ConfirmDialog("Are you sure ?");
-            if (confirm)
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", "Are you sure ?");
+            parameters.Add("ButtonText", "Delete");
+            parameters.Add("Color", Color.Error);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+            var dialog = DialogService.Show<ConfirmDialog>("Delete", parameters, options);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
             {
                 var res = await this.Http.DeleteAsync("api/analytic/" + item.Id);
                 if (res.IsSuccessStatusCode)
