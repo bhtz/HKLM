@@ -14,7 +14,7 @@ using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
 
 namespace Microscope.Admin.Pages.Analytic
 {
-    public partial class AnalyticPage : ComponentBase
+    public partial class Analytic : ComponentBase
     {
         #region injected properties
 
