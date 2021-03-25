@@ -20,6 +20,9 @@ namespace Microscope.Admin.Pages.Analytic
         [Inject]
         private HttpClient Http { get; set; }
 
+        [Inject]
+        private ISnackbar Snackbar { get; set; }
+
         #endregion
 
         #region properties
@@ -50,18 +53,38 @@ namespace Microscope.Admin.Pages.Analytic
             Success = true;
             StateHasChanged();
 
-             if (this.Analytic.Id != Guid.Empty)
+            if (this.Analytic.Id != Guid.Empty)
             {
-                await Http.PutAsJsonAsync("api/Analytic/" + this.Analytic.Id, this.Analytic);
+                var response = await Http.PutAsJsonAsync("api/Analytic/" + this.Analytic.Id, this.Analytic);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Analytic updated", Severity.Success);
+                    MudDialog.Close(DialogResult.Ok(this.Analytic));
+                }
+                else
+                {
+                    Snackbar.Add("Error", Severity.Error);
+                    MudDialog.Close(DialogResult.Cancel());
+                }
             }
             else
             {
-             var response =  await Http.PostAsJsonAsync("api/Analytic", this.Analytic);
-             AnalyticFormDTO inserted = await response.Content.ReadFromJsonAsync<AnalyticFormDTO>();
-             this.Analytic.Id = inserted.Id;
-            }
+                var response = await Http.PostAsJsonAsync("api/Analytic", this.Analytic);
 
-            MudDialog.Close(DialogResult.Ok(this.Analytic));
+                if (response.IsSuccessStatusCode)
+                {
+                    AnalyticFormDTO inserted = await response.Content.ReadFromJsonAsync<AnalyticFormDTO>();
+                    this.Analytic.Id = inserted.Id;
+                    Snackbar.Add("Analytic added", Severity.Success);
+                    MudDialog.Close(DialogResult.Ok(this.Analytic));
+                }
+                else
+                {
+                    Snackbar.Add("Error", Severity.Error);
+                    MudDialog.Close(DialogResult.Cancel());
+                }
+
+            }
 
         }
 

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Blazored.Toast;
 using MudBlazor.Services;
+using MudBlazor;
 
 namespace Microscope.Admin
 {
@@ -28,7 +29,19 @@ namespace Microscope.Admin
                 options.ProviderOptions.DefaultScopes.Add("roles");
             });
 
-            builder.Services.AddMudServices();
+
+
+            builder.Services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 10000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Outlined;
+            });
 
             await builder.Build().RunAsync();
         }

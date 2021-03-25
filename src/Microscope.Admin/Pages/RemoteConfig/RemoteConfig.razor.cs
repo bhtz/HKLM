@@ -29,6 +29,10 @@ namespace Microscope.Admin.Pages.RemoteConfig
         private IDialogService DialogService { get; set; }
 
         [Inject]
+        private ISnackbar Snackbar { get; set; }
+
+
+        [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
         // [Inject]
@@ -157,6 +161,11 @@ namespace Microscope.Admin.Pages.RemoteConfig
                 if (res.IsSuccessStatusCode)
                 {
                     this.RemoteConfigs.Remove(item);
+                    Snackbar.Add("Remote Config deleted", Severity.Success);
+                }
+                else
+                {
+                     Snackbar.Add("Error", Severity.Error);
                 }
             }
 

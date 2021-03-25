@@ -28,9 +28,11 @@ namespace Microscope.Admin.Pages.Analytic
         private IDialogService DialogService { get; set; }
 
         [Inject]
+        private ISnackbar Snackbar { get; set; }
+
+        [Inject]
         private IJSRuntime JsRuntime { get; set; }
-        // [Inject]
-        // private IToastService ToastService { get; set; }
+
         #endregion
 
         #region properties
@@ -72,7 +74,6 @@ namespace Microscope.Admin.Pages.Analytic
 
         private async Task OpenCreateDialog()
         {
-            await Task.FromResult(0);
             // await this.JSONEditor();
 
             var dialog = DialogService.Show<AnalyticFormDialog>("New Analytic", new DialogOptions
@@ -97,7 +98,6 @@ namespace Microscope.Admin.Pages.Analytic
                 };
 
                 this.Analytics.Add(newAnalytic);
-
             }
         }
 
@@ -154,9 +154,15 @@ namespace Microscope.Admin.Pages.Analytic
             if (!result.Cancelled)
             {
                 var res = await this.Http.DeleteAsync("api/analytic/" + item.Id);
+
                 if (res.IsSuccessStatusCode)
                 {
                     this.Analytics.Remove(item);
+                    Snackbar.Add("Remote Config deleted", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Error", Severity.Error);
                 }
             }
         }

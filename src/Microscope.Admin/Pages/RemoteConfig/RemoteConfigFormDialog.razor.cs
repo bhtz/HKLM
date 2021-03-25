@@ -20,6 +20,9 @@ namespace Microscope.Admin.Pages.RemoteConfig
         [Inject]
         private HttpClient Http { get; set; }
 
+        [Inject]
+        private ISnackbar Snackbar { get; set; }
+
         #endregion
 
         #region properties
@@ -50,18 +53,40 @@ namespace Microscope.Admin.Pages.RemoteConfig
             Success = true;
             StateHasChanged();
 
-             if (this.RemoteConfig.Id != Guid.Empty)
+            if (this.RemoteConfig.Id != Guid.Empty)
             {
-                await Http.PutAsJsonAsync("api/remoteconfig/" + this.RemoteConfig.Id, this.RemoteConfig);
+                var response = await Http.PutAsJsonAsync("api/remoteconfig/" + this.RemoteConfig.Id, this.RemoteConfig);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Remote Config updated", Severity.Success);
+                    MudDialog.Close(DialogResult.Ok(this.RemoteConfig));
+                }
+                else
+                {
+                    Snackbar.Add("Error", Severity.Error);
+                    MudDialog.Close(DialogResult.Cancel());
+                }
             }
             else
             {
-             var response =  await Http.PostAsJsonAsync("api/remoteconfig", this.RemoteConfig);
-             RemoteConfigFormDTO inserted = await response.Content.ReadFromJsonAsync<RemoteConfigFormDTO>();
-             this.RemoteConfig.Id = inserted.Id;
+                var response = await Http.PostAsJsonAsync("api/remoteconfig", this.RemoteConfig);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    RemoteConfigFormDTO inserted = await response.Content.ReadFromJsonAsync<RemoteConfigFormDTO>();
+                    this.RemoteConfig.Id = inserted.Id;
+                    Snackbar.Add("Remote Config added", Severity.Success);
+                    MudDialog.Close(DialogResult.Ok(this.RemoteConfig));
+                }
+                else
+                {
+                    Snackbar.Add("Error", Severity.Error);
+                    MudDialog.Close(DialogResult.Cancel());
+                }
+
             }
 
-            MudDialog.Close(DialogResult.Ok(this.RemoteConfig));
+
 
         }
 
