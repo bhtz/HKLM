@@ -30,9 +30,6 @@ namespace Microscope.Admin.Pages.Analytic
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
-        [Inject]
-        private IJSRuntime JsRuntime { get; set; }
-
         #endregion
 
         #region properties
@@ -74,7 +71,6 @@ namespace Microscope.Admin.Pages.Analytic
 
         private async Task OpenCreateDialog()
         {
-            // await this.JSONEditor();
 
             var dialog = DialogService.Show<AnalyticFormDialog>("New Analytic", new DialogOptions
             {
@@ -167,9 +163,5 @@ namespace Microscope.Admin.Pages.Analytic
             }
         }
 
-        private async Task JSONEditor()
-        {
-            await this.JsRuntime.InvokeVoidAsync("interop.jsonEditor", "jsoneditor", "dimension");
-        }
     }
 }

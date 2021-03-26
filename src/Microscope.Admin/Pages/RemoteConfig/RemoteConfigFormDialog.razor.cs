@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.JSInterop;
 using MudBlazor;
 
 namespace Microscope.Admin.Pages.RemoteConfig
@@ -19,6 +20,9 @@ namespace Microscope.Admin.Pages.RemoteConfig
         private IAccessTokenProvider TokenProvider { get; set; }
         [Inject]
         private HttpClient Http { get; set; }
+
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
 
         [Inject]
         private ISnackbar Snackbar { get; set; }
@@ -37,6 +41,19 @@ namespace Microscope.Admin.Pages.RemoteConfig
         protected override async Task OnInitializedAsync()
         {
             await this.SetHttpHeaders();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await this.JSONEditor();
+            }
+        }
+
+        private async Task JSONEditor()
+        {
+            await this.JsRuntime.InvokeVoidAsync("interop.jsonEditor", "jsoneditor", "dimension");
         }
 
         private async Task SetHttpHeaders()
@@ -101,7 +118,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
             public string Key { get; set; }
 
             [Required]
-            public string Dimension { get; set; } = "{}";
+            public string Dimension { get; set; }
 
         }
     }

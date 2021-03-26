@@ -18,15 +18,25 @@ window.interop = {
         downloadFromUrl({ url: url, fileName: options.fileName });
     },
 
+
     jsonEditor: function (containerId, inputId) {
         var editor = null;
         var container = document.getElementById(containerId);
-    
+        var input = document.getElementById(inputId);
         try {
-            var data = JSON.parse($input.val());
+            var value = input.value && input.value != '' ? input.value : null; 
+            var data = JSON.parse(value);
             var options = {
                 mode: 'code',
                 modes: ['code', 'form', 'text', 'tree', 'view', 'preview'],
+                onChange:function(json){
+                    if(json == null || json === undefined)
+                    {
+                        var event = new Event('change');
+                        input.value = null;
+                        input.dispatchEvent(event);
+                    }
+                },
                 onValidate: function (json) {
                     var input = document.getElementById(inputId);
                     var event = new Event('change');
