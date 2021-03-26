@@ -32,7 +32,7 @@ namespace Microscope.Admin.Shared
             StateHasChanged();
         }
 
-        private void DarkMode()
+        private void SwitchMode()
         {
             if (_themeManager.Theme == _defaultTheme)
             {

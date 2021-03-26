@@ -9,10 +9,10 @@ namespace Microscope.Admin.Theme
 
             Palette = new Palette()
             {
-                Primary = Colors.Blue.Darken1,
+                Primary = Colors.Cyan.Darken3,
                 Secondary = Colors.DeepPurple.Accent2,
                 Background = Colors.Grey.Lighten5,
-                AppbarBackground = Colors.Blue.Darken1,
+                AppbarBackground = Colors.Cyan.Darken3,
                 DrawerBackground = "#FFF",
                 DrawerText = "rgba(0,0,0, 0.7)",
                 Success = "#06d79c"

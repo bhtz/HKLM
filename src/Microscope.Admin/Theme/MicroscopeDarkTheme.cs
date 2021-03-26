@@ -12,6 +12,7 @@ namespace Microscope.Admin.Theme
                 Black = "#27272f",
                 Background = "#32333d",
                 BackgroundGrey = "#27272f",
+                Primary = Colors.Cyan.Darken3,
                 Surface = "#373740",
                 DrawerBackground = "#27272f",
                 DrawerText = "rgba(255,255,255, 0.50)",
@@ -19,7 +20,7 @@ namespace Microscope.Admin.Theme
                 AppbarText = "rgba(255,255,255, 0.70)",
                 TextPrimary = "rgba(255,255,255, 0.70)",
                 TextSecondary = "rgba(255,255,255, 0.50)",
-                ActionDefault = "#adadb1",
+                ActionDefault = "#ffffff",
                 ActionDisabled = "rgba(255,255,255, 0.26)",
                 ActionDisabledBackground = "rgba(255,255,255, 0.12)",
                 DrawerIcon = "rgba(255,255,255, 0.50)"

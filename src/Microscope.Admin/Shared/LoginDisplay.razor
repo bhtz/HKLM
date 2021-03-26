@@ -6,19 +6,20 @@
 
 <AuthorizeView>
     <Authorized>
-        <div class="dropdown">
-            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @context.User.Identity.Name
-            </a>
-
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="http://localhost:8083/auth/realms/master/account">Manage</a>
-                <a class="dropdown-item" @onclick="BeginSignOut">Log out</a>
-            </div>
-        </div>
+        <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
+            <ActivatorContent>
+                <MudAvatar Image="images/avatar_bhtz.jpg" />
+            </ActivatorContent>
+            <ChildContent>
+                <PersonCard Name="@context.User.Identity.Name" Role="IT Consultant" Class="mt-n2" />
+                <MudDivider Class="mb-2" />
+                <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="http://localhost:8083/auth/realms/master/account" target="_blank" />
+                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login" @onclick="BeginSignOut" />
+            </ChildContent>
+        </MudMenu>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/login">Log in</a>
+        <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Inherit" OnClick="BeginSignIn" />
     </NotAuthorized>
 </AuthorizeView>
 
@@ -27,5 +28,10 @@
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
+    }
+
+    private void BeginSignIn(MouseEventArgs args)
+    {
+        Navigation.NavigateTo("authentication/login");
     }
 }
