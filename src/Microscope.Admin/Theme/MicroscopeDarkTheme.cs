@@ -2,20 +2,27 @@ using MudBlazor;
 
 namespace Microscope.Admin.Theme
 {
-    public class MicroscopeTheme  : MudTheme
+    public class MicroscopeDarkTheme : MudTheme
     {
-        public MicroscopeTheme()
+        public MicroscopeDarkTheme()
         {
 
             Palette = new Palette()
             {
-                Primary = Colors.Blue.Darken1,
-                Secondary = Colors.DeepPurple.Accent2,
-                Background = Colors.Grey.Lighten5,
-                AppbarBackground = Colors.Blue.Darken1,
-                DrawerBackground = "#FFF",
-                DrawerText = "rgba(0,0,0, 0.7)",
-                Success = "#06d79c"
+                Black = "#27272f",
+                Background = "#32333d",
+                BackgroundGrey = "#27272f",
+                Surface = "#373740",
+                DrawerBackground = "#27272f",
+                DrawerText = "rgba(255,255,255, 0.50)",
+                AppbarBackground = "#27272f",
+                AppbarText = "rgba(255,255,255, 0.70)",
+                TextPrimary = "rgba(255,255,255, 0.70)",
+                TextSecondary = "rgba(255,255,255, 0.50)",
+                ActionDefault = "#adadb1",
+                ActionDisabled = "rgba(255,255,255, 0.26)",
+                ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+                DrawerIcon = "rgba(255,255,255, 0.50)"
             };
 
             LayoutProperties = new LayoutProperties()
@@ -124,6 +131,7 @@ namespace Microscope.Admin.Theme
             };
             Shadows = new Shadow();
             ZIndex = new ZIndex();
+
         }
     }
 }

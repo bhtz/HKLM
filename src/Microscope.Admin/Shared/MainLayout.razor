@@ -7,30 +7,35 @@
 
 <MudLayout>
     <MudAppBar Elevation="4">
-        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start"  OnClick="@((e) => DrawerToggle())" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start"
+            OnClick="@((e) => DrawerToggle())" />
 
         @* <MudHidden Breakpoint="Breakpoint.SmAndDown">
             <MudIcon Icon="@Icons.Custom.Brands.MudBlazor" Size="Size.Large" />
-        </MudHidden> *@
+            </MudHidden> *@
         @* <MudHidden Breakpoint="Breakpoint.MdAndUp">
-            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        </MudHidden> *@
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) =>
+            DrawerToggle())" />
+            </MudHidden> *@
         <MudHidden Breakpoint="Breakpoint.Xs">
             <MudText Typo="Typo.h6" Class="ml-4">Microscope</MudText>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
             <MudText Typo="Typo.subtitle2">Microscope</MudText>
         </MudHidden>
-        <MudAppBarSpacer />
-        <MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
+        <MudAppBarSpacer /> 
+        <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
+        @* <MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom"
+            OffsetY="true" Dense="true">
             <MudMenuItem>English</MudMenuItem>
             <MudMenuItem>Swedish</MudMenuItem>
             <MudMenuItem>Old Norse</MudMenuItem>
-        </MudMenu>
-        <MudMenu Icon="@Icons.Material.Outlined.Widgets" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
+            </MudMenu>
+            <MudMenu Icon="@Icons.Material.Outlined.Widgets" Color="Color.Inherit" Direction="Direction.Bottom"
+            OffsetY="true" Dense="true">
             <MudMenuItem Link="https://github.com/bhtz/HKLM">Microscope</MudMenuItem>
             <MudMenuItem Link="https://github.com/bhtz/HKLM">Source Code</MudMenuItem>
-        </MudMenu>
+            </MudMenu> *@
         <MudMenu Direction="Direction.Left" OffsetX="true" Dense="true" Class="mt-1 ml-4">
             <ActivatorContent>
                 <MudAvatar Image="images/avatar_bhtz.jpg" />
@@ -53,5 +58,6 @@
     </MudMainContent>
 </MudLayout>
 
-<MudThemeManagerButton  OnClick="@((e) => OpenThemeManager(true))"/>
-<MudThemeManager Open="_themeManagerOpen" OpenChanged="OpenThemeManager" Theme="_themeManager" ThemeChanged="UpdateTheme" />
+<MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
+<MudThemeManager Open="_themeManagerOpen" OpenChanged="OpenThemeManager" Theme="_themeManager"
+    ThemeChanged="UpdateTheme" />

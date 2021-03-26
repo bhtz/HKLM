@@ -13,6 +13,9 @@ namespace Microscope.Admin.Shared
         public bool _drawerOpen = true;
         public bool _themeManagerOpen = false;
 
+        private readonly MudTheme _defaultTheme = new MicroscopeTheme();
+        private readonly MudTheme _darkTheme = new MicroscopeDarkTheme();
+
         void DrawerToggle()
         {
             _drawerOpen = !_drawerOpen;
@@ -29,9 +32,21 @@ namespace Microscope.Admin.Shared
             StateHasChanged();
         }
 
+        private void DarkMode()
+        {
+            if (_themeManager.Theme == _defaultTheme)
+            {
+                _themeManager.Theme = _darkTheme;
+            }
+            else
+            {
+                _themeManager.Theme = _defaultTheme;
+            }
+        }
+
         protected override void OnInitialized()
         {
-            _themeManager.Theme = new MicroscopeTheme();
+            _themeManager.Theme = _defaultTheme;
             _themeManager.DrawerClipMode = DrawerClipMode.Never;
             _themeManager.FontFamily = "Montserrat";
             _themeManager.DefaultBorderRadius = 3;
