@@ -53,11 +53,9 @@ namespace Microscope.Admin.Shared
         }
 
         private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
-{
-        new BreadcrumbItem("Personal", href: "#"),
-        new BreadcrumbItem("Dashboard", href: "#"),
-    };
-
+        {
+            new BreadcrumbItem("Personal", href: "#"),
+            new BreadcrumbItem("Dashboard", href: "#"),
+        };
     }
-
 }

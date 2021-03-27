@@ -16,7 +16,7 @@
             <MudText Typo="Typo.subtitle2">Microscope</MudText>
         </MudHidden>
         <MudAppBarSpacer /> 
-        <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => SwitchMode())" />
+        <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="SwitchMode" />
         <LoginDisplay></LoginDisplay>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="_themeManager.DrawerClipMode">
@@ -29,6 +29,6 @@
     </MudMainContent>
 </MudLayout>
 
-<MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
+@* <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
 <MudThemeManager Open="_themeManagerOpen" OpenChanged="OpenThemeManager" Theme="_themeManager"
-    ThemeChanged="UpdateTheme" />
+    ThemeChanged="UpdateTheme" /> *@

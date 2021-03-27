@@ -8,7 +8,7 @@
 
 <MudButton Variant="Variant.Filled" OnClick="OpenCreateDialog" Color="Color.Primary">NEW</MudButton>
 
-<MudTable Class="mt-2" Items="@Analytics" Filter="new Func<MCSPAnalytic,bool>(FilterFunc)">
+<MudTable Class="mt-2" Items="@Analytics" Striped="true" Hover="true" Filter="new Func<MCSPAnalytic,bool>(FilterFunc)">
   <ToolBarContent>
     <MudText Typo="Typo.h6">Analytic</MudText>
     <MudToolBarSpacer />
