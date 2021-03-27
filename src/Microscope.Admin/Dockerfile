@@ -1,10 +1,21 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build-env
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
-COPY . ./
-RUN dotnet publish -c Release -o output
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["src/Microscope.Admin/Microscope.Admin.csproj", "src/Microscope.Admin/"]
+COPY ["src/Microscope.Domain/Microscope.Domain.csproj", "src/Microscope.Domain/"]
+RUN dotnet restore "src/Microscope.Admin/Microscope.Admin.csproj"
+COPY . .
+WORKDIR "/src/src/Microscope.Admin"
+RUN dotnet build "Microscope.Admin.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Microscope.Admin.csproj" -c Release -o /app/publish
 
 FROM nginx:alpine
 WORKDIR /var/www/web
-COPY --from=build-env /app/output/wwwroot .
-COPY nginx.conf /etc/nginx/nginx.conf
-EXPOSE 80
+COPY --from=publish /app/publish/wwwroot .
+COPY src/Microscope.Admin/nginx.conf /etc/nginx/nginx.conf

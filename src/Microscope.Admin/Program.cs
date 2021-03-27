@@ -20,7 +20,7 @@ namespace Microscope.Admin
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5011") });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:8086") });
 
             builder.Services.AddOidcAuthentication(options =>
             {

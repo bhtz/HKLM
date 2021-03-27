@@ -1,16 +1,26 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build-env
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-# Copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["src/Microscope.Api/Microscope.Api.csproj", "src/Microscope.Api/"]
+COPY ["src/Microscope.Hasura/Microscope.Hasura.csproj", "src/Microscope.Hasura/"]
+COPY ["src/Microscope.Storage/Microscope.Storage.csproj", "src/Microscope.Storage/"]
+COPY ["src/Microscope.Domain/Microscope.Domain.csproj", "src/Microscope.Domain/"]
+COPY ["src/Microscope.Infrastructure/Microscope.Infrastructure.csproj", "src/Microscope.Infrastructure/"]
+RUN dotnet restore "src/Microscope.Api/Microscope.Api.csproj"
+COPY . .
+WORKDIR "/src/src/Microscope.Api"
+RUN dotnet build "Microscope.Api.csproj" -c Release -o /app/build
 
-# Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+RUN dotnet publish "Microscope.Api.csproj" -c Release -o /app/publish
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Microscope.Api.dll"]
