@@ -5,14 +5,10 @@
 
 <AuthorizeView>
     <Authorized>
-        <nav class="navbar navbar-dark" style="background-color: #102362;">
-            <a class="navbar-brand" href="http://localhost:8081" target="_blank">Account</a>
-        </nav>
-        <br>
-
-        <div class="container">
+        <div>
             <h3>@context.User.Identity.Name</h3>
             <p>@context.User.Claims.FirstOrDefault(x => x.Type == "email")?.Value</p>
+            <p>@AccessToken</p>
         </div>
     </Authorized>
     <NotAuthorized>
