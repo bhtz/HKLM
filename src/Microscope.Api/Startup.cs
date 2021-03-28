@@ -45,7 +45,7 @@ namespace Microscope.Api
             }
             else
             {
-                app.UseHttpsRedirection();
+                // app.UseHttpsRedirection();
             }
 
             if(Configuration.GetValue<bool>("EnableMigration"))

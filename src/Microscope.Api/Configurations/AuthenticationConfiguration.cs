@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Microscope.Configurations
 {
@@ -32,10 +33,12 @@ namespace Microscope.Configurations
 
                         c.Response.StatusCode = 500;
                         c.Response.ContentType = "text/plain";
+
                         var t = o.Authority;
                         var r = o.Audience;
+                        Console.WriteLine("\n" + t + " : " + r + "\n");
 
-                        return c.Response.WriteAsync(c.Exception.Message);
+                        return c.Response.WriteAsync(c.Exception.InnerException.Message);
                     }
                 };
             });

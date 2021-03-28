@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microscope.Infrastructure;
 using Microscope.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Microscope.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AnalyticController : ControllerBase
     {
         private readonly MicroscopeDbContext _context;

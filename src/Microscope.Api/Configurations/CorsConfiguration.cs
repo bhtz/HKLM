@@ -7,7 +7,6 @@ namespace Microscope.Configurations
     {
         public static IServiceCollection AddCorsConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            
             services.AddCors(o => o.AddPolicy("allow-all", builder =>
             {
                 builder.AllowAnyOrigin()
