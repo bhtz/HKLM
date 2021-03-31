@@ -102,9 +102,6 @@ namespace Microscope.Admin.Pages.RemoteConfig
                 }
 
             }
-
-
-
         }
 
         void Cancel() => MudDialog.Cancel();

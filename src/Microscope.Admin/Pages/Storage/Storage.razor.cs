@@ -88,7 +88,7 @@ namespace Microscope.Admin.Pages.Storage
         private async Task OpenCreateContainerDialog()
         {
 
-            var dialog = DialogService.Show<ContainerFormDialog>("New Container", new DialogOptions
+            var dialog = DialogService.Show<ContainerFormDialog>("Modal", new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,

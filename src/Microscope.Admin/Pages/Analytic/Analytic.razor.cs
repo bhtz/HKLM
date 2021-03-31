@@ -72,7 +72,7 @@ namespace Microscope.Admin.Pages.Analytic
         private async Task OpenCreateDialog()
         {
 
-            var dialog = DialogService.Show<AnalyticFormDialog>("New Analytic", new DialogOptions
+            var dialog = DialogService.Show<AnalyticFormDialog>("Modal", new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
@@ -109,15 +109,14 @@ namespace Microscope.Admin.Pages.Analytic
 
             var parameters = new DialogParameters { ["Analytic"] = dto };
 
-            //await this.JSONEditor();
-
-            var dialog = DialogService.Show<AnalyticFormDialog>("Edit Analytic", parameters, new DialogOptions
+            var dialog = DialogService.Show<AnalyticFormDialog>("Modal", parameters, new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
                 CloseButton = true,
                 DisableBackdropClick = true
             });
+
             var result = await dialog.Result;
 
             if (!result.Cancelled)

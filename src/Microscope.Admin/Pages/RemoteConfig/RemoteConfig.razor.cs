@@ -77,10 +77,8 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
         private async Task OpenCreateDialog()
         {
-            await Task.FromResult(0);
-            // await this.JSONEditor();
 
-            var dialog = DialogService.Show<RemoteConfigFormDialog>("New Remote Config", new DialogOptions
+            var dialog = DialogService.Show<RemoteConfigFormDialog>("Modal", new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
@@ -120,7 +118,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
             //await this.JSONEditor();
 
-            var dialog = DialogService.Show<RemoteConfigFormDialog>("Edit Remote Config", parameters, new DialogOptions
+            var dialog = DialogService.Show<RemoteConfigFormDialog>("Modal", parameters, new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
