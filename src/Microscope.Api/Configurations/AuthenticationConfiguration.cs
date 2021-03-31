@@ -19,12 +19,17 @@ namespace Microscope.Configurations
             {
                 o.Authority = configuration["Jwt:Authority"];
                 o.Audience = configuration["Jwt:Audience"];
-                o.TokenValidationParameters.ValidIssuer = configuration["Jwt:Authority"];
+
+                //Docker OK : TODO ValidIssuer for prod ???
+             // o.TokenValidationParameters.ValidIssuer = configuration["Jwt:Authority"]
+                o.TokenValidationParameters.ValidateIssuer = false;
+                //END Docker OK
+
                 o.TokenValidationParameters.ValidateAudience = false;
                 o.RequireHttpsMetadata = false;
 
                 //o.TokenValidationParameters.ValidAudiences = new string[] { "master-realm", "account", Configuration["Jwt:Audience"] };
-                
+
                 o.Events = new JwtBearerEvents()
                 {
                     OnAuthenticationFailed = c =>
