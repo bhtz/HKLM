@@ -12,6 +12,7 @@ using MCSPAnalytic = Microscope.Domain.Entities.Analytic;
 using MudBlazor;
 using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
 using Microscope.Admin.Shared;
+using Microscope.Admin.Shared.Dialogs;
 
 namespace Microscope.Admin.Pages.Analytic
 {
