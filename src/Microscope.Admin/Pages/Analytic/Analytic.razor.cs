@@ -1,38 +1,18 @@
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 using MCSPAnalytic = Microscope.Domain.Entities.Analytic;
 using MudBlazor;
 using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
-using Microscope.Admin.Shared;
 using Microscope.Admin.Shared.Dialogs;
 
 namespace Microscope.Admin.Pages.Analytic
 {
     public partial class Analytic : ComponentBase
     {
-        #region injected properties
-
-        [Inject]
-        private IAccessTokenProvider TokenProvider { get; set; }
-        [Inject]
-        private HttpClient Http { get; set; }
-
-        [Inject]
-        private IDialogService DialogService { get; set; }
-
-        [Inject]
-        private ISnackbar Snackbar { get; set; }
-
-        #endregion
-
         #region properties
         public IList<MCSPAnalytic> Analytics { get; set; } = new List<MCSPAnalytic>();
 
@@ -41,22 +21,12 @@ namespace Microscope.Admin.Pages.Analytic
 
         protected override async Task OnInitializedAsync()
         {
-            await this.SetHttpHeaders();
             await this.GetAnalytic();
-        }
-
-        private async Task SetHttpHeaders()
-        {
-            var accessTokenResult = await TokenProvider.RequestAccessToken();
-            if (accessTokenResult.TryGetToken(out var token))
-            {
-                Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
-            }
         }
 
         private async Task GetAnalytic()
         {
-            var res = await this.Http.GetFromJsonAsync<IEnumerable<MCSPAnalytic>>("api/analytic");
+            var res = await this._httpClient.GetFromJsonAsync<IEnumerable<MCSPAnalytic>>("api/analytic");
             this.Analytics = res.ToList();
         }
 
@@ -73,7 +43,7 @@ namespace Microscope.Admin.Pages.Analytic
         private async Task OpenCreateDialog()
         {
 
-            var dialog = DialogService.Show<AnalyticFormDialog>("Modal", new DialogOptions
+            var dialog = _dialogService.Show<AnalyticFormDialog>("Modal", new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
@@ -110,7 +80,7 @@ namespace Microscope.Admin.Pages.Analytic
 
             var parameters = new DialogParameters { ["Analytic"] = dto };
 
-            var dialog = DialogService.Show<AnalyticFormDialog>("Modal", parameters, new DialogOptions
+            var dialog = _dialogService.Show<AnalyticFormDialog>("Modal", parameters, new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
@@ -145,20 +115,20 @@ namespace Microscope.Admin.Pages.Analytic
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 
-            var dialog = DialogService.Show<ConfirmDialog>("Delete", parameters, options);
+            var dialog = _dialogService.Show<ConfirmDialog>("Delete", parameters, options);
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var res = await this.Http.DeleteAsync("api/analytic/" + item.Id);
+                var res = await this._httpClient.DeleteAsync("api/analytic/" + item.Id);
 
                 if (res.IsSuccessStatusCode)
                 {
                     this.Analytics.Remove(item);
-                    Snackbar.Add("Remote Config deleted", Severity.Success);
+                    _snackBar.Add("Remote Config deleted", Severity.Success);
                 }
                 else
                 {
-                    Snackbar.Add("Error", Severity.Error);
+                    _snackBar.Add("Error", Severity.Error);
                 }
             }
         }

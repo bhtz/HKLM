@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microscope.Admin.Shared;
 using Microscope.Admin.Shared.Dialogs;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.JSInterop;
 using MudBlazor;
 using static Microscope.Admin.Pages.RemoteConfig.RemoteConfigFormDialog;
@@ -19,19 +15,6 @@ namespace Microscope.Admin.Pages.RemoteConfig
     public partial class RemoteConfig : ComponentBase
     {
         #region injected properties
-
-        [Inject]
-        private IAccessTokenProvider TokenProvider { get; set; }
-
-        [Inject]
-        private HttpClient Http { get; set; }
-
-        [Inject]
-        private IDialogService DialogService { get; set; }
-
-        [Inject]
-        private ISnackbar Snackbar { get; set; }
-
 
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
@@ -47,22 +30,12 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
         protected override async Task OnInitializedAsync()
         {
-            await this.SetHttpHeaders();
             await this.GetRemoteConfigs();
-        }
-
-        private async Task SetHttpHeaders()
-        {
-            var accessTokenResult = await TokenProvider.RequestAccessToken();
-            if (accessTokenResult.TryGetToken(out var token))
-            {
-                Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
-            }
         }
 
         private async Task GetRemoteConfigs()
         {
-            var res = await this.Http.GetFromJsonAsync<IEnumerable<MCSPRemoteConfig>>("api/remoteconfig");
+            var res = await this._httpClient.GetFromJsonAsync<IEnumerable<MCSPRemoteConfig>>("api/remoteconfig");
             this.RemoteConfigs = res.ToList();
         }
 
@@ -79,7 +52,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
         private async Task OpenCreateDialog()
         {
 
-            var dialog = DialogService.Show<RemoteConfigFormDialog>("Modal", new DialogOptions
+            var dialog = _dialogService.Show<RemoteConfigFormDialog>("Modal", new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
@@ -119,7 +92,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
             //await this.JSONEditor();
 
-            var dialog = DialogService.Show<RemoteConfigFormDialog>("Modal", parameters, new DialogOptions
+            var dialog = _dialogService.Show<RemoteConfigFormDialog>("Modal", parameters, new DialogOptions
             {
                 MaxWidth = MaxWidth.Medium,
                 FullWidth = true,
@@ -152,19 +125,19 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 
-            var dialog = DialogService.Show<ConfirmDialog>("Delete", parameters, options);
+            var dialog = _dialogService.Show<ConfirmDialog>("Delete", parameters, options);
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var res = await this.Http.DeleteAsync("api/remoteconfig/" + item.Id);
+                var res = await this._httpClient.DeleteAsync("api/remoteconfig/" + item.Id);
                 if (res.IsSuccessStatusCode)
                 {
                     this.RemoteConfigs.Remove(item);
-                    Snackbar.Add("Remote Config deleted", Severity.Success);
+                    _snackBar.Add("Remote Config deleted", Severity.Success);
                 }
                 else
                 {
-                     Snackbar.Add("Error", Severity.Error);
+                     _snackBar.Add("Error", Severity.Error);
                 }
             }
 

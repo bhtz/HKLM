@@ -1,7 +1,8 @@
-@using Microscope.Admin.Shared.Components
 @inherits LayoutComponentBase
+@using Microscope.Admin.Shared.Components
 
-<MudThemeProvider Theme="_themeManager.Theme" />
+
+<MudThemeProvider Theme="currentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -15,11 +16,12 @@
         <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
             <MudText Typo="Typo.subtitle2">Microscope</MudText>
         </MudHidden>
-        <MudAppBarSpacer /> 
-        <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="SwitchMode" />
+        <MudAppBarSpacer />
+        <LanguageSelector />
+        <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="DarkMode" />
         <LoginDisplay></LoginDisplay>
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="_themeManager.DrawerClipMode">
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="DrawerClipMode.Never">
         <NavMenu />
     </MudDrawer>
     <MudMainContent>
@@ -28,7 +30,3 @@
         </MudContainer>
     </MudMainContent>
 </MudLayout>
-
-@* <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
-<MudThemeManager Open="_themeManagerOpen" OpenChanged="OpenThemeManager" Theme="_themeManager"
-    ThemeChanged="UpdateTheme" /> *@

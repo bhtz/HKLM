@@ -1,9 +1,11 @@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<ContainerFormDialog> localizer
+
 <EditForm Model="@StorageContainer" OnValidSubmit="OnValidSubmit">
   <MudDialog>
     <TitleContent>
       <MudText Typo="Typo.h6">
         <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
-        Add container
+         @localizer["Add Container"]    
       </MudText>
     </TitleContent>
     <DialogContent>
@@ -27,8 +29,8 @@
       </MudExpansionPanels>
     </DialogContent>
     <DialogActions>
-      <MudButton Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
-      <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Success">Save</MudButton>
+      <MudButton Variant="Variant.Filled" OnClick="Cancel">@localizer["Cancel"]</MudButton>
+      <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Success">@localizer["Save"]</MudButton>
     </DialogActions>
   </MudDialog>
 </EditForm>

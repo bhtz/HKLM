@@ -1,11 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.JSInterop;
 using MudBlazor;
 
@@ -17,15 +14,8 @@ namespace Microscope.Admin.Pages.Analytic
         #region injected properties
 
         [Inject]
-        private IAccessTokenProvider TokenProvider { get; set; }
-        [Inject]
-        private HttpClient Http { get; set; }
-
-        [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
-        [Inject]
-        private ISnackbar Snackbar { get; set; }
 
         #endregion
 
@@ -38,26 +28,11 @@ namespace Microscope.Admin.Pages.Analytic
 
         #endregion
 
-        protected override async Task OnInitializedAsync()
-        {
-            await this.SetHttpHeaders();
-
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
                 await this.JSONEditor();
-            }
-        }
-
-        private async Task SetHttpHeaders()
-        {
-            var accessTokenResult = await TokenProvider.RequestAccessToken();
-            if (accessTokenResult.TryGetToken(out var token))
-            {
-                Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
             }
         }
 
@@ -72,32 +47,32 @@ namespace Microscope.Admin.Pages.Analytic
 
             if (this.Analytic.Id != Guid.Empty)
             {
-                var response = await Http.PutAsJsonAsync("api/Analytic/" + this.Analytic.Id, this.Analytic);
+                var response = await _httpClient.PutAsJsonAsync("api/Analytic/" + this.Analytic.Id, this.Analytic);
                 if (response.IsSuccessStatusCode)
                 {
-                    Snackbar.Add("Analytic updated", Severity.Success);
+                    _snackBar.Add("Analytic updated", Severity.Success);
                     MudDialog.Close(DialogResult.Ok(this.Analytic));
                 }
                 else
                 {
-                    Snackbar.Add("Error", Severity.Error);
+                    _snackBar.Add("Error", Severity.Error);
                     MudDialog.Close(DialogResult.Cancel());
                 }
             }
             else
             {
-                var response = await Http.PostAsJsonAsync("api/Analytic", this.Analytic);
+                var response = await _httpClient.PostAsJsonAsync("api/Analytic", this.Analytic);
 
                 if (response.IsSuccessStatusCode)
                 {
                     AnalyticFormDTO inserted = await response.Content.ReadFromJsonAsync<AnalyticFormDTO>();
                     this.Analytic.Id = inserted.Id;
-                    Snackbar.Add("Analytic added", Severity.Success);
+                    _snackBar.Add("Analytic added", Severity.Success);
                     MudDialog.Close(DialogResult.Ok(this.Analytic));
                 }
                 else
                 {
-                    Snackbar.Add("Error", Severity.Error);
+                    _snackBar.Add("Error", Severity.Error);
                     MudDialog.Close(DialogResult.Cancel());
                 }
 

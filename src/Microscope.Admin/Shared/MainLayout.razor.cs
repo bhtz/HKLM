@@ -1,56 +1,41 @@
 using System.Collections.Generic;
-using Microscope.Admin.Theme;
+using System.Threading.Tasks;
+using Microscope.Admin.Infrastructure.Settings;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using MudBlazor.ThemeManager;
 
 namespace Microscope.Admin.Shared
 {
     public partial class MainLayout : LayoutComponentBase
     {
-        private ThemeManagerTheme _themeManager = new ThemeManagerTheme();
+        MudTheme currentTheme;
 
         public bool _drawerOpen = true;
-        public bool _themeManagerOpen = false;
 
-        private readonly MudTheme _defaultTheme = new MicroscopeTheme();
-        private readonly MudTheme _darkTheme = new MicroscopeDarkTheme();
+        protected override async Task OnInitializedAsync()
+        {
+            currentTheme = await _preferenceManager.GetCurrentThemeAsync();
+        }
+
 
         void DrawerToggle()
         {
             _drawerOpen = !_drawerOpen;
         }
 
-        void OpenThemeManager(bool value)
+        async Task DarkMode()
         {
-            _themeManagerOpen = value;
-        }
-
-        void UpdateTheme(ThemeManagerTheme value)
-        {
-            _themeManager = value;
-            StateHasChanged();
-        }
-
-        private void SwitchMode()
-        {
-            if (_themeManager.Theme == _defaultTheme)
+            bool isDarkMode = await _preferenceManager.ToggleDarkModeAsync();
+            if (isDarkMode)
             {
-                _themeManager.Theme = _darkTheme;
+                currentTheme = MicroscopeTheme.DefaultTheme;
             }
             else
             {
-                _themeManager.Theme = _defaultTheme;
+                currentTheme = MicroscopeTheme.DarkTheme;
             }
         }
 
-        protected override void OnInitialized()
-        {
-            _themeManager.Theme = _defaultTheme;
-            _themeManager.DrawerClipMode = DrawerClipMode.Never;
-            _themeManager.FontFamily = "Montserrat";
-            _themeManager.DefaultBorderRadius = 3;
-        }
 
         private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
         {

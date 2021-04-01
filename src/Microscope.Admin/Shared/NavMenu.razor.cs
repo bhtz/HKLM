@@ -8,7 +8,7 @@ namespace Microscope.Admin.Shared
         {
             //_section = NavMan.GetSection();
             //_componentLink = NavMan.GetComponentLink();
-            StateHasChanged();
+            //StateHasChanged();
         }
     }
 }

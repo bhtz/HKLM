@@ -1,15 +1,14 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Blazored.Toast;
 using MudBlazor.Services;
 using MudBlazor;
+using Microscope.Admin.Extensions;
+using Microscope.Admin.Infrastructure.Managers.Preferences;
+using System.Globalization;
 
 namespace Microscope.Admin
 {
@@ -17,30 +16,25 @@ namespace Microscope.Admin
     {
         public static async Task Main(string[] args)
         {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<App>("#app");
+            var builder = WebAssemblyHostBuilder
+                 .CreateDefault(args)
+                 .AddRootComponents()
+                 .AddClientServices();
 
-            var baseAddress = builder.Configuration.GetValue<string>("APIBaseAddress");
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
-
-            builder.Services.AddOidcAuthentication(options =>
+            var host = builder.Build();
+            var storageService = host.Services.GetRequiredService<PreferenceManager>();
+            if (storageService != null)
             {
-                builder.Configuration.Bind("Auth", options.ProviderOptions);
-                options.ProviderOptions.ResponseType = "code";
-                options.ProviderOptions.DefaultScopes.Add("roles");
-            });
+                CultureInfo culture;
+                var preference = await storageService.GetPreference();
+                if (preference != null)
+                    culture = new CultureInfo(preference.LanguageCode);
+                else
+                    culture = new CultureInfo("fr-FR");
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+            }
 
-            builder.Services.AddMudServices(config =>
-            {
-                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
-                config.SnackbarConfiguration.PreventDuplicates = false;
-                config.SnackbarConfiguration.NewestOnTop = false;
-                config.SnackbarConfiguration.ShowCloseIcon = true;
-                config.SnackbarConfiguration.VisibleStateDuration = 10000;
-                config.SnackbarConfiguration.HideTransitionDuration = 500;
-                config.SnackbarConfiguration.ShowTransitionDuration = 500;
-                config.SnackbarConfiguration.SnackbarVariant = Variant.Outlined;
-            });
 
             await builder.Build().RunAsync();
         }
