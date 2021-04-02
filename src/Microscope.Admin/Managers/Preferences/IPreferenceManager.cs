@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Microscope.Admin.Infrastructure.Settings;
+using Microscope.Admin.Settings;
 using MudBlazor;
 
-namespace Microscope.Admin.Infrastructure.Managers.Preferences
+namespace Microscope.Admin.Managers.Preferences
 {
    public interface IPreferenceManager
     {

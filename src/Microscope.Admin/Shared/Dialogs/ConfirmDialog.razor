@@ -1,4 +1,5 @@
 @namespace Microscope.Admin.Shared.Dialogs
+
 <MudDialog>
     <DialogContent>
         <MudText>@ContentText</MudText>
@@ -8,6 +9,7 @@
         <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
     </DialogActions>
 </MudDialog>
+
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 

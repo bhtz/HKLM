@@ -1,8 +1,8 @@
 using MudBlazor;
 
-namespace Microscope.Admin.Infrastructure.Settings
+namespace Microscope.Admin.Settings
 {
-    public class MicroscopeTheme
+    public class Theme
     {
         private static Typography DefaultTypography = new Typography()
         {

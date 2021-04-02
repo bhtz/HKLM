@@ -1,4 +1,4 @@
-namespace Microscope.Admin.Infrastructure.Managers
+namespace Microscope.Admin.Managers
 {
     public interface IManager
     {

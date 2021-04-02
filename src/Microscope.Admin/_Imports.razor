@@ -14,14 +14,13 @@
 @using Microscope.Admin.Shared
 @using MudBlazor
 
-
 @*Client Services*@
-@using Microscope.Admin.Infrastructure.Managers.Preferences
+@using Microscope.Admin.Managers.Preferences
 
 @*Shared Libraries*@
-@using Microscope.Admin.Infrastructure.Settings
+@using Microscope.Admin.Settings
 
-
+@* Default DI *@
 @inject NavigationManager _navigationManager
 @inject PreferenceManager _preferenceManager
 @inject ISnackbar _snackBar

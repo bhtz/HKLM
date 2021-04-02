@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Microscope.Admin.Infrastructure.Settings;
 using MudBlazor;
 using Blazored.LocalStorage;
+using Microscope.Admin.Settings;
 
-namespace Microscope.Admin.Infrastructure.Managers.Preferences
+namespace Microscope.Admin.Managers.Preferences
 {
 public class PreferenceManager : IPreferenceManager
     {
@@ -32,8 +32,8 @@ public class PreferenceManager : IPreferenceManager
         public async Task<MudTheme> GetCurrentThemeAsync()
         {
             var preference = await GetPreference();
-            if (preference.IsDarkMode) return MicroscopeTheme.DarkTheme;
-            return MicroscopeTheme.DefaultTheme;
+            if (preference.IsDarkMode) return Theme.DarkTheme;
+            return Theme.DefaultTheme;
         }
 
         public async Task<Preference> GetPreference()

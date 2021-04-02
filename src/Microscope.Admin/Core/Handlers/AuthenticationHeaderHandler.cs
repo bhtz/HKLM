@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
-namespace Microscope.Admin.Infrastructure.Authentication
+namespace Microscope.Admin.Core.Handlers
 {
     public class AuthenticationHeaderHandler : DelegatingHandler
     {
@@ -24,7 +24,6 @@ namespace Microscope.Admin.Infrastructure.Authentication
                 {
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
                 }
-
             }
 
             return await base.SendAsync(request, cancellationToken);

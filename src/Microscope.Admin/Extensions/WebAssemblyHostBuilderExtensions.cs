@@ -2,9 +2,9 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using Blazored.LocalStorage;
-using Microscope.Admin.Infrastructure.Authentication;
-using Microscope.Admin.Infrastructure.Managers;
-using Microscope.Admin.Infrastructure.Managers.Preferences;
+using Microscope.Admin.Core.Handlers;
+using Microscope.Admin.Managers;
+using Microscope.Admin.Managers.Preferences;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,7 +49,7 @@ namespace Microscope.Admin.Extensions
                     config.SnackbarConfiguration.SnackbarVariant = Variant.Outlined;
 
                 })
-                .AddScoped<PreferenceManager>()
+                .AddScoped<PreferenceManager>() // CHECK BLAZORHERO
                 .AddManagers()
                 .AddTransient<AuthenticationHeaderHandler>()
                 .AddScoped(sp => sp

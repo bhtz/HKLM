@@ -1,13 +1,8 @@
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MudBlazor.Services;
-using MudBlazor;
 using Microscope.Admin.Extensions;
-using Microscope.Admin.Infrastructure.Managers.Preferences;
+using Microscope.Admin.Managers.Preferences;
 using System.Globalization;
 
 namespace Microscope.Admin

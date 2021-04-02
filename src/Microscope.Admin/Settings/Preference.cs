@@ -1,5 +1,6 @@
-namespace Microscope.Admin.Infrastructure.Settings
-{ public record Preference
+namespace Microscope.Admin.Settings
+{
+    public record Preference
     {
         public bool IsDarkMode { get; set; }
         public bool IsRTL { get; set; }

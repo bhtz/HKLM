@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microscope.Admin.Infrastructure.Settings;
+using Microscope.Admin.Settings;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -28,19 +28,12 @@ namespace Microscope.Admin.Shared
             bool isDarkMode = await _preferenceManager.ToggleDarkModeAsync();
             if (isDarkMode)
             {
-                currentTheme = MicroscopeTheme.DefaultTheme;
+                currentTheme = Theme.DefaultTheme;
             }
             else
             {
-                currentTheme = MicroscopeTheme.DarkTheme;
+                currentTheme = Theme.DarkTheme;
             }
         }
-
-
-        private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
-        {
-            new BreadcrumbItem("Personal", href: "#"),
-            new BreadcrumbItem("Dashboard", href: "#"),
-        };
     }
 }
