@@ -1,0 +1,89 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\Users\\ta\\Github\\HKLM\\src\\Microscope.Admin.Infrastructure\\Microscope.Admin.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "c:\\Users\\ta\\Github\\HKLM\\src\\Microscope.Admin.Infrastructure\\Microscope.Admin.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\ta\\Github\\HKLM\\src\\Microscope.Admin.Infrastructure\\Microscope.Admin.Infrastructure.csproj",
+        "projectName": "Microscope.Admin.Infrastructure",
+        "projectPath": "c:\\Users\\ta\\Github\\HKLM\\src\\Microscope.Admin.Infrastructure\\Microscope.Admin.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\ta\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\ta\\Github\\HKLM\\src\\Microscope.Admin.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ta\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/ecofeed/": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Blazored.LocalStorage": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.AspNetCore.Components.Authorization": {
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly": {
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.Authentication": {
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
+            "Toolbelt.Blazor.HttpClientInterceptor": {
+              "target": "Package",
+              "version": "[9.2.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
