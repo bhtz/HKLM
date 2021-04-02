@@ -49,10 +49,7 @@ namespace Microscope.Admin.Extensions
                     config.SnackbarConfiguration.SnackbarVariant = Variant.Outlined;
 
                 })
-                //.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
                 .AddScoped<PreferenceManager>()
-                // .AddScoped<BlazorHeroStateProvider>()
-                // .AddScoped<AuthenticationStateProvider, BlazorHeroStateProvider>()
                 .AddManagers()
                 .AddTransient<AuthenticationHeaderHandler>()
                 .AddScoped(sp => sp
@@ -60,7 +57,9 @@ namespace Microscope.Admin.Extensions
                     .CreateClient(ClientName).EnableIntercept(sp))
                 .AddHttpClient(ClientName, client => client.BaseAddress = new Uri(baseAddress))
                 .AddHttpMessageHandler<AuthenticationHeaderHandler>();
+
             builder.Services.AddHttpClientInterceptor();
+            
             return builder;
         }
 
