@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
+using SdkAnalytic = Microscope.SDK.Dotnet.Models.Analytic;
 
 namespace Microscope.Admin.Pages.Analytic
 {
@@ -45,10 +46,17 @@ namespace Microscope.Admin.Pages.Analytic
             Success = true;
             StateHasChanged();
 
-            if (this.Analytic.Id != Guid.Empty)
+            var analytic = new SdkAnalytic
             {
-                var response = await _httpClient.PutAsJsonAsync("api/Analytic/" + this.Analytic.Id, this.Analytic);
-                if (response.IsSuccessStatusCode)
+                Id = this.Analytic.Id,
+                Key = this.Analytic.Key,
+                Dimension = this.Analytic.Dimension
+            };
+
+            if (analytic.Id != Guid.Empty)
+            {
+                bool success = await _microscopeClient.PutAnalyticAsync(analytic.Id, analytic);
+                if (success)
                 {
                     _snackBar.Add("Analytic updated", Severity.Success);
                     MudDialog.Close(DialogResult.Ok(this.Analytic));
@@ -61,12 +69,11 @@ namespace Microscope.Admin.Pages.Analytic
             }
             else
             {
-                var response = await _httpClient.PostAsJsonAsync("api/Analytic", this.Analytic);
+                string id = await _microscopeClient.PostAnalyticAsync(analytic);
 
-                if (response.IsSuccessStatusCode)
+                if (!string.IsNullOrEmpty(id))
                 {
-                    AnalyticFormDTO inserted = await response.Content.ReadFromJsonAsync<AnalyticFormDTO>();
-                    this.Analytic.Id = inserted.Id;
+                    this.Analytic.Id = Guid.Parse(id);
                     _snackBar.Add("Analytic added", Severity.Success);
                     MudDialog.Close(DialogResult.Ok(this.Analytic));
                 }
@@ -75,7 +82,6 @@ namespace Microscope.Admin.Pages.Analytic
                     _snackBar.Add("Error", Severity.Error);
                     MudDialog.Close(DialogResult.Cancel());
                 }
-
             }
 
         }

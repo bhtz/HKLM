@@ -1,10 +1,9 @@
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using MCSPAnalytic = Microscope.Domain.Entities.Analytic;
+using SdkAnalytic = Microscope.SDK.Dotnet.Models.Analytic;
 using MudBlazor;
 using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
 using Microscope.Admin.Shared.Dialogs;
@@ -14,7 +13,7 @@ namespace Microscope.Admin.Pages.Analytic
     public partial class Analytic : ComponentBase
     {
         #region properties
-        public IList<MCSPAnalytic> Analytics { get; set; } = new List<MCSPAnalytic>();
+        public IList<SdkAnalytic> Analytics { get; set; } = new List<SdkAnalytic>();
 
         public string SearchTerm { get; set; } = String.Empty;
         #endregion
@@ -26,11 +25,11 @@ namespace Microscope.Admin.Pages.Analytic
 
         private async Task GetAnalytic()
         {
-            var res = await this._httpClient.GetFromJsonAsync<IEnumerable<MCSPAnalytic>>("api/analytic");
-            this.Analytics = res.ToList();
+            IEnumerable<SdkAnalytic> analytics = await _microscopeClient.GetAnalyticsAsync();
+            this.Analytics = analytics.ToList();
         }
 
-        private bool FilterFunc(MCSPAnalytic element)
+        private bool FilterFunc(SdkAnalytic element)
         {
             if (string.IsNullOrWhiteSpace(SearchTerm))
                 return true;
@@ -57,7 +56,7 @@ namespace Microscope.Admin.Pages.Analytic
             {
                 var newItem = (AnalyticFormDTO)result.Data;
                 //In a real world scenario we would reload the data from the source
-                MCSPAnalytic newAnalytic = new MCSPAnalytic
+                SdkAnalytic newAnalytic = new SdkAnalytic
                 {
                     Id = newItem.Id,
                     Key = newItem.Key,
@@ -68,7 +67,7 @@ namespace Microscope.Admin.Pages.Analytic
             }
         }
 
-        private async Task OnSelectItem(MCSPAnalytic item)
+        private async Task OnSelectItem(SdkAnalytic item)
         {
 
             AnalyticFormDTO dto = new AnalyticFormDTO
@@ -106,7 +105,7 @@ namespace Microscope.Admin.Pages.Analytic
             }
         }
 
-        private async Task Delete(MCSPAnalytic item)
+        private async Task Delete(SdkAnalytic item)
         {
             var parameters = new DialogParameters();
             parameters.Add("ContentText", "Are you sure ?");

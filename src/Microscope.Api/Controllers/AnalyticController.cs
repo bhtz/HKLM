@@ -82,7 +82,7 @@ namespace Microscope.Api.Controllers
             _context.Analytics.Add(analytic);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAnalytic", new { id = analytic.Id }, analytic);
+            return CreatedAtAction("GetAnalytic", new { id = analytic.Id }, analytic.Id.ToString());
         }
 
         // DELETE: api/Analytic/5

@@ -18,9 +18,10 @@
 @using Microscope.Admin.Managers.Preferences
 
 @*Shared Libraries*@
-@using Microscope.Admin.Settings
+@using Microscope.SDK.Dotnet
 
 @* Default DI *@
+@inject MicroscopeClient _microscopeClient
 @inject NavigationManager _navigationManager
 @inject PreferenceManager _preferenceManager
 @inject ISnackbar _snackBar

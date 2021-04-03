@@ -5,6 +5,7 @@ using Blazored.LocalStorage;
 using Microscope.Admin.Core.Handlers;
 using Microscope.Admin.Managers;
 using Microscope.Admin.Managers.Preferences;
+using Microscope.SDK.Dotnet;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,11 +52,12 @@ namespace Microscope.Admin.Extensions
                 })
                 .AddScoped<PreferenceManager>() // CHECK BLAZORHERO
                 .AddManagers()
+                // .AddScoped(sp => sp
+                //     .GetRequiredService<IHttpClientFactory>()
+                //     .CreateClient(ClientName).EnableIntercept(sp))
+                // .AddHttpClient(ClientName, client => client.BaseAddress = new Uri(baseAddress))
                 .AddTransient<AuthenticationHeaderHandler>()
-                .AddScoped(sp => sp
-                    .GetRequiredService<IHttpClientFactory>()
-                    .CreateClient(ClientName).EnableIntercept(sp))
-                .AddHttpClient(ClientName, client => client.BaseAddress = new Uri(baseAddress))
+                .AddHttpClient<MicroscopeClient>(client => client.BaseAddress = new Uri(baseAddress))
                 .AddHttpMessageHandler<AuthenticationHeaderHandler>();
 
             builder.Services.AddHttpClientInterceptor();
