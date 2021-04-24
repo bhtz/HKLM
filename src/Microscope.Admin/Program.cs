@@ -30,7 +30,6 @@ namespace Microscope.Admin
                 CultureInfo.DefaultThreadCurrentUICulture = culture;
             }
 
-
             await builder.Build().RunAsync();
         }
     }

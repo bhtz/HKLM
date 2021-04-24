@@ -21,6 +21,5 @@ namespace Microscope.SDK.Dotnet.Routes
         {
             return $"api/storage/{container}/{blob}";
         }
-
     }
 }

@@ -3,17 +3,18 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using SdkAnalytic = Microscope.SDK.Dotnet.Models.Analytic;
 using MudBlazor;
 using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
 using Microscope.Admin.Shared.Dialogs;
+using Microscope.Application.Core.Queries.Analytic;
+using Microscope.Application.Core.Commands.Analytic;
 
 namespace Microscope.Admin.Pages.Analytic
 {
     public partial class Analytic : ComponentBase
     {
         #region properties
-        public IList<SdkAnalytic> Analytics { get; set; } = new List<SdkAnalytic>();
+        public IList<AnalyticQueryResult> Analytics { get; set; } = new List<AnalyticQueryResult>();
 
         public string SearchTerm { get; set; } = String.Empty;
         #endregion
@@ -25,11 +26,11 @@ namespace Microscope.Admin.Pages.Analytic
 
         private async Task GetAnalytic()
         {
-            IEnumerable<SdkAnalytic> analytics = await _microscopeClient.GetAnalyticsAsync();
+            IEnumerable<AnalyticQueryResult> analytics = await _microscopeClient.GetAnalyticsAsync();
             this.Analytics = analytics.ToList();
         }
 
-        private bool FilterFunc(SdkAnalytic element)
+        private bool FilterFunc(AnalyticQueryResult element)
         {
             if (string.IsNullOrWhiteSpace(SearchTerm))
                 return true;
@@ -54,9 +55,9 @@ namespace Microscope.Admin.Pages.Analytic
 
             if (!result.Cancelled)
             {
-                var newItem = (AnalyticFormDTO)result.Data;
+                var newItem = (AnalyticFormViewModel)result.Data;
                 //In a real world scenario we would reload the data from the source
-                SdkAnalytic newAnalytic = new SdkAnalytic
+                AnalyticQueryResult newAnalytic = new AnalyticQueryResult
                 {
                     Id = newItem.Id,
                     Key = newItem.Key,
@@ -67,10 +68,10 @@ namespace Microscope.Admin.Pages.Analytic
             }
         }
 
-        private async Task OnSelectItem(SdkAnalytic item)
+        private async Task OnSelectItem(AnalyticQueryResult item)
         {
 
-            AnalyticFormDTO dto = new AnalyticFormDTO
+            AnalyticFormViewModel dto = new AnalyticFormViewModel
             {
                 Id = item.Id,
                 Key = item.Key,
@@ -93,7 +94,7 @@ namespace Microscope.Admin.Pages.Analytic
             {
                 //In a real world scenario we would reload the data 
 
-                var editedItem = (AnalyticFormDTO)result.Data;
+                var editedItem = (AnalyticFormViewModel)result.Data;
 
                 var analyticToUpdate = this.Analytics.FirstOrDefault(a => a.Id == editedItem.Id);
                 if (analyticToUpdate != null)
@@ -105,7 +106,7 @@ namespace Microscope.Admin.Pages.Analytic
             }
         }
 
-        private async Task Delete(SdkAnalytic item)
+        private async Task Delete(AnalyticQueryResult item)
         {
             var parameters = new DialogParameters();
             parameters.Add("ContentText", "Are you sure ?");
@@ -131,6 +132,5 @@ namespace Microscope.Admin.Pages.Analytic
                 }
             }
         }
-
     }
 }

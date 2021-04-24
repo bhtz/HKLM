@@ -1,4 +1,4 @@
-@using SdkAnalytic = Microscope.SDK.Dotnet.Models.Analytic;
+@using Microscope.Application.Core.Queries.Analytic
 @attribute [Authorize]
 @page "/analytic"
 
@@ -7,7 +7,7 @@
 
 <MudButton Variant="Variant.Filled" OnClick="OpenCreateDialog" Color="Color.Primary">NEW</MudButton>
 
-<MudTable Class="mt-2" Items="@Analytics" Striped="true" Hover="true" Filter="new Func<SdkAnalytic,bool>(FilterFunc)">
+<MudTable Class="mt-2" Items="@Analytics" Striped="true" Hover="true" Filter="new Func<AnalyticQueryResult, bool>(FilterFunc)">
   <ToolBarContent>
     <MudText Typo="Typo.h6">Analytic</MudText>
     <MudToolBarSpacer />

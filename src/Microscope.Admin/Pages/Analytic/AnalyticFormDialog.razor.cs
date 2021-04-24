@@ -2,10 +2,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microscope.Application.Core.Commands.Analytic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
-using SdkAnalytic = Microscope.SDK.Dotnet.Models.Analytic;
 
 namespace Microscope.Admin.Pages.Analytic
 {
@@ -23,7 +23,7 @@ namespace Microscope.Admin.Pages.Analytic
         #region properties
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        [Parameter] public AnalyticFormDTO Analytic { get; set; } = new AnalyticFormDTO();
+        [Parameter] public AnalyticFormViewModel Analytic { get; set; } = new AnalyticFormViewModel();
 
         public bool Success { get; set; }
 
@@ -46,7 +46,7 @@ namespace Microscope.Admin.Pages.Analytic
             Success = true;
             StateHasChanged();
 
-            var analytic = new SdkAnalytic
+            var analytic = new AddEditAnalyticCommand
             {
                 Id = this.Analytic.Id,
                 Key = this.Analytic.Key,
@@ -88,7 +88,7 @@ namespace Microscope.Admin.Pages.Analytic
 
         void Cancel() => MudDialog.Cancel();
 
-        public class AnalyticFormDTO
+        public class AnalyticFormViewModel
         {
             public Guid Id { get; set; }
 

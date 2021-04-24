@@ -1,3 +1,4 @@
+using Microscope.Application;
 using Microscope.Configurations;
 using Microscope.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +24,7 @@ namespace Microscope.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddControllers();
             services.AddCorsConfiguration(Configuration);

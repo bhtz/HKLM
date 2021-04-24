@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microscope.SDK.Dotnet.Routes;
-using Microscope.SDK.Dotnet.Models;
 using System;
 
 namespace Microscope.SDK.Dotnet
@@ -11,7 +10,7 @@ namespace Microscope.SDK.Dotnet
     {
         public async Task<bool> PostContainerAsync(string name)
         {
-            var response = await this._httpClient.PostAsJsonAsync(StoragesEndpoint.CreateContainer,name);
+            var response = await this._httpClient.PostAsJsonAsync(StoragesEndpoint.CreateContainer, name);
             return response.IsSuccessStatusCode;
         }
 

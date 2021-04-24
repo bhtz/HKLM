@@ -29,6 +29,7 @@ namespace Microscope.Admin.Extensions
         public static WebAssemblyHostBuilder AddClientServices(this WebAssemblyHostBuilder builder)
         {
             var baseAddress = builder.Configuration.GetValue<string>("APIBaseAddress");
+            Console.WriteLine(baseAddress);
 
             builder
                 .Services

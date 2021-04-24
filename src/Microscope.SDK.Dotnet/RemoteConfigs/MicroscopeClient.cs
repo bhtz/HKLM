@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microscope.SDK.Dotnet.Routes;
-using Microscope.SDK.Dotnet.Models;
 using System;
 
 namespace Microscope.SDK.Dotnet
@@ -28,5 +27,12 @@ namespace Microscope.SDK.Dotnet
         {
             return await this._httpClient.GetFromJsonAsync<IEnumerable<RemoteConfig>>(RemoteConfigsEndpoint.GetAll);
         }
+    }
+
+    public class RemoteConfig 
+    {
+        public Guid Id { get; set; }
+        public string Key { get; set; }
+        public string Dimension { get; set; }
     }
 }

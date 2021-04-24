@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microscope.Infrastructure;
 using Microscope.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using MediatR;
+using Microscope.Application.Core.Queries.Analytic;
 
 namespace Microscope.Api.Controllers
 {
@@ -16,17 +18,20 @@ namespace Microscope.Api.Controllers
     public class AnalyticController : ControllerBase
     {
         private readonly MicroscopeDbContext _context;
+        private readonly IMediator _mediator;
 
-        public AnalyticController(MicroscopeDbContext context)
+        public AnalyticController(MicroscopeDbContext context, IMediator mediator)
         {
             _context = context;
+            _mediator = mediator;
         }
 
         // GET: api/Analytic
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Analytic>>> GetAnalytics()
+        public async Task<ActionResult<IEnumerable<AnalyticQueryResult>>> GetAnalytics()
         {
-            return await _context.Analytics.ToListAsync();
+            var results = await this._mediator.Send(new FilteredAnalyticQuery());
+            return Ok(results);
         }
 
         // GET: api/Analytic/5

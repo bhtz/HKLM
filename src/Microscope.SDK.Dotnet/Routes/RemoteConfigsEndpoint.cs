@@ -11,6 +11,5 @@ namespace Microscope.SDK.Dotnet.Routes
         {
             return $"api/remoteconfig/{id.ToString()}";
         }
-
     }
 }
