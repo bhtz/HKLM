@@ -9,7 +9,7 @@ using Microscope.Infrastructure;
 
 namespace Microscope.Application.Features.Analytic.Commands
 {
-    public class DeleteAnalyticCommandHandler : IRequestHandler<DeleteAnalyticCommand, Guid> 
+    public class DeleteAnalyticCommandHandler : IRequestHandler<DeleteAnalyticCommand, Guid>
     {
         private readonly MicroscopeDbContext _context;
         private readonly IMapper _mapper;

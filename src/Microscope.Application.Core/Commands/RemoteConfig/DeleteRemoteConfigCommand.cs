@@ -1,9 +1,10 @@
 using System;
 using FluentValidation;
+using MediatR;
 
 namespace Microscope.Application.Core.Commands.RemoteConfig
 {
-    public class DeleteRemoteConfigCommand
+    public class DeleteRemoteConfigCommand : IRequest<Guid>
     {
         public Guid Id { get; set; }
     }
