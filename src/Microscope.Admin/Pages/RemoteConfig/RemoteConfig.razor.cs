@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microscope.Admin.Shared.Dialogs;
+using Microscope.Application.Core.Queries.RemoteConfig;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
 using static Microscope.Admin.Pages.RemoteConfig.RemoteConfigFormDialog;
-using MCSPRemoteConfig = Microscope.Domain.Entities.RemoteConfig;
 
 namespace Microscope.Admin.Pages.RemoteConfig
 {
@@ -24,7 +24,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
         #endregion
 
         #region properties
-        public IList<MCSPRemoteConfig> RemoteConfigs { get; set; } = new List<MCSPRemoteConfig>();
+        public IList<RemoteConfigQueryResult> RemoteConfigs { get; set; } = new List<RemoteConfigQueryResult>();
         public string SearchTerm { get; set; } = String.Empty;
         #endregion
 
@@ -35,11 +35,11 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
         private async Task GetRemoteConfigs()
         {
-            var res = await this._httpClient.GetFromJsonAsync<IEnumerable<MCSPRemoteConfig>>("api/remoteconfig");
+            var res = await this._httpClient.GetFromJsonAsync<IEnumerable<RemoteConfigQueryResult>>("api/remoteconfig");
             this.RemoteConfigs = res.ToList();
         }
 
-        private bool FilterFunc(MCSPRemoteConfig element)
+        private bool FilterFunc(RemoteConfigQueryResult element)
         {
             if (string.IsNullOrWhiteSpace(SearchTerm))
                 return true;
@@ -64,9 +64,9 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
             if (!result.Cancelled)
             {
-                var newItem = (RemoteConfigFormDTO)result.Data;
+                var newItem = (RemoteConfigFormViewModel)result.Data;
                 //In a real world scenario we would reload the data from the source
-                MCSPRemoteConfig newRemoteConfig = new MCSPRemoteConfig
+                RemoteConfigQueryResult newRemoteConfig = new RemoteConfigQueryResult
                 {
                     Id = newItem.Id,
                     Key = newItem.Key,
@@ -78,10 +78,10 @@ namespace Microscope.Admin.Pages.RemoteConfig
             }
         }
 
-        private async Task OnSelectItem(MCSPRemoteConfig item)
+        private async Task OnSelectItem(RemoteConfigQueryResult item)
         {
 
-            RemoteConfigFormDTO dto = new RemoteConfigFormDTO
+            RemoteConfigFormViewModel dto = new RemoteConfigFormViewModel
             {
                 Id = item.Id,
                 Key = item.Key,
@@ -105,7 +105,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
             {
                 //In a real world scenario we would reload the data 
 
-                var editedItem = (RemoteConfigFormDTO)result.Data;
+                var editedItem = (RemoteConfigFormViewModel)result.Data;
 
                 var remoteConfigToUpdate = this.RemoteConfigs.FirstOrDefault(a => a.Id == editedItem.Id);
                 if (remoteConfigToUpdate != null)
@@ -116,7 +116,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
             }
         }
-        private async Task Delete(MCSPRemoteConfig item)
+        private async Task Delete(RemoteConfigQueryResult item)
         {
             var parameters = new DialogParameters();
             parameters.Add("ContentText", "Are you sure ?");

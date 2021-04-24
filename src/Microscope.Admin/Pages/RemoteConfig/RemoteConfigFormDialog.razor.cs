@@ -22,7 +22,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
         #region properties
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        [Parameter] public RemoteConfigFormDTO RemoteConfig { get; set; } = new RemoteConfigFormDTO();
+        [Parameter] public RemoteConfigFormViewModel RemoteConfig { get; set; } = new RemoteConfigFormViewModel();
 
         public bool Success { get; set; }
 
@@ -66,7 +66,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
                 if (response.IsSuccessStatusCode)
                 {
-                    RemoteConfigFormDTO inserted = await response.Content.ReadFromJsonAsync<RemoteConfigFormDTO>();
+                    RemoteConfigFormViewModel inserted = await response.Content.ReadFromJsonAsync<RemoteConfigFormViewModel>();
                     this.RemoteConfig.Id = inserted.Id;
                     _snackBar.Add("Remote Config added", Severity.Success);
                     MudDialog.Close(DialogResult.Ok(this.RemoteConfig));
@@ -82,7 +82,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
         void Cancel() => MudDialog.Cancel();
 
-        public class RemoteConfigFormDTO
+        public class RemoteConfigFormViewModel
         {
             public Guid Id { get; set; }
 

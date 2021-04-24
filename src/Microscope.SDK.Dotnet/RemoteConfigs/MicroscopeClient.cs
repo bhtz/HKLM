@@ -3,12 +3,14 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microscope.SDK.Dotnet.Routes;
 using System;
+using Microscope.Application.Core.Commands.RemoteConfig;
+using Microscope.Application.Core.Queries.RemoteConfig;
 
 namespace Microscope.SDK.Dotnet
 {
     public partial class MicroscopeClient
     {
-        public async Task<string> PostRemoteConfigAsync(RemoteConfig remoteConfig)
+        public async Task<string> PostRemoteConfigAsync(AddEditRemoteConfigCommand remoteConfig)
         {
             var response = await this._httpClient.PostAsJsonAsync(RemoteConfigsEndpoint.Create, remoteConfig);
 
@@ -17,22 +19,15 @@ namespace Microscope.SDK.Dotnet
             return clientId;
         }
 
-        public async Task<bool> PutRemoteConfigAsync(Guid id, RemoteConfig remoteConfig)
+        public async Task<bool> PutRemoteConfigAsync(Guid id, AddEditRemoteConfigCommand remoteConfig)
         {
             var response = await this._httpClient.PutAsJsonAsync(RemoteConfigsEndpoint.Update(id), remoteConfig);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<IEnumerable<RemoteConfig>> GetRemoteConfigsAsync()
+        public async Task<IEnumerable<RemoteConfigQueryResult>> GetRemoteConfigsAsync()
         {
-            return await this._httpClient.GetFromJsonAsync<IEnumerable<RemoteConfig>>(RemoteConfigsEndpoint.GetAll);
+            return await this._httpClient.GetFromJsonAsync<IEnumerable<RemoteConfigQueryResult>>(RemoteConfigsEndpoint.GetAll);
         }
-    }
-
-    public class RemoteConfig 
-    {
-        public Guid Id { get; set; }
-        public string Key { get; set; }
-        public string Dimension { get; set; }
     }
 }
