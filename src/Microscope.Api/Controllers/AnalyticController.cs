@@ -9,6 +9,7 @@ using Microscope.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using MediatR;
 using Microscope.Application.Core.Queries.Analytic;
+using Microscope.Application.Core.Commands.Analytic;
 
 namespace Microscope.Api.Controllers
 {
@@ -51,43 +52,26 @@ namespace Microscope.Api.Controllers
         // PUT: api/Analytic/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnalytic(Guid id, Analytic analytic)
+        public async Task<IActionResult> PutAnalytic(Guid id, EditAnalyticCommand command)
         {
-            if (id != analytic.Id)
+            if (id != command.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(analytic).State = EntityState.Modified;
+            await this._mediator.Send(command);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AnalyticExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Analytic
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Analytic>> PostAnalytic(Analytic analytic)
+        public async Task<ActionResult<Analytic>> PostAnalytic(AddAnalyticCommand command)
         {
-            _context.Analytics.Add(analytic);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAnalytic", new { id = analytic.Id }, analytic.Id.ToString());
+            Guid idCreated = await this._mediator.Send(command);
+            return CreatedAtAction("GetAnalytic", new { id = idCreated }, idCreated.ToString());
         }
 
         // DELETE: api/Analytic/5

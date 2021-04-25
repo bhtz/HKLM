@@ -35,8 +35,8 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
         private async Task GetRemoteConfigs()
         {
-            var res = await this._httpClient.GetFromJsonAsync<IEnumerable<RemoteConfigQueryResult>>("api/remoteconfig");
-            this.RemoteConfigs = res.ToList();
+            IEnumerable<RemoteConfigQueryResult> remotes = await _microscopeClient.GetRemoteConfigsAsync();
+            this.RemoteConfigs = remotes.ToList();
         }
 
         private bool FilterFunc(RemoteConfigQueryResult element)

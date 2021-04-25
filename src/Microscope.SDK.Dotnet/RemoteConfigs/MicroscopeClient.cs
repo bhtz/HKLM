@@ -10,16 +10,15 @@ namespace Microscope.SDK.Dotnet
 {
     public partial class MicroscopeClient
     {
-        public async Task<string> PostRemoteConfigAsync(AddEditRemoteConfigCommand remoteConfig)
+        public async Task<string> PostRemoteConfigAsync(AddRemoteConfigCommand command)
         {
-            var response = await this._httpClient.PostAsJsonAsync(RemoteConfigsEndpoint.Create, remoteConfig);
 
-            var locationPathAndQuery = response.Headers.Location.PathAndQuery;
-            var clientId = response.IsSuccessStatusCode ? locationPathAndQuery.Substring(locationPathAndQuery.LastIndexOf("/", StringComparison.Ordinal) + 1) : null;
+            var response = await this._httpClient.PostAsJsonAsync(RemoteConfigsEndpoint.Create, command);
+            var clientId = response.IsSuccessStatusCode ? await response.Content.ReadAsStringAsync() : string.Empty;
             return clientId;
         }
 
-        public async Task<bool> PutRemoteConfigAsync(Guid id, AddEditRemoteConfigCommand remoteConfig)
+        public async Task<bool> PutRemoteConfigAsync(Guid id, EditRemoteConfigCommand remoteConfig)
         {
             var response = await this._httpClient.PutAsJsonAsync(RemoteConfigsEndpoint.Update(id), remoteConfig);
             return response.IsSuccessStatusCode;

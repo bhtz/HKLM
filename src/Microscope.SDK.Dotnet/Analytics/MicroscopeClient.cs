@@ -10,14 +10,14 @@ namespace Microscope.SDK.Dotnet
 {
     public partial class MicroscopeClient
     {
-        public async Task<string> PostAnalyticAsync(AddEditAnalyticCommand command)
+        public async Task<string> PostAnalyticAsync(AddAnalyticCommand command)
         {
             var response = await this._httpClient.PostAsJsonAsync(AnalyticsEndpoint.Create, command);
             var clientId = response.IsSuccessStatusCode ? await response.Content.ReadAsStringAsync() : string.Empty;
             return clientId;
         }
 
-        public async Task<bool> PutAnalyticAsync(Guid id, AddEditAnalyticCommand command)
+        public async Task<bool> PutAnalyticAsync(Guid id, EditAnalyticCommand command)
         {
             var response = await this._httpClient.PutAsJsonAsync(AnalyticsEndpoint.Update(id), command);
             return response.IsSuccessStatusCode;

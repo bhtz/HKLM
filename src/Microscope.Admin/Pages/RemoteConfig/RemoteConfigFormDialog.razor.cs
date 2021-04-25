@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microscope.Application.Core.Commands.RemoteConfig;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -46,10 +47,22 @@ namespace Microscope.Admin.Pages.RemoteConfig
             Success = true;
             StateHasChanged();
 
+
+
             if (this.RemoteConfig.Id != Guid.Empty)
             {
-                var response = await _httpClient.PutAsJsonAsync("api/remoteconfig/" + this.RemoteConfig.Id, this.RemoteConfig);
-                if (response.IsSuccessStatusCode)
+
+
+                var remote = new EditRemoteConfigCommand
+                {
+                    Id = this.RemoteConfig.Id,
+                    Key = this.RemoteConfig.Key,
+                    Dimension = this.RemoteConfig.Dimension
+                };
+
+
+                bool success = await _microscopeClient.PutRemoteConfigAsync(this.RemoteConfig.Id, remote);
+                if (success)
                 {
                     _snackBar.Add("Remote Config updated", Severity.Success);
                     MudDialog.Close(DialogResult.Ok(this.RemoteConfig));
@@ -62,12 +75,17 @@ namespace Microscope.Admin.Pages.RemoteConfig
             }
             else
             {
-                var response = await _httpClient.PostAsJsonAsync("api/remoteconfig", this.RemoteConfig);
-
-                if (response.IsSuccessStatusCode)
+                var remote = new AddRemoteConfigCommand
                 {
-                    RemoteConfigFormViewModel inserted = await response.Content.ReadFromJsonAsync<RemoteConfigFormViewModel>();
-                    this.RemoteConfig.Id = inserted.Id;
+                    Key = this.RemoteConfig.Key,
+                    Dimension = this.RemoteConfig.Dimension
+                };
+
+                string id = await _microscopeClient.PostRemoteConfigAsync(remote);
+
+                if (!string.IsNullOrEmpty(id))
+                {
+                    this.RemoteConfig.Id = Guid.Parse(id);
                     _snackBar.Add("Remote Config added", Severity.Success);
                     MudDialog.Close(DialogResult.Ok(this.RemoteConfig));
                 }

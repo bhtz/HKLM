@@ -3,14 +3,15 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microscope.SDK.Dotnet.Routes;
 using System;
+using Microscope.Application.Core.Commands.Storage;
 
 namespace Microscope.SDK.Dotnet
 {
     public partial class MicroscopeClient
     {
-        public async Task<bool> PostContainerAsync(string name)
+        public async Task<bool> PostContainerAsync(AddContainerCommand command)
         {
-            var response = await this._httpClient.PostAsJsonAsync(StoragesEndpoint.CreateContainer, name);
+            var response = await this._httpClient.PostAsJsonAsync(StoragesEndpoint.CreateContainer, command);
             return response.IsSuccessStatusCode;
         }
 

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microscope.Infrastructure;
 using Microscope.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microscope.Application.Core.Commands.RemoteConfig;
+using MediatR;
 
 namespace Microscope.Api.Controllers
 {
@@ -17,9 +19,13 @@ namespace Microscope.Api.Controllers
     {
         private readonly MicroscopeDbContext _context;
 
-        public RemoteConfigController(MicroscopeDbContext context)
+        private readonly IMediator _mediator;
+
+
+        public RemoteConfigController(MicroscopeDbContext context, IMediator mediator)
         {
             _context = context;
+            _mediator = mediator;
         }
 
         // GET: api/RemoteConfig
@@ -46,43 +52,26 @@ namespace Microscope.Api.Controllers
         // PUT: api/RemoteConfig/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRemoteConfig(Guid id, RemoteConfig remoteConfig)
+        public async Task<IActionResult> PutRemoteConfig(Guid id, EditRemoteConfigCommand command)
         {
-            if (id != remoteConfig.Id)
+            if (id != command.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(remoteConfig).State = EntityState.Modified;
+            await this._mediator.Send(command);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RemoteConfigExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/RemoteConfig
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RemoteConfig>> PostRemoteConfig(RemoteConfig remoteConfig)
+        public async Task<ActionResult<RemoteConfig>> PostRemoteConfig(AddRemoteConfigCommand command)
         {
-            _context.RemoteConfigs.Add(remoteConfig);
-            await _context.SaveChangesAsync();
+            Guid idCreated = await this._mediator.Send(command);
 
-            return CreatedAtAction("GetRemoteConfig", new { id = remoteConfig.Id }, remoteConfig);
+            return CreatedAtAction("GetRemoteConfig", new { id = idCreated }, idCreated.ToString());
         }
 
         // DELETE: api/RemoteConfig/5
@@ -101,9 +90,5 @@ namespace Microscope.Api.Controllers
             return NoContent();
         }
 
-        private bool RemoteConfigExists(Guid id)
-        {
-            return _context.RemoteConfigs.Any(e => e.Id == id);
-        }
     }
 }

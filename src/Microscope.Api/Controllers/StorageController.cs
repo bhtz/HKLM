@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Microscope.Application.Core.Commands.Storage;
 using Microscope.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -91,9 +92,9 @@ namespace Microscope.Api.Controllers
         /// <param name="containerName"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateContainer([FromBody] string containerName)
+        public async Task<IActionResult> CreateContainer([FromBody] AddContainerCommand command)
         {
-            await this._storageService.CreateContainerAsync(containerName);
+            await this._storageService.CreateContainerAsync(command.Name);
             return Ok();
         }
 

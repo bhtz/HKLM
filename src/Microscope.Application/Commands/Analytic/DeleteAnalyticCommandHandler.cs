@@ -7,7 +7,7 @@ using MediatR;
 using Microscope.Application.Core.Commands.Analytic;
 using Microscope.Infrastructure;
 
-namespace Microscope.Application.Features.Analytic.Commands
+namespace Microscope.Application.Commands.Analytic
 {
     public class DeleteAnalyticCommandHandler : IRequestHandler<DeleteAnalyticCommand, Guid>
     {

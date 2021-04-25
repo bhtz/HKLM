@@ -46,15 +46,17 @@ namespace Microscope.Admin.Pages.Analytic
             Success = true;
             StateHasChanged();
 
-            var analytic = new AddEditAnalyticCommand
-            {
-                Id = this.Analytic.Id,
-                Key = this.Analytic.Key,
-                Dimension = this.Analytic.Dimension
-            };
 
-            if (analytic.Id != Guid.Empty)
+
+            if (this.Analytic.Id != Guid.Empty)
             {
+                var analytic = new EditAnalyticCommand
+                {
+                    Id = this.Analytic.Id,
+                    Key = this.Analytic.Key,
+                    Dimension = this.Analytic.Dimension
+                };
+
                 bool success = await _microscopeClient.PutAnalyticAsync(analytic.Id, analytic);
                 if (success)
                 {
@@ -69,6 +71,13 @@ namespace Microscope.Admin.Pages.Analytic
             }
             else
             {
+
+                var analytic = new AddAnalyticCommand
+                {
+                    Key = this.Analytic.Key,
+                    Dimension = this.Analytic.Dimension
+                };
+
                 string id = await _microscopeClient.PostAnalyticAsync(analytic);
 
                 if (!string.IsNullOrEmpty(id))

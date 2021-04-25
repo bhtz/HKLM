@@ -4,18 +4,16 @@ using MediatR;
 
 namespace Microscope.Application.Core.Commands.Analytic
 {
-    public class AddEditAnalyticCommand : IRequest<Guid>
+    public class AddAnalyticCommand : IRequest<Guid>
     {
-        public Guid Id { get; set; }
         public string Key { get; set; }
         public string Dimension { get; set; }
     }
 
-    public class AddEditAnalyticCommandValidator : AbstractValidator<AddEditAnalyticCommand>
+    public class AddAnalyticCommandValidator : AbstractValidator<AddAnalyticCommand>
     {
-        public AddEditAnalyticCommandValidator()
+        public AddAnalyticCommandValidator()
         {
-            RuleFor(v => v.Id).NotEmpty();
             RuleFor(v => v.Key).NotEmpty();
             RuleFor(v => v.Dimension).NotEmpty();
         }
