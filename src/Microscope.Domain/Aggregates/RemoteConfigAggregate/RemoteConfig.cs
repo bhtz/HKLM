@@ -29,8 +29,6 @@ namespace Microscope.Domain.Entities
 
         public void Update(string key, string dimension)
         {
-            //do business logic here 
-
             this.Key = key;
             this.Dimension = dimension;
         }

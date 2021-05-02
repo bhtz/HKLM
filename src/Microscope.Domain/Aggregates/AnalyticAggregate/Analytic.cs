@@ -9,6 +9,7 @@ namespace Microscope.Domain.Entities
         {
 
         }
+
         protected Analytic(Guid id, string key, string dimension) : this()
         {
             this.Id = id;
@@ -29,8 +30,6 @@ namespace Microscope.Domain.Entities
 
         public void Update(string key, string dimension)
         {
-            //do business logic here 
-
             this.Key = key;
             this.Dimension = dimension;
         }

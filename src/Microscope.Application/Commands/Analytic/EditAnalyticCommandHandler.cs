@@ -7,7 +7,7 @@ using MediatR;
 using Microscope.Application.Core.Commands.Analytic;
 using Microscope.Infrastructure;
 
-namespace Microscope.Application.Commands.Analytic
+namespace Microscope.Application.Commands.AnalyticHandlers
 {
     public class EditAnalyticCommandHandler : IRequestHandler<EditAnalyticCommand, Guid>
     {
@@ -22,13 +22,12 @@ namespace Microscope.Application.Commands.Analytic
 
         public async Task<Guid> Handle(EditAnalyticCommand command, CancellationToken cancellationToken)
         {
+            var entity = this._context.Analytics.FirstOrDefault(x => x.Id == command.Id);
 
-                var entity = this._context.Analytics.FirstOrDefault(x => x.Id == command.Id);
-
-                entity.Update(command.Key,command.Dimension);
-                this._context.Update(entity);
-                await this._context.SaveChangesAsync();
+            entity.Update(command.Key, command.Dimension);
             
+            this._context.Update(entity);
+            await this._context.SaveChangesAsync();
 
             return entity.Id;
         }
