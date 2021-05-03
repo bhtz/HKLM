@@ -1,14 +1,16 @@
 using System;
+using Microscope.Domain.Interfaces;
 
 namespace Microscope.Domain.Entities
 {
-    public class RemoteConfig
+    public class RemoteConfig : IAggregateRoot
     {
         #region ctor
         protected RemoteConfig()
         {
 
         }
+        
         protected RemoteConfig(Guid id, string key, string dimension) : this()
         {
             this.Id = id;

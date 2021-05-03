@@ -1,8 +1,9 @@
 using System;
+using Microscope.Domain.Interfaces;
 
 namespace Microscope.Domain.Entities
 {
-    public class Analytic
+    public class Analytic : IAggregateRoot
     {
         #region ctor
         protected Analytic()

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Microscope.Domain.Interfaces;
 
 namespace Microscope.Domain.Aggregates.StorageAggregate
 {
-    public class Container
+    public class Container : IAggregateRoot
     {
         #region ctor
 
