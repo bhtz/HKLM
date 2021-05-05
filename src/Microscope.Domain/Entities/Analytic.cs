@@ -1,26 +1,26 @@
 using System;
-using Microscope.Domain.Interfaces;
+using Microscope.Domain.Kernel;
 
 namespace Microscope.Domain.Entities
 {
-    public class RemoteConfig : IAggregateRoot
+    public class Analytic : IAggregateRoot
     {
         #region ctor
-        protected RemoteConfig()
+        protected Analytic()
         {
 
         }
-        
-        protected RemoteConfig(Guid id, string key, string dimension) : this()
+
+        protected Analytic(Guid id, string key, string dimension) : this()
         {
             this.Id = id;
             this.Key = key;
             this.Dimension = dimension;
         }
 
-        public static RemoteConfig NewRemoteConfig(Guid id, string key, string dimension)
+        public static Analytic NewAnalytic(Guid id, string key, string dimension)
         {
-            return new RemoteConfig(id, key, dimension);
+            return new Analytic(id, key, dimension);
         }
 
         #endregion

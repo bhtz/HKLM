@@ -1,11 +1,9 @@
-using System;
 using Microscope.Domain.Entities;
-using Microscope.Domain.Interfaces;
+using Microscope.Domain.Kernel;
 
 namespace Microscope.Domain.Aggregates.RemoteConfigAggregate
 {
     public interface IRemoteConfigRepository : IRepository<RemoteConfig>
     {
-        IUnitOfWork UnitOfWork { get; }
     }
 }

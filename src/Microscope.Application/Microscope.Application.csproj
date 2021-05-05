@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Microscope.Infrastructure\Microscope.Infrastructure.csproj" />
-    <ProjectReference Include="..\Microscope.Application.Core\Microscope.Application.Core.csproj" />
+    <ProjectReference Include="..\Microscope.Application.Core\Microscope.Application.Features.csproj" />
   </ItemGroup>
 
   <ItemGroup>
