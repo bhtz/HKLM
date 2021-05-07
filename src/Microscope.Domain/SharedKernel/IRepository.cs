@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microscope.Domain.Kernel
+namespace Microscope.Domain.SharedKernel
 {
     public interface IRepository<T> : IRepository<T, Guid> where T : class, IAggregateRoot<Guid>
     {

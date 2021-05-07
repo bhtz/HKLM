@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microscope.Domain.Kernel
+namespace Microscope.Domain.SharedKernel
 {
     public interface IUnitOfWork : IDisposable
     {

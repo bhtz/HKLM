@@ -1,30 +1,29 @@
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microscope.Application.Core.Commands.Analytic;
 using Microscope.Application.Core.Commands.Storage;
-using Microscope.Infrastructure;
+using Microscope.Domain.Entities;
+using Microscope.Domain.Repositories;
 
 namespace Microscope.Application.Commands.Storage
 {
     public class AddContainerCommandHandler : IRequestHandler<AddContainerCommand, string>
     {
-        private readonly MicroscopeDbContext _context;
+        private readonly IContainerRepository _repository;
         private readonly IMapper _mapper;
 
-        public AddContainerCommandHandler(MicroscopeDbContext context, IMapper mapper)
+        public AddContainerCommandHandler(IContainerRepository repository, IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public async Task<string> Handle(AddContainerCommand command, CancellationToken cancellationToken)
         {
-    
-            return await Task.FromResult(string.Empty);
+            Container entity = Container.NewContainer(command.Name);
+            await this._repository.UnitOfWork.SaveChangesAsync();
+            return command.Name;
         }
     }
 }

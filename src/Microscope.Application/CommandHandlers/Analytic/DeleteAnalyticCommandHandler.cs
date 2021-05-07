@@ -5,26 +5,26 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microscope.Application.Core.Commands.Analytic;
-using Microscope.Infrastructure;
+using Microscope.Domain.Aggregates.AnalyticAggregate;
 
 namespace Microscope.Application.Commands.AnalyticHandlers
 {
     public class DeleteAnalyticCommandHandler : IRequestHandler<DeleteAnalyticCommand, Guid>
     {
-        private readonly MicroscopeDbContext _context;
+        private readonly IAnalyticRepository _repository;
         private readonly IMapper _mapper;
         
-        public DeleteAnalyticCommandHandler(MicroscopeDbContext context, IMapper mapper)
+        public DeleteAnalyticCommandHandler(IAnalyticRepository repository, IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
-        public Task<Guid> Handle(DeleteAnalyticCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(DeleteAnalyticCommand request, CancellationToken cancellationToken)
         {
-            var entity = this._context.Analytics.FirstOrDefault(x => x.Id == request.Id);
-            this._context.Analytics.Remove(entity);
-            return Task.FromResult(request.Id);
+            var entity = this._repository.Entities.FirstOrDefault(x => x.Id == request.Id);
+            await this._repository.DeleteAsync(entity);
+            return entity.Id;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microscope.Domain.Entities;
-using Microscope.Domain.Kernel;
+using Microscope.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microscope.Infrastructure

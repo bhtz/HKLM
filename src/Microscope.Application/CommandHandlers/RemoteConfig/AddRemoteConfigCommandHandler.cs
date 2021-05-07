@@ -5,18 +5,19 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microscope.Application.Core.Commands.RemoteConfig;
+using Microscope.Domain.Aggregates.RemoteConfigAggregate;
 using Microscope.Infrastructure;
 
 namespace Microscope.Application.Commands.RemoteConfig
 {
     public class AddRemoteConfigCommandHandler : IRequestHandler<AddRemoteConfigCommand, Guid>
     {
-        private readonly MicroscopeDbContext _context;
+        private readonly IRemoteConfigRepository _repository;
         private readonly IMapper _mapper;
 
-        public AddRemoteConfigCommandHandler(MicroscopeDbContext context, IMapper mapper)
+        public AddRemoteConfigCommandHandler(IRemoteConfigRepository repository, IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
@@ -25,8 +26,8 @@ namespace Microscope.Application.Commands.RemoteConfig
 
             var entity = Microscope.Domain.Entities.RemoteConfig.NewRemoteConfig(Guid.NewGuid(), command.Key, command.Dimension);
 
-            this._context.RemoteConfigs.Add(entity);
-            await this._context.SaveChangesAsync(cancellationToken);
+            await this._repository.AddAsync(entity);
+            await this._repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
         }

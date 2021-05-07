@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microscope.Application.Core.Commands.Analytic;
+using Microscope.Domain.Aggregates.AnalyticAggregate;
 using Microscope.Domain.Entities;
 using Microscope.Infrastructure;
 
@@ -12,20 +13,20 @@ namespace Microscope.Application.Commands.AnalyticHandlers
 {
     public class AddAnalyticCommandHandler : IRequestHandler<AddAnalyticCommand, Guid>
     {
-        private readonly MicroscopeDbContext _context;
+        private readonly IAnalyticRepository _repository;
         private readonly IMapper _mapper;
 
-        public AddAnalyticCommandHandler(MicroscopeDbContext context, IMapper mapper)
+        public AddAnalyticCommandHandler(IAnalyticRepository repository, IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public async Task<Guid> Handle(AddAnalyticCommand command, CancellationToken cancellationToken)
         {
-            var entity = Analytic.NewAnalytic(Guid.NewGuid(),command.Key,command.Dimension);
-            this._context.Analytics.Add(entity);
-            await this._context.SaveChangesAsync(cancellationToken);
+            var entity = Analytic.NewAnalytic(Guid.NewGuid(), command.Key, command.Dimension);
+            await this._repository.AddAsync(entity);
+            await this._repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
         }

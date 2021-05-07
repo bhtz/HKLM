@@ -1,4 +1,4 @@
-using Microscope.Domain.Kernel;
+using Microscope.Domain.SharedKernel;
 
 namespace Microscope.Domain.Entities
 {

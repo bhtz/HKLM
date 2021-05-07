@@ -1,6 +1,6 @@
 using System;
 
-namespace Microscope.Domain.Kernel
+namespace Microscope.Domain.SharedKernel
 {
     public interface IAggregateRoot : IAggregateRoot<Guid>
     {

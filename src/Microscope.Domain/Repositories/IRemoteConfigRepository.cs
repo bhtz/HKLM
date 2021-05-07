@@ -1,5 +1,5 @@
 using Microscope.Domain.Entities;
-using Microscope.Domain.Kernel;
+using Microscope.Domain.SharedKernel;
 
 namespace Microscope.Domain.Aggregates.RemoteConfigAggregate
 {
