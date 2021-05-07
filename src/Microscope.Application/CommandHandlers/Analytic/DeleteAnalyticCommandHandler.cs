@@ -22,7 +22,7 @@ namespace Microscope.Application.Commands.AnalyticHandlers
 
         public async Task<Guid> Handle(DeleteAnalyticCommand request, CancellationToken cancellationToken)
         {
-            var entity = this._repository.Entities.FirstOrDefault(x => x.Id == request.Id);
+            var entity = await this._repository.GetByIdAsync(request.Id);
             await this._repository.DeleteAsync(entity);
             return entity.Id;
         }

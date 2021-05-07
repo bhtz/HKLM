@@ -6,7 +6,6 @@ using AutoMapper;
 using MediatR;
 using Microscope.Application.Core.Commands.Analytic;
 using Microscope.Domain.Aggregates.AnalyticAggregate;
-using Microscope.Infrastructure;
 
 namespace Microscope.Application.Commands.AnalyticHandlers
 {

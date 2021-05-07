@@ -1,34 +1,32 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
-using Microscope.Application.Core.Queries.Analytic;
 using Microscope.Application.Core.Queries.RemoteConfig;
-using Microscope.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+using Microscope.Domain.Aggregates.RemoteConfigAggregate;
 
 namespace Microscope.Application.Features.Analytic.Queries
 {
     public class FilteredRemoteConfigQueryHandler : IRequestHandler<FilteredRemoteConfigQuery, IEnumerable<RemoteConfigQueryResult>>
     {
-        private readonly MicroscopeDbContext _microscopeDbContext;
+        private readonly IRemoteConfigRepository _repository;
         private readonly IMapper _mapper;
 
-        public FilteredRemoteConfigQueryHandler(MicroscopeDbContext context, IMapper mapper)
+        public FilteredRemoteConfigQueryHandler(IRemoteConfigRepository repository, IMapper mapper)
         {
-            _microscopeDbContext = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<RemoteConfigQueryResult>> Handle(FilteredRemoteConfigQuery request, CancellationToken cancellationToken)
         {
-            return await this._microscopeDbContext
-                .RemoteConfigs
-                .ProjectTo<RemoteConfigQueryResult>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var result =  await this._repository.GetAllAsync();
+            
+            return _mapper
+                .ProjectTo<RemoteConfigQueryResult>(result.AsQueryable())
+                .ToList();
         }
     }
 }

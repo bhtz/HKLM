@@ -6,7 +6,6 @@ using AutoMapper;
 using MediatR;
 using Microscope.Application.Core.Commands.RemoteConfig;
 using Microscope.Domain.Aggregates.RemoteConfigAggregate;
-using Microscope.Infrastructure;
 
 namespace Microscope.Application.Commands.RemoteConfig
 {

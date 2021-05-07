@@ -37,7 +37,7 @@ namespace Microscope.Infrastructure
             base.OnModelCreating(builder);
         }
 
-        public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+        public async Task<bool> SaveChangesAndDispatchEventsAsync(CancellationToken cancellationToken = default)
         {
             var result = await base.SaveChangesAsync(cancellationToken);
             return true;

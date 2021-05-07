@@ -1,12 +1,10 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microscope.Application.Core.Commands.RemoteConfig;
 using Microscope.Domain.Aggregates.RemoteConfigAggregate;
-using Microscope.Infrastructure;
 
 namespace Microscope.Application.Commands.RemoteConfig
 {
@@ -23,8 +21,7 @@ namespace Microscope.Application.Commands.RemoteConfig
 
         public async Task<Guid> Handle(EditRemoteConfigCommand command, CancellationToken cancellationToken)
         {
-
-            var entity = this._repository.Entities.SingleOrDefault(x => x.Id == command.Id);
+            var entity = await this._repository.GetByIdAsync(command.Id);
             entity.Update(command.Key, command.Dimension);
 
             await this._repository.UpdateAsync(entity);
