@@ -6,6 +6,6 @@ namespace Microscope.Domain.Aggregates.AnalyticAggregate
 {
     public interface IAnalyticRepository : IRepository<Analytic>
     {
-        IQueryable<Analytic> Entities { get; }
+        
     }
 }

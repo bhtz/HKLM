@@ -22,6 +22,7 @@ namespace Microscope.Application.Commands.Storage
         public async Task<string> Handle(AddContainerCommand command, CancellationToken cancellationToken)
         {
             Container entity = Container.NewContainer(command.Name);
+            await this._repository.AddAsync(entity);
             await this._repository.UnitOfWork.SaveChangesAsync();
             return command.Name;
         }

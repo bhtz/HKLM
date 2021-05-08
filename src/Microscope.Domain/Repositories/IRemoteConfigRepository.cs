@@ -6,6 +6,6 @@ namespace Microscope.Domain.Aggregates.RemoteConfigAggregate
 {
     public interface IRemoteConfigRepository : IRepository<RemoteConfig>
     {
-        IQueryable<RemoteConfig> Entities { get; }
+        
     }
 }
