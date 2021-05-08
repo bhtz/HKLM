@@ -5,15 +5,24 @@ using System.Threading.Tasks;
 
 namespace Microscope.Domain.SharedKernel
 {
+
+    public interface IRepository
+    {
+        IUnitOfWork UnitOfWork { get; }
+    }
+
     public interface IRepository<T> : IRepository<T, Guid> where T : class, IAggregateRoot<Guid>
     {
 
     }
 
-    public interface IRepository<T, TId> where T : IAggregateRoot<TId>
+    public interface IRepository<T, TId> : IRepository where T : class, IAggregateRoot<TId>
     {
-        IUnitOfWork UnitOfWork { get; }
 
+    }
+
+    public interface ICrudRepository<T, TId> : IRepository where T : class, IAggregateRoot<TId>
+    {
         Task<T> GetByIdAsync(TId id);
 
         Task<List<T>> GetAllAsync();
@@ -23,5 +32,10 @@ namespace Microscope.Domain.SharedKernel
         Task UpdateAsync(T entity);
 
         Task DeleteAsync(T entity);
+    }
+
+    public interface ICrudRepository<T> : ICrudRepository<T, Guid> where T : class, IAggregateRoot<Guid>
+    {
+        
     }
 }

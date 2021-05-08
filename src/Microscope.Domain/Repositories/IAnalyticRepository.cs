@@ -4,7 +4,7 @@ using Microscope.Domain.SharedKernel;
 
 namespace Microscope.Domain.Aggregates.AnalyticAggregate
 {
-    public interface IAnalyticRepository : IRepository<Analytic>
+    public interface IAnalyticRepository : ICrudRepository<Analytic>
     {
         
     }

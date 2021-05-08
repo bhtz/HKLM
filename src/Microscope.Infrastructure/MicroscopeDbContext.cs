@@ -17,6 +17,8 @@ namespace Microscope.Infrastructure
 
         public virtual DbSet<Analytic> Analytics { get; set; }
         public virtual DbSet<RemoteConfig> RemoteConfigs { get; set; }
+        public virtual DbSet<Container> Containers { get; set; }
+        public virtual DbSet<Blob> Blobs { get; set; }
         
         #endregion
         

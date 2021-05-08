@@ -5,7 +5,7 @@ using Microscope.Domain.SharedKernel;
 
 namespace Microscope.Domain.Repositories
 {
-    public interface IBlobRepository : IRepository<Blob>
+    public interface IBlobRepository : IRepository<Blob, string>
     {
         Task<Stream> GetBlobData(Blob blob);
     }

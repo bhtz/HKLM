@@ -3,7 +3,7 @@ using Microscope.Domain.SharedKernel;
 
 namespace Microscope.Domain.Entities
 {
-    public class Blob : IAggregateRoot
+    public class Blob : IAggregateRoot<string>
     {
         #region ctor
 
