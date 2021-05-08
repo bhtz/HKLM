@@ -8,5 +8,13 @@ namespace Microscope.Domain.Repositories
     public interface IContainerRepository : IRepository<Container, string>
     {
         Task<List<Blob>> GetBlobsAsync(Container container);
+
+        Task<List<Container>> GetAllAsync();
+
+        Task AddAsync(Container entity);
+
+        Task UpdateAsync(Container entity);
+
+        Task DeleteAsync(Container entity);
     }
 }

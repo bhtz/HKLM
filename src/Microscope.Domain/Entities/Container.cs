@@ -26,7 +26,11 @@ namespace Microscope.Domain.Entities
         #region properties
 
         public string Id { get; private set; }
-        public string Name () => Id;
+        public string Name
+        { 
+            get { return Id; }  
+            set { Id = value; }
+        }
 
         #endregion
     }

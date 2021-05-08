@@ -8,5 +8,9 @@ namespace Microscope.Domain.Repositories
     public interface IBlobRepository : IRepository<Blob, string>
     {
         Task<Stream> GetBlobData(Blob blob);
+
+        Task SaveAsync(Blob blob);
+
+        Task DeleteAsync(Blob blob);
     }
 }

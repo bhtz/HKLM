@@ -38,7 +38,15 @@ namespace Microscope.Domain.Entities
         public string Id { get; private set; }
         public byte[] Data { get; private set; }
         public string ContainerName { get; private set; }
-        public string Name () => Id;
-        public int Size () => Data.Length;
+        public string Name
+        {
+            get { return Id; }
+        }
+        public long GetSize() => Data.Length;
+
+        public Stream ToStream()
+        {
+            return new MemoryStream(this.Data);
+        }
     }
 }
