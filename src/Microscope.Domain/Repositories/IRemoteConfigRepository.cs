@@ -1,4 +1,3 @@
-using System.Linq;
 using Microscope.Domain.Entities;
 using Microscope.Domain.SharedKernel;
 
