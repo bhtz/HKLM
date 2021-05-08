@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Microscope.Infrastructure.Repositories
 {
-    public class EFRepositoryBase<TEntity> : EFRepositoryBase<TEntity, Guid>, IRepository<TEntity> where TEntity : class, IAggregateRoot<Guid>
+    public class EFRepositoryBase<TEntity> : EFRepositoryBase<TEntity, Guid>, ICrudRepository<TEntity> where TEntity : class, IAggregateRoot<Guid>
     {
         public EFRepositoryBase(MicroscopeDbContext context) : base(context)
         {
         }
     }
 
-    public class EFRepositoryBase<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : class, IAggregateRoot<TPrimaryKey>
+    public class EFRepositoryBase<TEntity, TPrimaryKey> : ICrudRepository<TEntity, TPrimaryKey> where TEntity : class, IAggregateRoot<TPrimaryKey>
     {
 
         protected readonly MicroscopeDbContext _context;

@@ -9,12 +9,9 @@ namespace Microscope.Infrastructure.Repositories.Analytics
 {
     public class AnalyticRepository : EFRepositoryBase<Analytic>, IAnalyticRepository
     {
-
-
         public AnalyticRepository(MicroscopeDbContext context) : base(context)
         {
-        }
-
-       
+            
+        }  
     }
 }

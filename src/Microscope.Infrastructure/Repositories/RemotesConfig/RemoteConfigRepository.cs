@@ -7,6 +7,7 @@ namespace Microscope.Infrastructure.Repositories.RemotesConfig
     {
         public RemoteConfigRepository(MicroscopeDbContext context) : base(context)
         {
+            
         }
     }
 }
