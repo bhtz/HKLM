@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 using MediatR;
 
@@ -13,7 +12,9 @@ namespace Microscope.Application.Features.Storage.Commands
     {
         public AddContainerCommandValidator()
         {
-            RuleFor(v => v.Name).NotEmpty();
+            RuleFor(v => v.Name)
+                .NotEmpty()
+                .Matches(@"^\S*$");
         }
     }
 }

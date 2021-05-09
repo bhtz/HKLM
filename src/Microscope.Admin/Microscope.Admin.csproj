@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microscope.Domain\Microscope.Domain.csproj" />
     <ProjectReference Include="..\Microscope.SDK.Dotnet\Microscope.SDK.Dotnet.csproj" />
     <ProjectReference Include="..\Microscope.Application.Core\Microscope.Application.Features.csproj" />
   </ItemGroup>
