@@ -44,6 +44,8 @@ namespace Microscope.Domain.Entities
         }
         public long GetSize() => Data.Length;
 
+        public bool IsHydrated() => Data.Length > 0;
+
         public Stream ToStream()
         {
             return new MemoryStream(this.Data);
