@@ -1,6 +1,6 @@
 using System;
 
-namespace Microscope.Storage
+namespace Microscope.Infrastructure.Storage
 {
     public class StorageOptions
     {

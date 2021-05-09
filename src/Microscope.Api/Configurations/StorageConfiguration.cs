@@ -1,4 +1,5 @@
-using Microscope.Storage;
+using Microscope.Domain.Services;
+using Microscope.Infrastructure.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

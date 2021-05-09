@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Minio.DataModel;
+using Microscope.Domain.Services;
 
-namespace Microscope.Storage
+namespace Microscope.Infrastructure.Storage
 {
     public class BlobStorageService : IStorageService
     {

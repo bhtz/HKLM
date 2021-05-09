@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Linq;
+using Microscope.Domain.Services;
 
-namespace Microscope.Storage
+namespace Microscope.Infrastructure.Storage
 {
     public class MinioStorageService : IStorageService
     {
