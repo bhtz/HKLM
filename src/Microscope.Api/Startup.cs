@@ -31,7 +31,6 @@ namespace Microscope.Api
             services.AddSwaggerConfiguration(Configuration);
             services.AddAuthenticationConfiguration(Configuration);
             services.AddAuthorizationConfiguration(Configuration);
-            services.AddStorageConfiguration(Configuration);
         }
 
         /// <summary>
