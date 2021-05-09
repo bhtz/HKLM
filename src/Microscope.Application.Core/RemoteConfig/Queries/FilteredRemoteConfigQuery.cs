@@ -4,12 +4,12 @@ using MediatR;
 
 namespace Microscope.Application.Core.Queries.RemoteConfig
 {
-    public class FilteredRemoteConfigQuery : IRequest<IEnumerable<RemoteConfigQueryResult>>
+    public class FilteredRemoteConfigQuery : IRequest<IEnumerable<FilteredRemoteConfigQueryResult>>
     {
         
     }
 
-    public class RemoteConfigQueryResult
+    public class FilteredRemoteConfigQueryResult
     {
         public Guid Id { get; set; }
         public string Key { get; set; }

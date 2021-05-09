@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microscope.Infrastructure;
 using Microscope.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using MediatR;
 using Microscope.Application.Features.RemoteConfig.Commands;
+using Microscope.Application.Core.Queries.RemoteConfig;
+using Microscope.Application.Features.RemoteConfig.Queries;
 
 namespace Microscope.Api.Controllers
 {
@@ -17,14 +16,11 @@ namespace Microscope.Api.Controllers
     [Authorize]
     public class RemoteConfigController : ControllerBase
     {
-        private readonly MicroscopeDbContext _context;
-
         private readonly IMediator _mediator;
 
 
-        public RemoteConfigController(MicroscopeDbContext context, IMediator mediator)
+        public RemoteConfigController(IMediator mediator)
         {
-            _context = context;
             _mediator = mediator;
         }
 
@@ -32,21 +28,20 @@ namespace Microscope.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RemoteConfig>>> GetRemoteConfigs()
         {
-            return await _context.RemoteConfigs.ToListAsync();
+            var query = new FilteredRemoteConfigQuery();
+            var results = await this._mediator.Send(query);
+
+            return Ok(results);
         }
 
         // GET: api/RemoteConfig/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RemoteConfig>> GetRemoteConfig(Guid id)
         {
-            var remoteConfig = await _context.RemoteConfigs.FindAsync(id);
+            var query = new GetRemoteConfigByIdQuery(id);
+            var results = await this._mediator.Send(query);
 
-            if (remoteConfig == null)
-            {
-                return NotFound();
-            }
-
-            return remoteConfig;
+            return Ok(results);
         }
 
         // PUT: api/RemoteConfig/5
@@ -78,14 +73,8 @@ namespace Microscope.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRemoteConfig(Guid id)
         {
-            var remoteConfig = await _context.RemoteConfigs.FindAsync(id);
-            if (remoteConfig == null)
-            {
-                return NotFound();
-            }
-
-            _context.RemoteConfigs.Remove(remoteConfig);
-            await _context.SaveChangesAsync();
+            var cmd = new DeleteRemoteConfigCommand(){ Id = id };
+            await this._mediator.Send(cmd);
 
             return NoContent();
         }

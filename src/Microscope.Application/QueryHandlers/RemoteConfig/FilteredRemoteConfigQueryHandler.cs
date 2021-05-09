@@ -9,7 +9,7 @@ using Microscope.Domain.Aggregates.RemoteConfigAggregate;
 
 namespace Microscope.Application.Features.Analytic.Queries
 {
-    public class FilteredRemoteConfigQueryHandler : IRequestHandler<FilteredRemoteConfigQuery, IEnumerable<RemoteConfigQueryResult>>
+    public class FilteredRemoteConfigQueryHandler : IRequestHandler<FilteredRemoteConfigQuery, IEnumerable<FilteredRemoteConfigQueryResult>>
     {
         private readonly IRemoteConfigRepository _repository;
         private readonly IMapper _mapper;
@@ -20,12 +20,12 @@ namespace Microscope.Application.Features.Analytic.Queries
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<RemoteConfigQueryResult>> Handle(FilteredRemoteConfigQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<FilteredRemoteConfigQueryResult>> Handle(FilteredRemoteConfigQuery request, CancellationToken cancellationToken)
         {
             var result =  await this._repository.GetAllAsync();
             
             return _mapper
-                .ProjectTo<RemoteConfigQueryResult>(result.AsQueryable())
+                .ProjectTo<FilteredRemoteConfigQueryResult>(result.AsQueryable())
                 .ToList();
         }
     }

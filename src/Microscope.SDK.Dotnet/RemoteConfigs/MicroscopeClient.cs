@@ -24,9 +24,9 @@ namespace Microscope.SDK.Dotnet
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<IEnumerable<RemoteConfigQueryResult>> GetRemoteConfigsAsync()
+        public async Task<IEnumerable<FilteredRemoteConfigQueryResult>> GetRemoteConfigsAsync()
         {
-            return await this._httpClient.GetFromJsonAsync<IEnumerable<RemoteConfigQueryResult>>(RemoteConfigsEndpoint.GetAll);
+            return await this._httpClient.GetFromJsonAsync<IEnumerable<FilteredRemoteConfigQueryResult>>(RemoteConfigsEndpoint.GetAll);
         }
     }
 }

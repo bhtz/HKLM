@@ -17,7 +17,7 @@ namespace Microscope.Application.CommandHandlers.Storage
 
         public async Task<bool> Handle(DeleteBlobCommand request, CancellationToken cancellationToken)
         {
-            await this._storageService.DeleteBlobAsync(request.ContainerName, request.Name);
+            await this._storageService.DeleteBlobAsync(request.ContainerName, request.BlobName);
             return true;
         }
     }

@@ -7,7 +7,7 @@
 
 <MudButton Variant="Variant.Filled" OnClick="OpenCreateDialog" Color="Color.Primary">NEW</MudButton>
 
-<MudTable Class="mt-2" Items="@RemoteConfigs" Striped="true" Hover="true" Filter="new Func<RemoteConfigQueryResult, bool>(FilterFunc)">
+<MudTable Class="mt-2" Items="@RemoteConfigs" Striped="true" Hover="true" Filter="new Func<FilteredRemoteConfigQueryResult, bool>(FilterFunc)">
   <ToolBarContent>
     <MudText Typo="Typo.h6">Remote Config</MudText>
     <MudToolBarSpacer />

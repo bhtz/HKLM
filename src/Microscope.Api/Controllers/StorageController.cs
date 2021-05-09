@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microscope.Application.Features.Storage.Commands;
+using Microscope.Application.Features.Storage.Queries;
 using Microscope.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,11 +17,11 @@ namespace Microscope.Api.Controllers
     [Authorize]
     public class StorageController : ControllerBase
     {
-        private readonly IStorageService _storageService;
+        private readonly IMediator _mediator;
 
-        public StorageController(IStorageService storageService)
+        public StorageController(IMediator mediator)
         {
-            _storageService = storageService;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -36,7 +39,16 @@ namespace Microscope.Api.Controllers
                 using (var ms = new MemoryStream())
                 {
                     file.CopyTo(ms);
-                    await this._storageService.SaveBlobAsync(containerName, file.FileName, ms);
+                    
+                    var cmd = new UploadBlobCommand()
+                    {
+                        BlobName = file.FileName,
+                        ContainerName = containerName,
+                        Data = ms
+                    };
+
+                    await this._mediator.Send(cmd);
+
                     return Ok();
                 }
             }
@@ -56,12 +68,18 @@ namespace Microscope.Api.Controllers
         [Route("{containerName}/{blobName}")]
         public async Task<FileContentResult> GetBlob([FromRoute] string containerName, [FromRoute] string blobName)
         {
-            var stream = await this._storageService.GetBlobAsync(containerName, blobName);
-            stream.Position = 0;
+            var query = new DownloadBlobQuery() 
+            {
+                BlobName = blobName,
+                ContainerName = containerName
+            };
+            
+            var result = await this._mediator.Send(query);
+            result.Data.Position = 0;
 
             using (MemoryStream ms = new MemoryStream())
             {
-                stream.CopyTo(ms);
+                result.Data.CopyTo(ms);
                 return File(ms.ToArray(), "application/octet-stream", blobName);
             }
         }
@@ -75,15 +93,23 @@ namespace Microscope.Api.Controllers
         [Route("{containerName}")]
         public async Task<IEnumerable<string>> ListBlob([FromRoute] string containerName)
         {
-            var blobs = await this._storageService.ListBlobsAsync(containerName);
-            return blobs;
+            var query = new GetBlobsByContainerQuery()
+            {
+                ContainerName = containerName
+            };
+
+            var results = await this._mediator.Send(query);
+
+            return results.Select(x => x.Name);
         }
 
         [HttpGet]
         public async Task<IEnumerable<string>> ListContainers()
         {
-            var containers = await this._storageService.ListContainersAsync();
-            return containers;
+            var query = new FilteredContainerQuery();
+            var results = await this._mediator.Send(query);
+
+            return results.Select(x => x.Name);
         }
 
         /// <summary>
@@ -94,7 +120,8 @@ namespace Microscope.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateContainer([FromBody] AddContainerCommand command)
         {
-            await this._storageService.CreateContainerAsync(command.Name);
+            await this._mediator.Send(command);
+
             return Ok();
         }
 
@@ -110,7 +137,14 @@ namespace Microscope.Api.Controllers
         {
             try
             {
-                await this._storageService.DeleteBlobAsync(containerName, blobName);
+                var cmd = new DeleteBlobCommand()
+                {
+                    ContainerName = containerName,
+                    BlobName = blobName
+                };
+
+                await this._mediator.Send(cmd);
+                
                 return Ok();   
             }
             catch (System.Exception)

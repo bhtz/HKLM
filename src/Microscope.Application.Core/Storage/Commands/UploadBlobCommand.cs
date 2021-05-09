@@ -7,7 +7,7 @@ namespace Microscope.Application.Features.Storage.Commands
 {
     public class UploadBlobCommand : IRequest<bool>
     {
-        public string Name { get; set; }
+        public string BlobName { get; set; }
         public string ContainerName { get; set; }
         public Stream Data { get; set; }
     }
@@ -16,7 +16,7 @@ namespace Microscope.Application.Features.Storage.Commands
     {
         public UploadBlobCommandValidator()
         {
-            RuleFor(v => v.Name).NotEmpty();
+            RuleFor(v => v.BlobName).NotEmpty();
             RuleFor(v => v.Data).NotEmpty();
         }
     }

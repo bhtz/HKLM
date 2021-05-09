@@ -12,6 +12,7 @@ namespace Microscope.Application.Commands.Storage
 
         public AddContainerCommandHandler(IStorageService storageService)
         {
+            _storageService = storageService;
         }
 
         public async Task<string> Handle(AddContainerCommand command, CancellationToken cancellationToken)

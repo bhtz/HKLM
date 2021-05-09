@@ -24,7 +24,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
         #endregion
 
         #region properties
-        public IList<RemoteConfigQueryResult> RemoteConfigs { get; set; } = new List<RemoteConfigQueryResult>();
+        public IList<FilteredRemoteConfigQueryResult> RemoteConfigs { get; set; } = new List<FilteredRemoteConfigQueryResult>();
         public string SearchTerm { get; set; } = String.Empty;
         #endregion
 
@@ -35,11 +35,11 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
         private async Task GetRemoteConfigs()
         {
-            IEnumerable<RemoteConfigQueryResult> remotes = await _microscopeClient.GetRemoteConfigsAsync();
+            IEnumerable<FilteredRemoteConfigQueryResult> remotes = await _microscopeClient.GetRemoteConfigsAsync();
             this.RemoteConfigs = remotes.ToList();
         }
 
-        private bool FilterFunc(RemoteConfigQueryResult element)
+        private bool FilterFunc(FilteredRemoteConfigQueryResult element)
         {
             if (string.IsNullOrWhiteSpace(SearchTerm))
                 return true;
@@ -66,7 +66,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
             {
                 var newItem = (RemoteConfigFormViewModel)result.Data;
                 //In a real world scenario we would reload the data from the source
-                RemoteConfigQueryResult newRemoteConfig = new RemoteConfigQueryResult
+                FilteredRemoteConfigQueryResult newRemoteConfig = new FilteredRemoteConfigQueryResult
                 {
                     Id = newItem.Id,
                     Key = newItem.Key,
@@ -78,7 +78,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
             }
         }
 
-        private async Task OnSelectItem(RemoteConfigQueryResult item)
+        private async Task OnSelectItem(FilteredRemoteConfigQueryResult item)
         {
 
             RemoteConfigFormViewModel dto = new RemoteConfigFormViewModel
@@ -116,7 +116,7 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
             }
         }
-        private async Task Delete(RemoteConfigQueryResult item)
+        private async Task Delete(FilteredRemoteConfigQueryResult item)
         {
             var parameters = new DialogParameters();
             parameters.Add("ContentText", "Are you sure ?");

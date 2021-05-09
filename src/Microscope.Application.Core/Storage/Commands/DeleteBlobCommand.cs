@@ -6,7 +6,7 @@ namespace Microscope.Application.Features.Storage.Commands
 {
     public class DeleteBlobCommand : IRequest<bool>
     {
-        public string Name { get; set; }
+        public string BlobName { get; set; }
         public string ContainerName { get; set; }
     }
 
@@ -14,7 +14,7 @@ namespace Microscope.Application.Features.Storage.Commands
     {
         public DeleteBlobCommandValidator()
         {
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.BlobName).NotEmpty();
             RuleFor(x => x.ContainerName).NotEmpty();
         }
     }

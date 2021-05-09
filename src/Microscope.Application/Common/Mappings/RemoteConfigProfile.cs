@@ -8,7 +8,7 @@ namespace Microscope.Application.Common.Mappings
     {
         public RemoteConfigProfile()
         {
-            CreateMap<RemoteConfig, RemoteConfigQueryResult>().ReverseMap();
+            CreateMap<RemoteConfig, FilteredRemoteConfigQueryResult>().ReverseMap();
         }
     }
 }

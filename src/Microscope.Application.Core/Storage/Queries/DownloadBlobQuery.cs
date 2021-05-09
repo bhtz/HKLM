@@ -3,13 +3,13 @@ using MediatR;
 
 namespace Microscope.Application.Features.Storage.Queries
 {
-    public class DonloadFileQuery : IRequest<BlobQueryResult>
+    public class DownloadBlobQuery : IRequest<BlobDataQueryResult>
     {
         public string ContainerName { get; set; }
-        public string Name { get; set; }
+        public string BlobName { get; set; }
     }
 
-    public class BlobQueryResult 
+    public class BlobDataQueryResult 
     {
         public string Name { get; set; }
         public Stream Data { get; set; }

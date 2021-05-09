@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microscope.Infrastructure;
@@ -17,12 +16,10 @@ namespace Microscope.Api.Controllers
     [Authorize]
     public class AnalyticController : ControllerBase
     {
-        private readonly MicroscopeDbContext _context;
         private readonly IMediator _mediator;
 
         public AnalyticController(MicroscopeDbContext context, IMediator mediator)
         {
-            _context = context;
             _mediator = mediator;
         }
 
@@ -38,14 +35,10 @@ namespace Microscope.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Analytic>> GetAnalytic(Guid id)
         {
-            var analytic = await _context.Analytics.FindAsync(id);
+            var query = new GetAnalyticByIdQuery(id);
+            var results = await this._mediator.Send(query);
 
-            if (analytic == null)
-            {
-                return NotFound();
-            }
-
-            return analytic;
+            return Ok(results);
         }
 
         // PUT: api/Analytic/5
@@ -60,7 +53,6 @@ namespace Microscope.Api.Controllers
 
             await this._mediator.Send(command);
 
-
             return Ok();
         }
 
@@ -70,6 +62,7 @@ namespace Microscope.Api.Controllers
         public async Task<ActionResult<Analytic>> PostAnalytic(AddAnalyticCommand command)
         {
             Guid idCreated = await this._mediator.Send(command);
+
             return CreatedAtAction("GetAnalytic", new { id = idCreated }, idCreated.ToString());
         }
 
@@ -77,21 +70,10 @@ namespace Microscope.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnalytic(Guid id)
         {
-            var analytic = await _context.Analytics.FindAsync(id);
-            if (analytic == null)
-            {
-                return NotFound();
-            }
-
-            _context.Analytics.Remove(analytic);
-            await _context.SaveChangesAsync();
+            var cmd = new DeleteAnalyticCommand(){ Id = id };
+            await this._mediator.Send(cmd);
 
             return NoContent();
-        }
-
-        private bool AnalyticExists(Guid id)
-        {
-            return _context.Analytics.Any(e => e.Id == id);
         }
     }
 }
