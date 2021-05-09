@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microscope.Application.Core.Commands.RemoteConfig;
+using Microscope.Application.Features.RemoteConfig.Commands;
 using Microscope.Domain.Aggregates.RemoteConfigAggregate;
 
 namespace Microscope.Application.Commands.RemoteConfig

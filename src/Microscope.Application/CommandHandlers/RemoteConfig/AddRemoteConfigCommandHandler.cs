@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microscope.Application.Core.Commands.RemoteConfig;
+using Microscope.Application.Features.RemoteConfig.Commands;
 using Microscope.Domain.Aggregates.RemoteConfigAggregate;
 
 namespace Microscope.Application.Commands.RemoteConfig
@@ -22,7 +22,6 @@ namespace Microscope.Application.Commands.RemoteConfig
 
         public async Task<Guid> Handle(AddRemoteConfigCommand command, CancellationToken cancellationToken)
         {
-
             var entity = Microscope.Domain.Entities.RemoteConfig.NewRemoteConfig(Guid.NewGuid(), command.Key, command.Dimension);
 
             await this._repository.AddAsync(entity);

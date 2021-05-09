@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microscope.Application.Core.Commands.Analytic;
+using Microscope.Application.Features.Analytic.Commands;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;

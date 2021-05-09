@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microscope.Application.Features.Commands.Storage;
+using Microscope.Application.Features.Storage.Commands;
 using Microscope.Domain.Services;
 
 namespace Microscope.Application.CommandHandlers.Storage

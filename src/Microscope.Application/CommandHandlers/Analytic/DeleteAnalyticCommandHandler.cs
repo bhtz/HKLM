@@ -1,10 +1,9 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microscope.Application.Core.Commands.Analytic;
+using Microscope.Application.Features.Analytic.Commands;
 using Microscope.Domain.Aggregates.AnalyticAggregate;
 
 namespace Microscope.Application.Commands.AnalyticHandlers

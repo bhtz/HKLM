@@ -3,8 +3,8 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microscope.SDK.Dotnet.Routes;
 using System;
-using Microscope.Application.Core.Commands.RemoteConfig;
 using Microscope.Application.Core.Queries.RemoteConfig;
+using Microscope.Application.Features.RemoteConfig.Commands;
 
 namespace Microscope.SDK.Dotnet
 {

@@ -2,17 +2,17 @@ using System;
 using FluentValidation;
 using MediatR;
 
-namespace Microscope.Application.Core.Commands.RemoteConfig
+namespace Microscope.Application.Features.Analytic.Commands
 {
-    public class AddRemoteConfigCommand : IRequest<Guid>
+    public class AddAnalyticCommand : IRequest<Guid>
     {
         public string Key { get; set; }
         public string Dimension { get; set; }
     }
 
-    public class AddRemoteConfigCommandValidator : AbstractValidator<AddRemoteConfigCommand>
+    public class AddAnalyticCommandValidator : AbstractValidator<AddAnalyticCommand>
     {
-        public AddRemoteConfigCommandValidator()
+        public AddAnalyticCommandValidator()
         {
             RuleFor(v => v.Key).NotEmpty();
             RuleFor(v => v.Dimension).NotEmpty();

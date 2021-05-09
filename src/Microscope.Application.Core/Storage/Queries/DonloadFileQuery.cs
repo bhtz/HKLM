@@ -1,8 +1,7 @@
-using System;
 using System.IO;
 using MediatR;
 
-namespace Microscope.Application.Features.Queries.Storage
+namespace Microscope.Application.Features.Storage.Queries
 {
     public class DonloadFileQuery : IRequest<BlobQueryResult>
     {

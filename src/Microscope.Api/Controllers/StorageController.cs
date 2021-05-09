@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microscope.Application.Core.Commands.Storage;
+using Microscope.Application.Features.Storage.Commands;
 using Microscope.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

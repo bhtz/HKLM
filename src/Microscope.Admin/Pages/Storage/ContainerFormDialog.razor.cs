@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microscope.Application.Core.Commands.Storage;
+using Microscope.Application.Features.Storage.Commands;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

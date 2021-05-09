@@ -6,8 +6,7 @@ using System;
 using MudBlazor;
 using static Microscope.Admin.Pages.Analytic.AnalyticFormDialog;
 using Microscope.Admin.Shared.Dialogs;
-using Microscope.Application.Core.Queries.Analytic;
-using Microscope.Application.Core.Commands.Analytic;
+using Microscope.Application.Features.Analytic.Queries;
 
 namespace Microscope.Admin.Pages.Analytic
 {

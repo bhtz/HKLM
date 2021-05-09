@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microscope.Infrastructure;
 using Microscope.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microscope.Application.Core.Commands.RemoteConfig;
 using MediatR;
+using Microscope.Application.Features.RemoteConfig.Commands;
 
 namespace Microscope.Api.Controllers
 {

@@ -7,8 +7,8 @@ using Microscope.Infrastructure;
 using Microscope.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using MediatR;
-using Microscope.Application.Core.Queries.Analytic;
-using Microscope.Application.Core.Commands.Analytic;
+using Microscope.Application.Features.Analytic.Commands;
+using Microscope.Application.Features.Analytic.Queries;
 
 namespace Microscope.Api.Controllers
 {

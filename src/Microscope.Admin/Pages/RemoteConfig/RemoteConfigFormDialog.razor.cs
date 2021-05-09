@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microscope.Application.Core.Commands.RemoteConfig;
+using Microscope.Application.Features.RemoteConfig.Commands;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -47,19 +47,14 @@ namespace Microscope.Admin.Pages.RemoteConfig
             Success = true;
             StateHasChanged();
 
-
-
             if (this.RemoteConfig.Id != Guid.Empty)
             {
-
-
                 var remote = new EditRemoteConfigCommand
                 {
                     Id = this.RemoteConfig.Id,
                     Key = this.RemoteConfig.Key,
                     Dimension = this.RemoteConfig.Dimension
                 };
-
 
                 bool success = await _microscopeClient.PutRemoteConfigAsync(this.RemoteConfig.Id, remote);
                 if (success)
@@ -94,7 +89,6 @@ namespace Microscope.Admin.Pages.RemoteConfig
                     _snackBar.Add("Error", Severity.Error);
                     MudDialog.Close(DialogResult.Cancel());
                 }
-
             }
         }
 
@@ -110,7 +104,6 @@ namespace Microscope.Admin.Pages.RemoteConfig
 
             [Required]
             public string Dimension { get; set; }
-
         }
     }
 }

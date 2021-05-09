@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MediatR;
 
-namespace Microscope.Application.Core.Queries.Analytic
+namespace Microscope.Application.Features.Analytic.Queries
 {
     public class FilteredAnalyticQuery : IRequest<IEnumerable<AnalyticQueryResult>>
     {

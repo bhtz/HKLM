@@ -2,7 +2,7 @@ using System;
 using FluentValidation;
 using MediatR;
 
-namespace Microscope.Application.Features.Commands.Storage
+namespace Microscope.Application.Features.Storage.Commands
 {
     public class DeleteContainerCommand : IRequest<bool>
     {
