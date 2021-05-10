@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Microscope.Domain.SharedKernel
@@ -21,7 +20,7 @@ namespace Microscope.Domain.SharedKernel
 
     }
 
-    public interface ICrudRepository<T, TId> : IRepository where T : class, IAggregateRoot<TId>
+    public interface IBaseRepository<T, TId> : IRepository where T : class, IAggregateRoot<TId>
     {
         Task<T> GetByIdAsync(TId id);
 
@@ -34,7 +33,7 @@ namespace Microscope.Domain.SharedKernel
         Task DeleteAsync(T entity);
     }
 
-    public interface ICrudRepository<T> : ICrudRepository<T, Guid> where T : class, IAggregateRoot<Guid>
+    public interface IBaseRepository<T> : IBaseRepository<T, Guid> where T : class, IAggregateRoot<Guid>
     {
         
     }
