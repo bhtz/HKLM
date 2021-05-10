@@ -3,7 +3,7 @@ using Microscope.Domain.SharedKernel;
 
 namespace Microscope.Domain.Entities
 {
-    public class Analytic : IAggregateRoot
+    public class Analytic : Entity, IAggregateRoot
     {
         #region ctor
         protected Analytic()

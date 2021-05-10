@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,7 +40,22 @@ namespace Microscope.Infrastructure
 
         public async Task<bool> SaveChangesAndDispatchEventsAsync(CancellationToken cancellationToken = default)
         {
+            var domainEntities = this.ChangeTracker
+                .Entries<Entity>()
+                .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
+
+            var domainEvents = domainEntities
+                .SelectMany(x => x.Entity.DomainEvents)
+                .ToList();
+
+            domainEntities.ToList()
+                .ForEach(entity => entity.Entity.ClearDomainEvents());
+
+            foreach (var domainEvent in domainEvents)
+                await this._mediator.Publish(domainEvent);
+
             var result = await base.SaveChangesAsync(cancellationToken);
+            
             return true;
         }
     }

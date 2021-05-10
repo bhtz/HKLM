@@ -3,7 +3,7 @@ using Microscope.Domain.SharedKernel;
 
 namespace Microscope.Domain.Entities
 {
-    public class RemoteConfig : IAggregateRoot
+    public class RemoteConfig : Entity, IAggregateRoot
     {
         #region ctor
         protected RemoteConfig()
