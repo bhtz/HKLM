@@ -68,7 +68,7 @@ namespace Microscope.Api.Controllers
         [Route("{containerName}/{blobName}")]
         public async Task<FileContentResult> GetBlob([FromRoute] string containerName, [FromRoute] string blobName)
         {
-            var query = new DownloadBlobQuery() 
+            var query = new GetBlobDataQuery() 
             {
                 BlobName = blobName,
                 ContainerName = containerName
