@@ -26,6 +26,7 @@ namespace Microscope.Api
         {
             services.AddApplication();
             services.AddInfrastructure(Configuration);
+            services.AddStorage(Configuration);
             services.AddControllers();
             services.AddCorsConfiguration(Configuration);
             services.AddSwaggerConfiguration(Configuration);

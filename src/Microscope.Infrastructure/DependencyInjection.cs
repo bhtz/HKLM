@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microscope.Domain.Services;
 using Microscope.Infrastructure.Storage;
+using Microscope.Domain.Aggregates.RemoteConfigAggregate;
+using Microscope.Infrastructure.Repositories;
+using Microscope.Domain.Aggregates.AnalyticAggregate;
 
 namespace Microscope.Infrastructure
 {
@@ -39,6 +42,9 @@ namespace Microscope.Infrastructure
                 }
             });
 
+            services.AddScoped<IRemoteConfigRepository, RemoteConfigRepository>();
+            services.AddScoped<IAnalyticRepository, AnalyticRepository>();
+
             return services;
         }
 
@@ -48,7 +54,7 @@ namespace Microscope.Infrastructure
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static IServiceCollection AddStorageConfiguration(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddStorage(this IServiceCollection services, IConfiguration configuration)
         {
             StorageOptions options = new StorageOptions();
             IConfigurationSection section = configuration.GetSection("Storage");
