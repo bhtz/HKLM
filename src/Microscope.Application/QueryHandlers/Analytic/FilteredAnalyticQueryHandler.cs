@@ -4,9 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microscope.Application.Features.Analytic.Queries;
 using Microscope.Domain.Aggregates.AnalyticAggregate;
 
-namespace Microscope.Application.Features.Analytic.Queries
+namespace Microscope.Application.QueryHandlers.Analytics
 {
     public class FilteredAnalyticQueryHandler : IRequestHandler<FilteredAnalyticQuery, IEnumerable<AnalyticQueryResult>>
     {
@@ -21,7 +22,7 @@ namespace Microscope.Application.Features.Analytic.Queries
 
         public async Task<IEnumerable<AnalyticQueryResult>> Handle(FilteredAnalyticQuery request, CancellationToken cancellationToken)
         {
-            var result =  await this._repository.GetAllAsync();
+            var result = await this._repository.GetAllAsync();
             
             return _mapper
                 .ProjectTo<AnalyticQueryResult>(result.AsQueryable())

@@ -7,7 +7,7 @@ using MediatR;
 using Microscope.Application.Core.Queries.RemoteConfig;
 using Microscope.Domain.Aggregates.RemoteConfigAggregate;
 
-namespace Microscope.Application.Features.Analytic.Queries
+namespace Microscope.Application.QueryHandlers.RemoteConfigs
 {
     public class FilteredRemoteConfigQueryHandler : IRequestHandler<FilteredRemoteConfigQuery, IEnumerable<FilteredRemoteConfigQueryResult>>
     {

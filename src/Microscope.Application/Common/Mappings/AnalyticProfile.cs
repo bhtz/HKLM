@@ -9,6 +9,7 @@ namespace Microscope.Application.Common.Mappings
         public AnalyticProfile()
         {
             CreateMap<Analytic, AnalyticQueryResult>().ReverseMap();
+            CreateMap<Analytic, GetAnalyticByIdQueryResult>().ReverseMap();
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microscope.Application.Features.Storage.Commands;
 using Microscope.Application.Features.Storage.Queries;
-using Microscope.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
