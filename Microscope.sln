@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microscope.SDK.Dotnet", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microscope.Application", "src\Microscope.Application\Microscope.Application.csproj", "{06E6DEE9-700E-4613-9D72-CAB7F8F85F93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microscope.Application.Features", "src\Microscope.Application.Core\Microscope.Application.Features.csproj", "{8175DCBB-D80F-4650-984F-3CF6196CFEFE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microscope.Application.Features", "src\Microscope.Application.Features\Microscope.Application.Features.csproj", "{8175DCBB-D80F-4650-984F-3CF6196CFEFE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{50E00150-A487-11EB-909C-CBDD6692D3DF}"
 EndProject

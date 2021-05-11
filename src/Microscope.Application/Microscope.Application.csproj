@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Microscope.Application.Core\Microscope.Application.Features.csproj" />
     <ProjectReference Include="..\Microscope.Domain\Microscope.Domain.csproj" />
+    <ProjectReference Include="..\Microscope.Application.Features\Microscope.Application.Features.csproj" />
   </ItemGroup>
 
   <ItemGroup>

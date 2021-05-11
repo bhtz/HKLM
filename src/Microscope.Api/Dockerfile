@@ -9,7 +9,6 @@ WORKDIR /src
 
 COPY ["src/Microscope.Api/Microscope.Api.csproj", "src/Microscope.Api/"]
 COPY ["src/Microscope.Hasura/Microscope.Hasura.csproj", "src/Microscope.Hasura/"]
-COPY ["src/Microscope.Storage/Microscope.Storage.csproj", "src/Microscope.Storage/"]
 COPY ["src/Microscope.Domain/Microscope.Domain.csproj", "src/Microscope.Domain/"]
 COPY ["src/Microscope.Infrastructure/Microscope.Infrastructure.csproj", "src/Microscope.Infrastructure/"]
 

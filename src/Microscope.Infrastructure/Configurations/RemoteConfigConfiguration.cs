@@ -13,6 +13,8 @@ namespace Microscope.Infrastructure.Configurations
             builder.Property(e => e.Dimension)
                 .IsRequired()
                 .HasColumnType<string>("jsonb");
+
+            builder.Ignore(b => b.DomainEvents);
         }
     }
 }
