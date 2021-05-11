@@ -5,7 +5,8 @@ namespace Microscope.Domain.SharedKernel
 {
     public class Entity
     {
-        public List<DomainEvent> _domainEvents { get; private set; }
+        private List<DomainEvent> _domainEvents;
+
         public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
 
         public void AddDomainEvent(DomainEvent eventItem)

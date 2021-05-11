@@ -6,6 +6,7 @@ using Microscope.Infrastructure.Storage;
 using Microscope.Domain.Aggregates.RemoteConfigAggregate;
 using Microscope.Infrastructure.Repositories;
 using Microscope.Domain.Aggregates.AnalyticAggregate;
+using System;
 
 namespace Microscope.Infrastructure
 {
@@ -59,6 +60,8 @@ namespace Microscope.Infrastructure
             StorageOptions options = new StorageOptions();
             IConfigurationSection section = configuration.GetSection("Storage");
             section.Bind(options);
+
+            services.Configure<StorageOptions>(settings => settings = options);
 
             switch (options.Adapter)
             {

@@ -2,7 +2,7 @@ using System;
 
 namespace Microscope.Domain.SharedKernel
 {
-    public class DomainEvent
+    public abstract class DomainEvent
     {
         
     }

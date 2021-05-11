@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Microscope.Infrastructure.Migrations
 {
     [DbContext(typeof(MicroscopeDbContext))]
-    [Migration("20210314174138_InitialCreate")]
+    [Migration("20210511232302_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

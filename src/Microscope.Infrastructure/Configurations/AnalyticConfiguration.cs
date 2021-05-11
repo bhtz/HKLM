@@ -8,13 +8,13 @@ namespace Microscope.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Analytic> builder)
         {   
+            builder.Ignore(b => b.DomainEvents);
+
             builder.HasKey(e => e.Id);
             
             builder.Property(e => e.Dimension)
                 .IsRequired()
                 .HasColumnType<string>("jsonb");
-
-            builder.Ignore(b => b.DomainEvents);
         }
     }
 }
