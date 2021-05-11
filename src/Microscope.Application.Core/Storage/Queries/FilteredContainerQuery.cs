@@ -12,5 +12,10 @@ namespace Microscope.Application.Features.Storage.Queries
     public class FilteredContainerQueryResult 
     {
         public string Name { get; set; }
+
+        public FilteredContainerQueryResult(string name)
+        {
+            this.Name = name;
+        }
     }
 }

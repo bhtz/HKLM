@@ -146,5 +146,15 @@ namespace Microscope.Infrastructure.Storage
         {
             await this._client.MakeBucketAsync(containerName);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="containerName"></param>
+        /// <returns></returns>
+        public async Task DeleteContainerAsync(string containerName)
+        {
+            await this._client.RemoveBucketAsync(containerName);
+        }
     }
 }

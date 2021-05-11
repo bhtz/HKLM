@@ -40,7 +40,7 @@ namespace Microscope.Api.Controllers
                 {
                     file.CopyTo(ms);
                     
-                    var cmd = new UploadBlobCommand()
+                    var cmd = new AddBlobCommand()
                     {
                         BlobName = file.FileName,
                         ContainerName = containerName,

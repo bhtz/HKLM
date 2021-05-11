@@ -5,14 +5,14 @@ using MediatR;
 
 namespace Microscope.Application.Features.Storage.Commands
 {
-    public class UploadBlobCommand : IRequest<bool>
+    public class AddBlobCommand : IRequest<bool>
     {
         public string BlobName { get; set; }
         public string ContainerName { get; set; }
         public Stream Data { get; set; }
     }
 
-    public class UploadBlobCommandValidator : AbstractValidator<UploadBlobCommand>
+    public class UploadBlobCommandValidator : AbstractValidator<AddBlobCommand>
     {
         public UploadBlobCommandValidator()
         {

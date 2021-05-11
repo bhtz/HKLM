@@ -11,5 +11,10 @@ namespace Microscope.Application.Features.Storage.Queries
     public class GetBlobsByContainerQueryResult
     {
         public string Name { get; set; }
+
+        public GetBlobsByContainerQueryResult(string Name)
+        {
+            this.Name = Name;
+        }
     }
 }

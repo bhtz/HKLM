@@ -42,5 +42,10 @@ namespace Microscope.Infrastructure.Storage
         {
             throw new NotImplementedException();
         }
+
+        public Task DeleteContainerAsync(string containerName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
