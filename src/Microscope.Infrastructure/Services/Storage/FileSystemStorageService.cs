@@ -117,9 +117,10 @@ namespace Microscope.Infrastructure.Storage
 
         private string GetRootDirectoryPath()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), this._options.Host);
+            var rootDirectory = this._options.Host ?? "Uploads";
+            return Path.Combine(Directory.GetCurrentDirectory(), rootDirectory);
         }
-
+        
         private string GetContainerPath(string containerName)
         {
             return Path.Combine(this.GetRootDirectoryPath(), containerName);
