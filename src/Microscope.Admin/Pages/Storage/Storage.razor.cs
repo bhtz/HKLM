@@ -94,7 +94,6 @@ namespace Microscope.Admin.Pages.Storage
 
         private async void GetBlobsFromSelectedContainer()
         {
-
             if (!string.IsNullOrEmpty(this.SelectedContainer))
             {
                 this.SearchTerm = string.Empty;
