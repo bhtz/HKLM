@@ -60,8 +60,8 @@ namespace Microscope.Infrastructure
             StorageOptions options = new StorageOptions();
             IConfigurationSection section = configuration.GetSection("Storage");
             section.Bind(options);
-            //services.Configure<StorageOptions>(settings => settings = options);  //KO 
-            services.Configure<StorageOptions>(settings => section.Bind(settings)); //OK
+            
+            services.Configure<StorageOptions>(settings => section.Bind(settings));
 
             switch (options.Adapter)
             {
