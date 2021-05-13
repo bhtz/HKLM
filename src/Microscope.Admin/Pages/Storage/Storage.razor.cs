@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microscope.Admin.Shared.Dialogs;
 using Microsoft.AspNetCore.Components;
@@ -55,7 +54,7 @@ namespace Microscope.Admin.Pages.Storage
 
         private async Task GetContainers()
         {
-            var containerResults = await _httpClient.GetFromJsonAsync<IEnumerable<string>>("api/storage");
+            var containerResults = await _microscopeClient.GetContainersAsync();
             this.Containers = containerResults.ToList();
             this.SelectedContainer = this.Containers.FirstOrDefault();
         }
@@ -97,7 +96,7 @@ namespace Microscope.Admin.Pages.Storage
             if (!string.IsNullOrEmpty(this.SelectedContainer))
             {
                 this.SearchTerm = string.Empty;
-                var blobResults = await _httpClient.GetFromJsonAsync<IEnumerable<string>>("api/storage/" + this.SelectedContainer);
+                var blobResults = await _microscopeClient.GetBlobsAsync(this.SelectedContainer);
                 this.Blobs = blobResults.ToList();
                 this.StateHasChanged();
             }
@@ -105,21 +104,15 @@ namespace Microscope.Admin.Pages.Storage
 
         private async void Download(string blobName)
         {
-            var res = await _httpClient.GetAsync("api/storage/" + this.SelectedContainer + "/" + blobName);
+            var blobByteArray = await _microscopeClient.GetBlobAsync(this.SelectedContainer, blobName);
 
-            if (res.IsSuccessStatusCode)
-            {
-                var bytes = await res.Content.ReadAsByteArrayAsync();
-                Console.WriteLine(bytes.Length);
-
-                await this.JsRuntime.InvokeVoidAsync("interop.downloadFromByteArray",
-                    new
-                    {
-                        ByteArray = bytes,
-                        FileName = blobName,
-                        ContentType = "application/octet-stream"
-                    });
-            }
+            await this.JsRuntime.InvokeVoidAsync("interop.downloadFromByteArray",
+                new
+                {
+                    ByteArray = blobByteArray,
+                    FileName = blobName,
+                    ContentType = "application/octet-stream"
+                });
         }
 
         private async Task DeleteBlob(string blobName)
@@ -135,8 +128,9 @@ namespace Microscope.Admin.Pages.Storage
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var res = await _httpClient.DeleteAsync($"api/storage/{this.SelectedContainer}/{blobName}");
-                if (res.IsSuccessStatusCode)
+                var success = await _microscopeClient.DeleteBlobAsync(this.SelectedContainer, blobName);
+
+                if (success)
                 {
                     this.Blobs.Remove(blobName);
                     _snackBar.Add("Blob deleted", Severity.Success);
@@ -162,8 +156,8 @@ namespace Microscope.Admin.Pages.Storage
 
             try
             {
-                var res = await _httpClient.PostAsync("api/storage/" + this.SelectedContainer, content);
-                if (res.IsSuccessStatusCode)
+                bool success = await _microscopeClient.PostBlobsAsync(this.SelectedContainer,content);
+                if (success)
                 {
                     _snackBar.Add("File uploaded", Severity.Success);
                     this.GetBlobsFromSelectedContainer();
@@ -181,7 +175,7 @@ namespace Microscope.Admin.Pages.Storage
 
             this.IsLoading = false;
         }
-        
+
         #endregion
     }
 }
